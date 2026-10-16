@@ -982,7 +982,7 @@ Both 255 × 192.
 }
 
 /* TD Other Projects */
-.selected-projects .other-projects-link { position:absolute; top:15px; right:35px; color:#55ff00; font-size:18px; font-weight:700; text-decoration:none; }
+.selected-projects .other-projects-link { position:absolute; top:15px; right:55px; color:#55ff00; font-size:18px; font-weight:700; text-decoration:none; }
 .selected-projects .other-projects-link:hover, .other-projects-page .back-link:hover { text-decoration:underline; }
 .other-projects-page { position:relative; width:100%; max-width:1100px; margin:0 auto; padding:80px 35px 60px; }
 .other-projects-page .back-link { position:absolute; top:15px; left:35px; color:#55ff00; font-size:18px; text-decoration:none; }
