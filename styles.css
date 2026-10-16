@@ -1,0 +1,146 @@
+/* All styling is here. No libraries, remote fonts, or paid services. */
+:root {
+  color-scheme: dark;
+  --background: #000;
+  --heading: #55ff00;
+  --active: #00ed00;
+  --text: #b3b3b3;
+  --border: #303030;
+  --corner: #626262;
+  --portrait-width: clamp(230px, calc((100svh - 390px) * .752), 500px);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 68px 24px 72px;
+  background: var(--background);
+  color: var(--text);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 66px 32px 76px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--corner);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+}
+.top-left { top: -1px; left: -1px; border-top-width: 3px; border-left-width: 3px; }
+.top-right { top: -1px; right: -1px; border-top-width: 3px; border-right-width: 3px; }
+.bottom-left { bottom: -1px; left: -1px; border-bottom-width: 3px; border-left-width: 3px; }
+.bottom-right { bottom: -1px; right: -1px; border-bottom-width: 3px; border-right-width: 3px; }
+
+.portrait {
+  position: relative;
+  width: var(--portrait-width);
+  max-width: 100%;
+  aspect-ratio: 500 / 665;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #101c1c;
+}
+
+/* Original screenshot: 1092 × 1189. Portrait: x292, y135, 500 × 665.
+   This keeps the supplied image untouched and displays only its portrait. */
+.reference-photo {
+  position: absolute;
+  width: 218.4%;
+  height: auto;
+  max-width: none;
+  left: -58.4%;
+  top: -20.300752%;
+}
+
+/* Use this class when you replace the sample with a standalone portrait. */
+.portrait-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+h1 {
+  margin: 57px 0 43px;
+  color: var(--heading);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 5.9vw, 64px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -2px;
+}
+
+.bio {
+  margin: 0 auto;
+  max-width: 600px;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.navigation {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 666px;
+  max-width: calc(100% - 48px);
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: -1px 0 0 var(--corner), 1px 0 0 var(--corner);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 21px;
+  color: #eee;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav-item.active { background: var(--active); color: #000; }
+
+/* Keyboard focus styling is ready for when real links are added. */
+a.nav-item:hover { color: var(--heading); }
+a.nav-item.active:hover { color: #000; }
+a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4px; }
+
+@media (max-width: 700px) {
+  body { padding: 28px 18px 54px; }
+  .cover { padding: 32px 22px 66px; }
+  .portrait { width: min(100%, 380px); }
+  h1 { margin: 34px 0 24px; letter-spacing: -1.5px; }
+  .bio { max-width: 470px; font-size: clamp(16px, 3.2vw, 21px); }
+  .desktop-break { display: none; }
+  .navigation { bottom: -28px; max-width: calc(100% - 20px); padding: 8px 6px; }
+  .nav-item { padding: 12px 8px; font-size: clamp(10px, 2.7vw, 17px); }
+}
+
+@media (max-width: 380px) {
+  body { padding-right: 12px; padding-left: 12px; }
+  .cover { padding-right: 15px; padding-left: 15px; }
+  h1 { font-size: 34px; }
+  .nav-item { padding-right: 5px; padding-left: 5px; }
+}
