@@ -8,8 +8,8 @@ Welcome to my personal portfolio. This site introduces my professional work and 
 
 ## Professional experience
 
-- **TD Securities** — Analyst III
-- **Easy Group** — Senior Academic Instructor
+- **TD Securities** — Analyst III (Data Engineer)
+- **Easy Group** — Data Engineer
 
 ## Portfolio
 
