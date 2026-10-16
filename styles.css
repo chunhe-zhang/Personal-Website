@@ -158,13 +158,13 @@ h1 {
 ================================ */
 
 .navigation {
-  position: absolute;
-  bottom: -35px;
+  position: fixed;
+  bottom: 33px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: stretch;
-  justify-content: space-between;
   width: 666px;
   max-width: calc(100% - 48px);
   padding: 10px 14px;
@@ -179,13 +179,16 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 21px;
+  width: 100%;
+  min-width: 0;
+  padding: 13px 4px;
   color: #eee;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.2;
   text-transform: uppercase;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-item.active {
@@ -235,7 +238,6 @@ a.nav-item:focus-visible {
   }
 
   .navigation {
-    bottom: -28px;
     padding-top: 7px;
     padding-bottom: 7px;
   }
@@ -278,7 +280,7 @@ a.nav-item:focus-visible {
   }
 
   .navigation {
-    bottom: -28px;
+    bottom: 16px;
     max-width: calc(100% - 20px);
     padding: 8px 6px;
   }
@@ -668,9 +670,6 @@ Both 255 × 192.
     font-size: clamp(19px, 2.5svh, 25px);
   }
 
-  body:not(.section-page) .navigation {
-    bottom: -26px;
-  }
 }
 
 /* Short desktop screens */
