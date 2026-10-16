@@ -471,3 +471,67 @@ Both 255 × 192.
     font-size: 25px;
   }
 }
+
+
+/* ================================
+   FULL VIEWPORT HOME COVER
+================================ */
+
+@media (min-width: 701px) {
+  body:not(.section-page) {
+    padding: 18px 24px 58px;
+  }
+
+  body:not(.section-page) .cover {
+    min-height: calc(100svh - 76px);
+    max-width: 1200px;
+    padding: clamp(20px, 3svh, 45px) 32px 80px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body:not(.section-page) .portrait {
+    width: min(400px, 39svh);
+    flex-shrink: 0;
+  }
+
+  body:not(.section-page) h1 {
+    margin: clamp(20px, 3svh, 40px) 0
+            clamp(14px, 2svh, 25px);
+  }
+
+  body:not(.section-page) .bio {
+    font-size: clamp(19px, 2.5svh, 25px);
+  }
+
+  body:not(.section-page) .navigation {
+    bottom: -26px;
+  }
+}
+
+/* Short desktop screens */
+
+@media (min-width: 701px) and (max-height: 750px) {
+  body:not(.section-page) .cover {
+    padding-top: 12px;
+    padding-bottom: 64px;
+  }
+
+  body:not(.section-page) .portrait {
+    width: min(290px, 34svh);
+  }
+
+  body:not(.section-page) h1 {
+    margin-top: 14px;
+    margin-bottom: 10px;
+    font-size: clamp(36px, 4vw, 52px);
+  }
+
+  body:not(.section-page) .bio {
+    font-size: 18px;
+  }
+}
+
