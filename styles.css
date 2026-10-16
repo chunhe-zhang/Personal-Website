@@ -1074,3 +1074,119 @@ Both 255 × 192.
     font-size: 14px;
   }
 }
+
+
+/* Consistent page headings across Projects, Skills, Album, and Contact */
+.unified-section-content {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 35px 150px;
+  text-align: left;
+}
+
+.section-page-title {
+  margin: 0 auto 36px;
+  color: var(--heading);
+  font-size: clamp(36px, 5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.page-empty-state {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.page-empty-state p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.contact-content.unified-section-content {
+  max-width: 900px;
+  padding: 40px 35px 150px;
+  text-align: left;
+}
+
+.contact-content .section-page-title {
+  margin-bottom: 36px;
+  font-size: clamp(36px, 5vw, 48px);
+  text-align: center;
+}
+
+.contact-list {
+  max-width: 830px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.contact-icon {
+  display: block;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.linkedin-icon {
+  fill: #0a66c2;
+  stroke: none;
+}
+
+.linkedin-icon text {
+  fill: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.github-icon {
+  fill: currentColor;
+  stroke: none;
+}
+
+@media (max-width: 700px) {
+  .unified-section-content,
+  .contact-content.unified-section-content {
+    padding: 32px 18px 120px;
+  }
+
+  .section-page-title,
+  .contact-content .section-page-title {
+    margin-bottom: 28px;
+    font-size: clamp(32px, 8vw, 40px);
+  }
+
+  .contact-item {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px 0;
+    font-size: 14px;
+  }
+
+  .contact-link {
+    gap: 8px;
+  }
+
+  .contact-icon {
+    flex-basis: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
