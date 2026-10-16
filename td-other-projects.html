@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Additional TD Securities data and automation projects by Chunhe Zhang.">
+  <title>Other Projects | Chunhe Zhang</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="section-page">
+  <div class="section-shell">
+    <main class="section-content other-projects-page">
+      <a class="back-link" href="td-securities.html">&larr; Back to Selected Projects</a>
+      <h1 class="selected-title">Other Projects</h1>
+      <p class="other-projects-intro">A selection of additional data automation, reconciliation and workflow projects from my TD Securities portfolio.</p>
+      <div class="other-projects-grid">
+
+        <article class="project-summary-card">
+          <h2>Missing ETF</h2>
+          <p>Reconciled daily source files against prior-day records, filtered instruments to team scope, validated setup needs and archived status in a centralized log.</p>
+          <p class="project-summary-impact">15 minutes saved daily; removed upstream dependency and consolidated two teams’ workload.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>US Inflation & BRL UED</h2>
+          <p>Retrieved Outlook files and dynamically located changing source tables and instrument rollovers before generating standardized uploads and archives.</p>
+          <p class="project-summary-impact">About 3 minutes saved per workflow daily; eliminated manual input errors.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Month-End Snaptime Change</h2>
+          <p>Automated currency-specific filtering, update-file preparation and archival of original settings so month-end ingestion windows could be safely reverted.</p>
+          <p class="project-summary-impact">30 minutes saved monthly; reduced the annual error rate from one incident to zero.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Early Close Snaptime Change</h2>
+          <p>Added a holiday-configurable switcher and automated filtering plus change and reversion files for early market closes.</p>
+          <p class="project-summary-impact">30 minutes saved per event; handled a 15-minute-notice close within 10 minutes.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>London Fixing Recon</h2>
+          <p>Automated Outlook file retrieval and a three-way reconciliation across source reports, Calypso and internal records, including fallback fixes and decommissioned instruments.</p>
+          <p class="project-summary-impact">20 minutes saved daily; introduced the team’s first automated Outlook ingestion.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Basket Pricing (Multi-Currency)</h2>
+          <p>Aligned equity prices with date-matched FX rates, converted constituents into the basket currency and calculated weighted prices across multi-currency baskets.</p>
+          <p class="project-summary-impact">Expanded asset coverage and enabled multi-currency basket pricing.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Stock Pricing Validation</h2>
+          <p>Built a reusable JSON parser for live web feeds and a validation workflow against MDS pricing, prioritizing primary-exchange prices.</p>
+          <p class="project-summary-impact">Added a price validation framework and reusable JSON utility for downstream data quality.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Murex Recon</h2>
+          <p>Automated Murex portal extraction with a hybrid Python and JavaScript scraper, then replaced fragile spreadsheet formulas with generated logic and faster bulk reconciliation.</p>
+          <p class="project-summary-impact">15 minutes saved daily; macro execution cut by 5 minutes.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Cowen SOI & Recon</h2>
+          <p>Automated source-file consolidation, new-ticker checks, PivotTable partitioning, Bloomberg formula propagation and exception setup, alongside daily Cowen reconciliation.</p>
+          <p class="project-summary-impact">About 40 minutes saved daily across SOI and recon; onboarding reduced from five days to one.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Corporate Action (EOD)</h2>
+          <p>Built a dual-track ETL for global corporate actions and targeted EU/London special cash dividends across T+0, T+1 and T+2 reports, avoiding Bloomberg report limits.</p>
+          <p class="project-summary-impact">Delivered continuous multi-day front-office visibility and reliable regional event filtering.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>3 PM Closing Mark</h2>
+          <p>Rebuilt a time-sensitive pricing workflow with headless Selenium extraction, attachment downloads and HTML email distribution scheduled for 3:05 PM.</p>
+          <p class="project-summary-impact">2 minutes saved daily; removed manual steps from the close-window workflow.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>FX Check</h2>
+          <p>Replaced hardcoded spreadsheet ranges with dynamic table detection and conditional Bloomberg-versus-Raptor checks across T-1 and T-2, producing upload files and audit logs.</p>
+          <p class="project-summary-impact">5 minutes saved daily; corrected a long-standing issue that risked data corruption.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>StrucFin List Check</h2>
+          <p>Parsed email and chat requests, mapped legacy currency codes to Bloomberg/ISO conventions and reconciled basket membership against Sophis records.</p>
+          <p class="project-summary-impact">10 minutes saved daily; standardized cross-team ad-hoc requests.</p>
+        </article>
+
+        <article class="project-summary-card">
+          <h2>Centralized Interactive Process Matrix</h2>
+          <p>Created a single repository for nearly 100 live procedures, linked to the team allocation matrix with contextual double-click access to current guidance.</p>
+          <p class="project-summary-impact">Reduced handoff training from three weeks to one and established an up-to-date source of truth.</p>
+        </article>
+
+      </div>
+    </main>
+    <nav class="navigation" aria-label="Main navigation">
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item active" href="projects.html" aria-current="page">Projects</a>
+      <a class="nav-item" href="skills.html">Skills</a>
+      <a class="nav-item" href="album.html">Album</a>
+      <a class="nav-item" href="contact.html">Contact</a>
+    </nav>
+  </div>
+</body>
+</html>

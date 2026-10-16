@@ -980,3 +980,24 @@ Both 255 × 192.
     gap: 28px;
   }
 }
+
+/* TD Other Projects */
+.selected-projects .other-projects-link { position:absolute; top:15px; right:35px; color:#55ff00; font-size:18px; font-weight:700; text-decoration:none; }
+.selected-projects .other-projects-link:hover, .other-projects-page .back-link:hover { text-decoration:underline; }
+.other-projects-page { position:relative; width:100%; max-width:1100px; margin:0 auto; padding:80px 35px 60px; }
+.other-projects-page .back-link { position:absolute; top:15px; left:35px; color:#55ff00; font-size:18px; text-decoration:none; }
+.other-projects-page .selected-title { margin:0 0 18px; color:#55ff00; font-size:clamp(28px,3.5vw,48px); line-height:1.1; text-align:center; }
+.other-projects-intro { margin:0 0 28px; font-size:15px; line-height:1.6; text-align:left; }
+.other-projects-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.project-summary-card { padding:20px; border:1px solid var(--border); background:#070a07; text-align:left; }
+.project-summary-card h2 { margin:0 0 12px; color:#f5f5f5; font-family:Georgia,"Times New Roman",serif; font-size:21px; line-height:1.25; text-align:center; }
+.project-summary-card p { margin:0; font-size:14px; line-height:1.6; text-align:left; }
+.project-summary-card .project-summary-impact { margin-top:12px; color:var(--heading); font-size:13px; font-weight:700; }
+@media (max-width:700px) {
+  .selected-projects .other-projects-link { right:18px; font-size:14px; }
+  .other-projects-page { padding:70px 18px 45px; }
+  .other-projects-page .back-link { left:18px; font-size:15px; }
+  .other-projects-grid { grid-template-columns:1fr; gap:12px; }
+  .project-summary-card { padding:17px; }
+  .project-summary-card h2 { font-size:19px; }
+}
