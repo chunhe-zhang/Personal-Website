@@ -327,21 +327,29 @@ a.nav-item:focus-visible {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: clamp(64px, 12vh, 127px) 0 36px;
+  padding: clamp(32px, 6vh, 64px) 0 36px;
 }
 
+/* Leave room at the bottom so the fixed navigation never covers content */
 .section-content {
-  padding-bottom: 64px;
+  padding-bottom: 150px;
   text-align: center;
 }
 
+/*
+Navigation is fixed to the viewport, at the same spot as on the cover page
+(bottom edge 32px above the viewport bottom). Content scrolls behind it,
+so adding more companies never moves the bar.
+*/
 .section-shell .navigation {
-  position: relative;
-  left: auto;
-  bottom: auto;
-  transform: none;
-  margin: auto auto 0;
-  max-width: 100%;
+  position: fixed;
+  left: 50%;
+  bottom: 33px;
+  transform: translateX(-50%);
+  margin: 0;
+  width: 666px;
+  max-width: calc(100% - 48px);
+  z-index: 10;
 }
 
 /* ================================
@@ -351,8 +359,9 @@ a.nav-item:focus-visible {
 .company-cards {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  margin: 0;
+  gap: 18px;
+  max-width: 760px;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
 }
@@ -363,8 +372,8 @@ a.nav-item:focus-visible {
   position: relative;
   display: flex;
   align-items: stretch;
-  gap: 32px;
-  padding: 28px;
+  gap: 22px;
+  padding: 18px 20px;
   border: 1px solid var(--border);
   background: var(--background);
   text-align: left;
@@ -377,8 +386,8 @@ a.nav-item:focus-visible {
 }
 
 .company-card .company-logo {
-  flex: 0 0 255px;
-  width: 255px;
+  flex: 0 0 150px;
+  width: 150px;
   align-self: center;
 }
 
@@ -392,32 +401,32 @@ a.nav-item:focus-visible {
 .card-body h2 {
   margin: 0;
   color: #f5f5f5;
-  font-size: 28px;
+  font-size: 21px;
   font-weight: 700;
   line-height: 1.2;
   text-transform: uppercase;
 }
 
 .card-role {
-  margin: 8px 0 0;
+  margin: 5px 0 0;
   color: var(--heading);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
 }
 
 .card-summary {
-  margin: 14px 0 20px;
-  font-size: 17px;
-  line-height: 1.5;
+  margin: 9px 0 12px;
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .view-detail {
   align-self: flex-end;
   margin-top: auto;
-  padding: 10px 18px;
+  padding: 6px 12px;
   border: 1px solid var(--active);
   color: var(--active);
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 700;
   text-decoration: none;
   text-transform: uppercase;
@@ -443,7 +452,7 @@ a.nav-item:focus-visible {
 ================================ */
 
 .detail {
-  padding-bottom: 64px;
+  padding-bottom: 150px;
   text-align: left;
 }
 
@@ -579,32 +588,46 @@ Both 255 × 192.
     padding-bottom: 24px;
   }
 
-  .section-content {
-    padding-bottom: 48px;
+  .section-content,
+  .detail {
+    padding-bottom: 120px;
+  }
+
+  .section-shell .navigation {
+    bottom: 16px;
+    max-width: calc(100% - 36px);
   }
 
   .company-cards {
-    gap: 24px;
+    gap: 14px;
   }
 
   .company-card {
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+    gap: 14px;
+    padding: 14px;
   }
 
   .company-card .company-logo {
-    flex: none;
-    width: min(235px, 100%);
-    align-self: center;
+    flex: 0 0 96px;
+    width: 96px;
   }
 
   .card-body h2 {
-    font-size: 24px;
+    font-size: 17px;
+  }
+
+  .card-role {
+    font-size: 12px;
   }
 
   .card-summary {
-    font-size: 16px;
+    margin: 6px 0 10px;
+    font-size: 12px;
+  }
+
+  .view-detail {
+    padding: 5px 10px;
+    font-size: 11px;
   }
 }
 
