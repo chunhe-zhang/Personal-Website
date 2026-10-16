@@ -818,6 +818,7 @@ Both 255 × 192.
   margin-top: 26px;
   font-size: clamp(36px, 5vw, 54px);
   letter-spacing: -1px;
+  text-align: center;
 }
 
 .project-article .article-lede {
