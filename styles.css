@@ -1,4 +1,6 @@
+
 /* All styling is here. No libraries, remote fonts, or paid services. */
+
 :root {
   color-scheme: dark;
   --background: #000;
@@ -7,28 +9,43 @@
   --text: #b3b3b3;
   --border: #303030;
   --corner: #626262;
-  --portrait-width: clamp(230px, calc((100svh - 390px) * .752), 500px);
+
+  /* Responsive portrait size based on viewport height */
+  --portrait-width: clamp(
+    150px,
+    calc((100svh - 400px) * 0.55),
+    400px
+  );
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  padding: 68px 24px 72px;
+  padding: 24px 24px 58px;
   background: var(--background);
   color: var(--text);
   font-family: "Courier New", Courier, monospace;
 }
+
+/* ================================
+   HOME COVER
+================================ */
 
 .cover {
   position: relative;
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 66px 32px 76px;
+  padding: clamp(20px, 3svh, 38px) 32px
+           clamp(64px, 9svh, 90px);
   border: 1px solid var(--border);
   text-align: center;
 }
+
+/* Decorative corners */
 
 .corner {
   position: absolute;
@@ -39,10 +56,38 @@ body {
   border-width: 0;
   pointer-events: none;
 }
-.top-left { top: -1px; left: -1px; border-top-width: 3px; border-left-width: 3px; }
-.top-right { top: -1px; right: -1px; border-top-width: 3px; border-right-width: 3px; }
-.bottom-left { bottom: -1px; left: -1px; border-bottom-width: 3px; border-left-width: 3px; }
-.bottom-right { bottom: -1px; right: -1px; border-bottom-width: 3px; border-right-width: 3px; }
+
+.top-left {
+  top: -1px;
+  left: -1px;
+  border-top-width: 3px;
+  border-left-width: 3px;
+}
+
+.top-right {
+  top: -1px;
+  right: -1px;
+  border-top-width: 3px;
+  border-right-width: 3px;
+}
+
+.bottom-left {
+  bottom: -1px;
+  left: -1px;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+}
+
+.bottom-right {
+  bottom: -1px;
+  right: -1px;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+}
+
+/* ================================
+   PORTRAIT
+================================ */
 
 .portrait {
   position: relative;
@@ -54,8 +99,14 @@ body {
   background: #101c1c;
 }
 
-/* Original screenshot: 1092 × 1189. Portrait: x292, y135, 500 × 665.
-   This keeps the supplied image untouched and displays only its portrait. */
+/*
+Original screenshot: 1092 × 1189.
+Portrait: x292, y135, 500 × 665.
+
+Keep the supplied image untouched.
+Display only its portrait region.
+*/
+
 .reference-photo {
   position: absolute;
   width: 218.4%;
@@ -65,7 +116,8 @@ body {
   top: -20.300752%;
 }
 
-/* Use this class when you replace the sample with a standalone portrait. */
+/* Standalone portrait image */
+
 .portrait-photo {
   display: block;
   width: 100%;
@@ -74,8 +126,13 @@ body {
   object-position: center;
 }
 
+/* ================================
+   HOME TITLE
+================================ */
+
 h1 {
-  margin: 57px 0 43px;
+  margin: clamp(20px, 3svh, 34px) 0
+          clamp(14px, 2svh, 24px);
   color: var(--heading);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(38px, 5.9vw, 64px);
@@ -84,13 +141,21 @@ h1 {
   letter-spacing: -2px;
 }
 
+/* ================================
+   BIO
+================================ */
+
 .bio {
   margin: 0 auto;
   max-width: 600px;
-  font-size: 25px;
+  font-size: clamp(17px, 2.5svh, 25px);
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.4;
 }
+
+/* ================================
+   NAVIGATION
+================================ */
 
 .navigation {
   position: absolute;
@@ -105,7 +170,9 @@ h1 {
   padding: 10px 14px;
   border: 1px solid var(--border);
   background: var(--background);
-  box-shadow: -1px 0 0 var(--corner), 1px 0 0 var(--corner);
+  box-shadow:
+    -1px 0 0 var(--corner),
+     1px 0 0 var(--corner);
 }
 
 .nav-item {
@@ -120,33 +187,139 @@ h1 {
   text-transform: uppercase;
   text-decoration: none;
 }
-.nav-item.active { background: var(--active); color: #000; }
 
-/* Current page stays green; links support keyboard navigation. */
-a.nav-item:hover { color: var(--heading); }
-a.nav-item.active:hover { color: #000; }
-a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4px; }
+.nav-item.active {
+  background: var(--active);
+  color: #000;
+}
+
+/* Hover and keyboard accessibility */
+
+a.nav-item:hover {
+  color: var(--heading);
+}
+
+a.nav-item.active:hover {
+  color: #000;
+}
+
+a.nav-item:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 4px;
+}
+
+/* ================================
+   SHORT DESKTOP SCREENS
+================================ */
+
+@media (min-width: 701px) and (max-height: 800px) {
+  body {
+    padding-top: 14px;
+    padding-bottom: 48px;
+  }
+
+  .cover {
+    padding-top: 16px;
+    padding-bottom: 60px;
+  }
+
+  h1 {
+    margin-top: 18px;
+    margin-bottom: 12px;
+    font-size: clamp(36px, 5vw, 54px);
+  }
+
+  .bio {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .navigation {
+    bottom: -28px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .nav-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+/* ================================
+   MOBILE
+================================ */
 
 @media (max-width: 700px) {
-  body { padding: 28px 18px 54px; }
-  .cover { padding: 32px 22px 66px; }
-  .portrait { width: min(100%, 380px); }
-  h1 { margin: 34px 0 24px; letter-spacing: -1.5px; }
-  .bio { max-width: 470px; font-size: clamp(16px, 3.2vw, 21px); }
-  .desktop-break { display: none; }
-  .navigation { bottom: -28px; max-width: calc(100% - 20px); padding: 8px 6px; }
-  .nav-item { padding: 12px 8px; font-size: clamp(10px, 2.7vw, 17px); }
+  body {
+    padding: 28px 18px 54px;
+  }
+
+  .cover {
+    padding: 32px 22px 66px;
+  }
+
+  .portrait {
+    width: min(100%, 380px);
+  }
+
+  h1 {
+    margin: 34px 0 24px;
+    letter-spacing: -1.5px;
+  }
+
+  .bio {
+    max-width: 470px;
+    font-size: clamp(16px, 3.2vw, 21px);
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .navigation {
+    bottom: -28px;
+    max-width: calc(100% - 20px);
+    padding: 8px 6px;
+  }
+
+  .nav-item {
+    padding: 12px 8px;
+    font-size: clamp(10px, 2.7vw, 17px);
+  }
 }
+
+/* Small mobile screens */
 
 @media (max-width: 380px) {
-  body { padding-right: 12px; padding-left: 12px; }
-  .cover { padding-right: 15px; padding-left: 15px; }
-  h1 { font-size: 34px; }
-  .nav-item { padding-right: 5px; padding-left: 5px; }
+  body {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .cover {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .nav-item {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
 }
 
-/* Interior pages keep the same navigation, with a simple black canvas. */
-.section-page { padding: 0 24px; }
+/* ================================
+   INTERIOR PAGES
+================================ */
+
+.section-page {
+  padding: 0 24px;
+}
+
 .section-shell {
   display: flex;
   flex-direction: column;
@@ -156,7 +329,12 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   margin: 0 auto;
   padding: clamp(64px, 12vh, 127px) 0 36px;
 }
-.section-content { padding-bottom: 64px; text-align: center; }
+
+.section-content {
+  padding-bottom: 64px;
+  text-align: center;
+}
+
 .section-shell .navigation {
   position: relative;
   left: auto;
@@ -165,6 +343,11 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   margin: auto auto 0;
   max-width: 100%;
 }
+
+/* ================================
+   COMPANIES
+================================ */
+
 .companies {
   display: flex;
   flex-direction: column;
@@ -174,15 +357,29 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   padding: 0;
   list-style: none;
 }
-.company { width: min(255px, 100%); }
+
+.company {
+  width: min(255px, 100%);
+}
+
 .company-logo {
   position: relative;
   width: 100%;
   aspect-ratio: 255 / 192;
   overflow: hidden;
 }
-/* Display the logo regions from the original screenshot without altering it.
-   Source 978 x 1053; logos at x393/y127 and x393/y418, both 255 x 192. */
+
+/*
+Display logo regions from original screenshot.
+
+Source: 978 × 1053
+Logos:
+x393/y127
+x393/y418
+
+Both 255 × 192.
+*/
+
 .company-logo img {
   position: absolute;
   width: 383.529412%;
@@ -190,8 +387,15 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   height: auto;
   left: -154.117647%;
 }
-.td-logo img { top: -66.145833%; }
-.easy-logo img { top: -217.708333%; }
+
+.td-logo img {
+  top: -66.145833%;
+}
+
+.easy-logo img {
+  top: -217.708333%;
+}
+
 .company-logo .company-logo-photo {
   position: static;
   display: block;
@@ -199,6 +403,7 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   height: 100%;
   object-fit: contain;
 }
+
 .company h2 {
   margin: 20px 0 0;
   color: #f5f5f5;
@@ -207,8 +412,23 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   line-height: 1.2;
   text-transform: uppercase;
 }
-.placeholder h1 { margin-top: 40px; }
-.placeholder p { font-size: 20px; }
+
+/* ================================
+   PLACEHOLDER PAGES
+================================ */
+
+.placeholder h1 {
+  margin-top: 40px;
+}
+
+.placeholder p {
+  font-size: 20px;
+}
+
+/* ================================
+   ACCESSIBILITY
+================================ */
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -220,11 +440,34 @@ a.nav-item:focus-visible { outline: 2px solid var(--heading); outline-offset: 4p
   white-space: nowrap;
   border: 0;
 }
+
+/* ================================
+   INTERIOR MOBILE LAYOUT
+================================ */
+
 @media (max-width: 700px) {
-  .section-page { padding: 0 18px; }
-  .section-shell { padding-top: 48px; padding-bottom: 24px; }
-  .section-content { padding-bottom: 48px; }
-  .companies { gap: 36px; }
-  .company { width: min(235px, 100%); }
-  .company h2 { font-size: 25px; }
+  .section-page {
+    padding: 0 18px;
+  }
+
+  .section-shell {
+    padding-top: 48px;
+    padding-bottom: 24px;
+  }
+
+  .section-content {
+    padding-bottom: 48px;
+  }
+
+  .companies {
+    gap: 36px;
+  }
+
+  .company {
+    width: min(235px, 100%);
+  }
+
+  .company h2 {
+    font-size: 25px;
+  }
 }
