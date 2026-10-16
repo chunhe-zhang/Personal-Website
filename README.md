@@ -4,7 +4,11 @@ A personal portfolio showcasing Chunhe Zhang’s professional experience, projec
 
 Double-click `index.html` to open the website in your browser. It works offline.
 No installation, account, server, domain, subscription, or hosting is required.
-The source code is available on GitHub. Website hosting has not been enabled.
+The source code is available on GitHub. GitHub Pages is enabled from `main` / `(root)`:
+
+https://chunhe-zhang.github.io/Chunhe-Zhang-Personal-Website/
+
+Changes committed to `main` are automatically published after the Pages build completes.
 The page makes no external network requests.
 
 ## Edit it
