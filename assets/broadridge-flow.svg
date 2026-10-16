@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+<title id="title">Broadridge pricing pipeline</title><desc id="desc">Market data vendors and internal records feed pricing controls, fallback matching and FX conversion, followed by BPS upload, reporting and distribution.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#55ff00"/></marker><style>.box{fill:#101610;stroke:#55ff00;stroke-width:2}.t{fill:#f2f2f2;font:700 19px Arial,sans-serif;text-anchor:middle}.s{fill:#aaa;font:14px Arial,sans-serif;text-anchor:middle}.line{fill:none;stroke:#55ff00;stroke-width:2.5;marker-end:url(#arrow)}</style></defs>
+<rect width="1000" height="720" rx="18" fill="#070a07"/>
+<text class="t" x="500" y="38">PRICE SOURCES</text>
+<rect class="box" x="38" y="58" width="210" height="78" rx="12"/><text class="t" x="143" y="91">ICE 360</text><text class="s" x="143" y="116">Primary vendor</text>
+<rect class="box" x="275" y="58" width="210" height="78" rx="12"/><text class="t" x="380" y="91">Refinitiv</text><text class="s" x="380" y="116">Fallback vendor</text>
+<rect class="box" x="512" y="58" width="210" height="78" rx="12"/><text class="t" x="617" y="91">FINRA</text><text class="s" x="617" y="116">Bond fallback</text>
+<rect class="box" x="749" y="58" width="210" height="78" rx="12"/><text class="t" x="854" y="91">CommonDB / BPS</text><text class="s" x="854" y="116">Internal records</text>
+<path class="line" d="M143 136v36h357M380 136v36h120M617 136v36H500M854 136v36H500v18"/>
+<rect class="box" x="225" y="190" width="550" height="84" rx="12"/><text class="t" x="500" y="224">Daily Price Controls</text><text class="s" x="500" y="250">Missing prices · &gt;10% differences · holiday-aware schedule</text>
+<path class="line" d="M500 274v30"/>
+<rect class="box" x="190" y="306" width="620" height="88" rx="12"/><text class="t" x="500" y="340">Match + Resolve Exceptions</text><text class="s" x="500" y="367">SEDOL → CUSIP → ISIN · ICE 360 → Refinitiv → FINRA</text>
+<path class="line" d="M500 394v30"/>
+<rect class="box" x="190" y="426" width="620" height="84" rx="12"/><text class="t" x="500" y="460">Normalize + Validate</text><text class="s" x="500" y="486">Spot FX conversion · house prices · exception logs</text>
+<path class="line" d="M500 510v30"/>
+<rect class="box" x="250" y="542" width="500" height="76" rx="12"/><text class="t" x="500" y="574">Upload House Prices to BPS</text><text class="s" x="500" y="599">Apply expiration and multiplier rules</text>
+<path class="line" d="M500 618v30M500 648H250v20M500 648H750v20"/>
+<rect class="box" x="70" y="670" width="360" height="42" rx="12"/><text class="t" x="250" y="698">Control Reports → Finance</text>
+<rect class="box" x="570" y="670" width="360" height="42" rx="12"/><text class="t" x="750" y="698">Archive Reports → SharePoint</text>
+</svg>

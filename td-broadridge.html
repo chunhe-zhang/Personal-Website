@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How an end-to-end Broadridge pricing and reporting pipeline handles validation, exceptions and distribution.">
+  <title>Broadridge | TD Securities | Chunhe Zhang</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="section-page">
+  <div class="section-shell">
+    <main class="detail project-article" aria-labelledby="page-title">
+      <a class="back-link" href="td-securities.html">&larr; Back to Selected Projects</a>
+      <h1 id="page-title">Broadridge</h1>
+      <p class="article-lede">An end-to-end price control and exception pipeline that carries market data from vendor feeds through validation, BPS updates and daily reporting.</p>
+      <p>The daily process checks Broadridge BPS records across customer and firm accounts against CommonDB and external feeds from ICE 360, Refinitiv and FINRA. It flags missing prices and differences greater than 10% across equities, options and fixed income. The workflow also applies house-pricing rules, handles USD conversion, and adjusts its schedule around US market holidays so the first business day after a closure does not trigger empty checks.</p>
+      <p>For fixed-income securities without an internal price, the pipeline follows a vendor fallback sequence: ICE 360 first, then Refinitiv, then FINRA. It matches security identifiers in SEDOL, CUSIP and ISIN order, converts foreign prices to USD using spot FX, and records clear exception states when no valid quote is available. A companion control path retrieves option prices using OCC OSI identifiers and applies the same validation and currency rules to control and unpriced reports.</p>
+      <figure class="flowchart-figure">
+        <img src="assets/broadridge-flow.svg" alt="Flowchart: market and vendor sources feed price validation, identifier matching, fallback pricing and FX conversion; outputs update BPS and produce reports for Finance and SharePoint.">
+        <figcaption>Broadridge pipeline: source data flows through price controls and vendor fallback before upload, reporting and archiving.</figcaption>
+      </figure>
+      <p>After validation, daily house prices are uploaded to BPS with expiration rules for active and inactive securities and multiplier corrections for selected structured instruments. The process then formats the control files, sends the MSD Control, MSD Unpriced and Fixed Income Missing Price reports to Finance, and archives the finalized copies in the Operations SharePoint folder.</p>
+      <p>For larger runs, I redesigned the scraper to extract records in batches directly in the browser and save progress after each 100 securities. If a network interruption occurs, the next run resumes from the last saved security instead of restarting. Clear Excel and text logs make the run visible to teammates, who can launch it through a simple batch file. The optimized scraper runs in about one quarter of its former time, and its output was checked line by line against the existing process for two weeks before adoption.</p>
+      <p>The complete workflow saves about 40 minutes each day and supports team handover through shared run instructions, logs and archived reports.</p>
+      <p class="article-tags">Python · Web scraping · ICE 360 · Refinitiv · FINRA · Bloomberg · BPS · Excel · SharePoint</p>
+    </main>
+    <nav class="navigation" aria-label="Main navigation">
+      <a class="nav-item" href="index.html">Home</a><a class="nav-item active" href="projects.html" aria-current="page">Projects</a><a class="nav-item" href="skills.html">Skills</a><a class="nav-item" href="album.html">Album</a><a class="nav-item" href="contact.html">Contact</a>
+    </nav>
+  </div>
+</body>
+</html>

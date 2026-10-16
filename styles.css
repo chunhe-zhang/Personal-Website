@@ -696,3 +696,208 @@ Both 255 × 192.
   }
 }
 
+
+
+/* ================================
+   TD SELECTED PROJECTS
+================================ */
+
+.selected-projects {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.selected-projects > .back-link {
+  display: block;
+  text-align: left;
+}
+
+.selected-title {
+  margin: 28px 0 10px;
+  color: var(--heading);
+  font-size: clamp(34px, 5vw, 48px);
+  letter-spacing: -1px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.selected-intro {
+  margin: 0;
+  color: #f5f5f5;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.selected-context {
+  max-width: 650px;
+  margin: 16px auto 30px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.project-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.project-card {
+  display: flex;
+  min-height: 210px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  background: #070a07;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.project-card:hover,
+.project-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--heading);
+  background: #0b1009;
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--heading);
+  outline-offset: 4px;
+}
+
+.project-index {
+  color: var(--heading);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.project-card-title {
+  margin-top: 10px;
+  color: #f5f5f5;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.project-card-copy {
+  max-width: 650px;
+  margin-top: 9px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.project-card-impact {
+  margin-top: 12px;
+  color: var(--heading);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.project-card-link {
+  align-self: flex-end;
+  margin-top: 14px;
+  color: var(--active);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.project-article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.project-article h1 {
+  margin-top: 26px;
+  font-size: clamp(36px, 5vw, 54px);
+  letter-spacing: -1px;
+}
+
+.project-article .article-lede {
+  margin: 0 0 26px;
+  color: #f5f5f5;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.project-article p {
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.project-article strong {
+  color: #f5f5f5;
+}
+
+.flowchart-figure {
+  margin: 32px 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: #070a07;
+}
+
+.flowchart-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.flowchart-figure figcaption {
+  margin-top: 10px;
+  color: #9a9a9a;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.article-tags {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: var(--heading);
+  font-size: 14px !important;
+}
+
+@media (max-width: 700px) {
+  .selected-title {
+    margin-top: 24px;
+  }
+
+  .selected-context {
+    margin-bottom: 22px;
+    font-size: 14px;
+  }
+
+  .project-card {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .project-card-title {
+    font-size: 25px;
+  }
+
+  .project-card-copy {
+    font-size: 14px;
+  }
+
+  .project-article .article-lede {
+    font-size: 16px;
+  }
+
+  .project-article p {
+    font-size: 15px;
+  }
+
+  .flowchart-figure {
+    margin: 24px 0;
+    padding: 8px;
+  }
+}
