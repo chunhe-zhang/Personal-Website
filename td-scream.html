@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How Scream unified recurring market-data setup and reconciliation work at TD Securities.">
+  <title>Scream | TD Securities | Chunhe Zhang</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="section-page">
+  <div class="section-shell">
+    <main class="detail project-article" aria-labelledby="page-title">
+      <a class="back-link" href="td-securities.html">&larr; Back to Selected Projects</a>
+      <h1 id="page-title">Scream</h1>
+      <p class="article-lede">A modular workflow for the daily, weekly, ad-hoc and quarterly market-data requests that had outgrown separate scripts and manual handling.</p>
+      <p>Scream began as a small weekly database update. As request volume grew, the work expanded to include urgent setup requests, daily synchronization, large weekly uploads and quarterly re-uploads. Each instrument family came with its own rules, while inputs arrived in different formats and used inconsistent currency and instrument names across legacy systems.</p>
+      <p>I brought those paths into one framework with instrument-specific processing modules. The workflow normalizes incoming data with shared mapping tables, checks it against the master instrument list, and routes it through the right processing logic. For weekly uploads, it reads system error logs and removes already-existing tickers before the next attempt, preventing duplicate records from blocking an otherwise valid batch. Quarterly runs aggregate date-coded files, while defensive file naming prevents one request from overwriting another.</p>
+      <figure class="flowchart-figure">
+        <img src="assets/scream-flow.svg" alt="Flowchart: daily, weekly, ad-hoc and quarterly sources are classified, normalized, validated against reference data, then safely queued for upload and reconciliation.">
+        <figcaption>Scream system architecture: distinct request streams use shared mapping, validation and upload safeguards.</figcaption>
+      </figure>
+      <p>A shared submission queue connects these modules, while duplicate scrubbing and versioned output files protect the handoff into downstream systems. The quarterly path also handles freeze periods and full refreshes for equity, index, basket and equity-volatility data, so the same platform can serve routine updates and larger reconciliation cycles.</p>
+      <p>The combined workflow saves roughly 30 minutes each day, 30 minutes each week and two hours per quarterly cycle. It also reduced new-hire training from three weeks to one. The shared currency and instrument mappings now serve as reusable building blocks for other operational tools.</p>
+      <p class="article-tags">Python · Data parsing · Instrument mapping · Reconciliation · Batch uploads · File versioning</p>
+    </main>
+    <nav class="navigation" aria-label="Main navigation">
+      <a class="nav-item" href="index.html">Home</a><a class="nav-item active" href="projects.html" aria-current="page">Projects</a><a class="nav-item" href="skills.html">Skills</a><a class="nav-item" href="album.html">Album</a><a class="nav-item" href="contact.html">Contact</a>
+    </nav>
+  </div>
+</body>
+</html>
