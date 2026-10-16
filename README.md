@@ -32,14 +32,17 @@ After saving an edit, refresh your browser to see the change.
 
 The reference image can then be removed. For best results, use a vertical photo with a similar 500:665 aspect ratio.
 
-## Add links later
+## Pages and navigation
 
-The navigation labels are intentionally unlinked and do not pretend to open unfinished pages.
-When you have another page, replace its label with an anchor, for example:
+The bottom navigation links to Home, Projects, Skills, Album, and Contact.
+Each page marks its own link with the green active style and `aria-current="page"`.
 
-```html
-<a class="nav-item" href="projects.html">Projects</a>
-```
+- `projects.html`: TD Securities and Easy Education logos and names, with no company project links yet.
+- `skills.html`, `album.html`, `contact.html`: simple placeholders ready for your content.
+- `assets/companies-reference.png`: your supplied company reference image, visually cropped with CSS for the two logos.
+
+To add company projects later, wrap a company card in a link to its project page.
+To replace a logo, use a standalone image with class `company-logo-photo` inside its `company-logo` container.
 
 Keep the folder together when moving or copying it. You have the complete source;
 there are no frameworks, dependencies, tracking scripts, or service connections.
