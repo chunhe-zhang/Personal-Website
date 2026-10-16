@@ -1190,3 +1190,40 @@ Both 255 × 192.
     height: 18px;
   }
 }
+
+
+/* Matching centered empty states for Projects and Articles */
+.empty-state-page.unified-section-content {
+  display: flex;
+  min-height: calc(100svh - 150px);
+  flex-direction: column;
+}
+
+.empty-state-page .section-page-title {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+}
+
+.empty-state-page .page-empty-state {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: center;
+}
+
+.empty-state-page .page-empty-state p {
+  font-size: clamp(18px, 2vw, 22px);
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .empty-state-page.unified-section-content {
+    min-height: calc(100svh - 150px);
+  }
+}
