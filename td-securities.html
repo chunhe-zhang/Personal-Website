@@ -3,38 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="TD Securities projects — Chunhe Zhang.">
-  <title>TD Securities | Chunhe Zhang</title>
+  <meta name="description" content="Selected TD Securities data engineering projects by Chunhe Zhang.">
+  <title>Selected Projects | TD Securities | Chunhe Zhang</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="section-page">
   <div class="section-shell">
-    <main class="detail" aria-labelledby="page-title">
+    <main class="section-content selected-projects" aria-labelledby="page-title">
       <a class="back-link" href="projects.html">&larr; Back to Projects</a>
-      <h1 id="page-title">TD Securities</h1>
-      <p class="detail-role">Analyst III (Data Engineer) · TD Legendary Award Recipient · 06/2022 – Present</p>
-
-      <p class="detail-intro">
-        Awarded the TD Legendary Award for designing the TDS Market Data Service's first
-        centralized knowledge repository and 5+ data platforms, and for setting the standards
-        used to migrate legacy pipelines to a modern stack (Python, SQL, PySpark) across Global
-        Operations, saving 2+ hours per person every day.
+      <h1 class="selected-title" id="page-title">Selected Projects</h1>
+      <p class="selected-intro">TD Securities · Analyst III (Data Engineer) · 06/2022 – Present</p>
+      <p class="selected-context">
+        A few of the data pipelines and workflow systems I built for market data operations, from browser-based reconciliation to multi-asset upload and pricing controls.
       </p>
 
-      <h2>Highlights</h2>
-      <ul class="detail-list">
-        <li><strong>Market-data ingestion.</strong> Python pipeline for real-time fixed-income data from Refinitiv, ICE360 and FINRA, with retrieval monitoring and batched execution across multiple VDI nodes. Runtime dropped from 60 to 10 minutes.</li>
-        <li><strong>Broadridge.</strong> End-to-end daily price validation and exception pipeline with vendor fallback logic, auto-save and resume, and a 25% scraping runtime. Saves 40 minutes a day.</li>
-        <li><strong>PySpark backfilling.</strong> Estimates missing historical prices from currency index references and prices 100+ ticker baskets over 30 years across currencies.</li>
-        <li><strong>Scream.</strong> Unified platform for daily, weekly and quarterly uploads across equities, equity volatility, baskets and indices. Cut new-hire training from three weeks to one.</li>
-        <li><strong>Equity validation and reconciliation.</strong> Standardized exception rules across LON, TOR, SYD and LATE. Moving the source from Bloomberg to Dremio cut annual data costs by 60K.</li>
-        <li><strong>Ticker matching.</strong> TF-IDF character n-grams with cosine similarity to normalize noisy tickers into Bloomberg format.</li>
-        <li><strong>Cowen SOI, Murex Recon, London Fixing Recon and more.</strong> 17 automation workflows in total, saving over 600 hours a year.</li>
+      <ul class="project-cards">
+        <li>
+          <a class="project-card" href="td-colline.html">
+            <span class="project-index">01 / WEB AUTOMATION</span>
+            <span class="project-card-title">Colline</span>
+            <span class="project-card-copy">Restored an end-to-end reconciliation workflow after Internet Explorer was retired, using Selenium with Chrome and Edge.</span>
+            <span class="project-card-impact">60 minutes saved each month · First team-wide web-scraping workflow</span>
+            <span class="project-card-link">Read project <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="td-scream.html">
+            <span class="project-index">02 / DATA OPERATIONS</span>
+            <span class="project-card-title">Scream</span>
+            <span class="project-card-copy">Unified ad-hoc, daily, weekly and quarterly instrument updates in a modular workflow with reconciliation and upload safeguards.</span>
+            <span class="project-card-impact">30 minutes saved daily · New-hire training reduced from 3 weeks to 1</span>
+            <span class="project-card-link">Read project <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="td-broadridge.html">
+            <span class="project-index">03 / PRICING PIPELINE</span>
+            <span class="project-card-title">Broadridge</span>
+            <span class="project-card-copy">Automated price checks, vendor fallback, exception reporting, BPS uploads and daily distribution across equities, options and fixed income.</span>
+            <span class="project-card-impact">40 minutes saved daily · Designed for team handover and repeatable runs</span>
+            <span class="project-card-link">Read project <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
       </ul>
-
-      <h2>Tech</h2>
-      <p class="detail-tags">Python · SQL · PySpark · Selenium · Playwright · VBA · Bloomberg API · Refinitiv API · Tableau</p>
     </main>
     <nav class="navigation" aria-label="Main navigation">
       <a class="nav-item" href="index.html">Home</a>
