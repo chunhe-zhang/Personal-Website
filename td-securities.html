@@ -1,53 +1,45 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Selected TD Securities data engineering projects by Chunhe Zhang.">
-  <title>Selected Projects | TD Securities | Chunhe Zhang</title>
+  <meta name="description" content="Selected data engineering projects by Chunhe Zhang.">
+  <title>Selected Projects | Chunhe Zhang</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="section-page">
   <div class="section-shell">
-    <main class="section-content selected-projects" aria-labelledby="page-title">
-      <a class="back-link" href="projects.html">&larr; Back to Projects</a>
-      <h1 class="selected-title" id="page-title">Selected Projects</h1>
-      <p class="selected-intro">TD Securities · Analyst III (Data Engineer) · 06/2022 – Present</p>
-      <p class="selected-context">
-        A few of the data pipelines and workflow systems I built for market data operations, from browser-based reconciliation to multi-asset upload and pricing controls.
-      </p>
+    <main class="section-content selected-projects">
 
-      <ul class="project-cards">
-        <li>
-          <a class="project-card" href="td-colline.html">
-            <span class="project-index">01 / WEB AUTOMATION</span>
-            <span class="project-card-title">Colline</span>
-            <span class="project-card-copy">Restored an end-to-end reconciliation workflow after Internet Explorer was retired, using Selenium with Chrome and Edge.</span>
-            <span class="project-card-impact">60 minutes saved each month · First team-wide web-scraping workflow</span>
-            <span class="project-card-link">Read project <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-        <li>
-          <a class="project-card" href="td-scream.html">
-            <span class="project-index">02 / DATA OPERATIONS</span>
-            <span class="project-card-title">Scream</span>
-            <span class="project-card-copy">Unified ad-hoc, daily, weekly and quarterly instrument updates in a modular workflow with reconciliation and upload safeguards.</span>
-            <span class="project-card-impact">30 minutes saved daily · New-hire training reduced from 3 weeks to 1</span>
-            <span class="project-card-link">Read project <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-        <li>
-          <a class="project-card" href="td-broadridge.html">
-            <span class="project-index">03 / PRICING PIPELINE</span>
-            <span class="project-card-title">Broadridge</span>
-            <span class="project-card-copy">Automated price checks, vendor fallback, exception reporting, BPS uploads and daily distribution across equities, options and fixed income.</span>
-            <span class="project-card-impact">40 minutes saved daily · Designed for team handover and repeatable runs</span>
-            <span class="project-card-link">Read project <span aria-hidden="true">→</span></span>
-          </a>
-        </li>
-      </ul>
+      <a class="back-link" href="projects.html">
+        &larr; Back to Projects
+      </a>
+
+      <h1 class="selected-title">Selected Projects</h1>
+
+      <div class="project-list">
+
+        <a class="project-entry" href="td-colline.html">
+          <strong>Colline</strong> —
+          Restored a web-based reconciliation workflow after Internet Explorer's retirement using Selenium and Edge.
+        </a>
+
+        <a class="project-entry" href="td-scream.html">
+          <strong>Scream</strong> —
+          Automated daily, weekly and quarterly market data updates with validation and reconciliation.
+        </a>
+
+        <a class="project-entry" href="td-broadridge.html">
+          <strong>Broadridge</strong> —
+          Built an automated pricing pipeline with vendor fallback, exception handling and BPS uploads.
+        </a>
+
+      </div>
     </main>
+
     <nav class="navigation" aria-label="Main navigation">
       <a class="nav-item" href="index.html">Home</a>
       <a class="nav-item active" href="projects.html" aria-current="page">Projects</a>
