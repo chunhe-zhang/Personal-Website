@@ -930,7 +930,7 @@ Both 255 × 192.
 .selected-projects .selected-title {
   margin: 0 0 45px;
   color: #55ff00;
-  font-size: clamp(44px, 6vw, 85px);
+  font-size: clamp(30px, 4vw, 55px);
   line-height: 1.1;
   text-align: left;
 }
