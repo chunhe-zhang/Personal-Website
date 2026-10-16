@@ -1,7 +1,5 @@
 # Chunhe Zhang
 
-**TD Securities Analyst III · Senior Academic Instructor at Easy Group**
-
 Welcome to my personal portfolio. This site introduces my professional work and provides a place to share projects, skills, and personal ideas.
 
 **[Visit my website](https://chunhe-zhang.github.io/Personal-Website/)**
