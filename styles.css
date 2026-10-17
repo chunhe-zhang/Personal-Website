@@ -22,6 +22,16 @@
   box-sizing: border-box;
 }
 
+/*
+Always reserve the scrollbar track. Without this, pages that are tall enough
+to scroll have a narrower viewport than short pages, which shifts anything
+centred in it (like the navigation bar) by half the scrollbar width.
+*/
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
   padding: 24px 24px 58px;
@@ -157,16 +167,23 @@ h1 {
    NAVIGATION
 ================================ */
 
+/*
+Single source of truth for the navigation bar on EVERY page.
+Fixed to the viewport, centred with left/right auto margins (no transform),
+so scrolling or page height never moves it. Do not override its position
+or size on individual pages.
+*/
 .navigation {
   position: fixed;
   bottom: 33px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 10;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: stretch;
-  width: 666px;
-  max-width: calc(100% - 48px);
+  width: min(666px, calc(100% - 48px));
   padding: 10px 14px;
   border: 1px solid var(--border);
   background: var(--background);
@@ -281,7 +298,7 @@ a.nav-item:focus-visible {
 
   .navigation {
     bottom: 16px;
-    max-width: calc(100% - 20px);
+    width: min(666px, calc(100% - 20px));
     padding: 8px 6px;
   }
 
@@ -338,21 +355,7 @@ a.nav-item:focus-visible {
   text-align: center;
 }
 
-/*
-Navigation is fixed to the viewport, at the same spot as on the cover page
-(bottom edge 32px above the viewport bottom). Content scrolls behind it,
-so adding more companies never moves the bar.
-*/
-.section-shell .navigation {
-  position: fixed;
-  left: 50%;
-  bottom: 33px;
-  transform: translateX(-50%);
-  margin: 0;
-  width: 666px;
-  max-width: calc(100% - 48px);
-  z-index: 10;
-}
+/* Navigation position/size is defined once, in the NAVIGATION section above. */
 
 /* ================================
    COMPANIES
@@ -594,11 +597,6 @@ Both 255 × 192.
   .section-content,
   .detail {
     padding-bottom: 120px;
-  }
-
-  .section-shell .navigation {
-    bottom: 16px;
-    max-width: calc(100% - 36px);
   }
 
   .company-cards {
