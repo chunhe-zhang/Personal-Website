@@ -1224,3 +1224,18 @@ Both 255 × 192.
     min-height: calc(100svh - 150px);
   }
 }
+
+/* "Coming soon." placeholder — same type as a .project-entry on the TD pages */
+.selected-projects .coming-soon-text,
+.other-projects-page .coming-soon-text {
+  margin: 0;
+  color: #b3b3b3;
+  font-size: clamp(17px, 1.7vw, 22px);
+  line-height: 1.65;
+  text-align: left;
+}
+
+/* Match the 45px title gap used on Selected Projects (margins collapse, so use 45px, not the 27px difference) */
+.other-projects-page .coming-soon-text {
+  margin-top: 45px;
+}
