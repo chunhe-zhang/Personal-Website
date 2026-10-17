@@ -1201,21 +1201,17 @@ Both 255 × 192.
   margin-bottom: 0;
 }
 
-/* "Coming soon." sits at the exact centre of the viewport, whatever the page height */
 .empty-state-page .page-empty-state {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
-  width: auto;
+  width: 100%;
   max-width: none;
   margin: 0;
   padding: 0;
   border: 0;
   text-align: center;
-  pointer-events: none;
 }
 
 .empty-state-page .page-empty-state p {
@@ -1242,4 +1238,17 @@ Both 255 × 192.
 /* Match the 45px title gap used on Selected Projects (margins collapse, so use 45px, not the 27px difference) */
 .other-projects-page .coming-soon-text {
   margin-top: 45px;
+}
+
+/* Easy Education pages: "Coming soon." at the exact centre of the viewport */
+.selected-projects.coming-soon-page .coming-soon-text,
+.other-projects-page.coming-soon-page .coming-soon-text {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  text-align: center;
+  pointer-events: none;
 }
