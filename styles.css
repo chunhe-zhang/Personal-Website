@@ -1252,3 +1252,22 @@ Both 255 × 192.
   text-align: center;
   pointer-events: none;
 }
+
+/*
+Project detail pages (Colline, Scream, Broadridge) share the Selected Projects
+shell: same back-link, title and text column as td-securities.html.
+*/
+.selected-projects.project-detail {
+  padding-bottom: 150px;
+}
+
+.project-detail .project-article {
+  max-width: none;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .selected-projects.project-detail {
+    padding-bottom: 120px;
+  }
+}

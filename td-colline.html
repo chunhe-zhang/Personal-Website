@@ -6,13 +6,18 @@
   <meta name="description" content="How a Selenium pipeline restored Colline web data reconciliation at TD Securities.">
   <title>Colline | TD Securities | Chunhe Zhang</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="styles.css?v=20261016g">
+  <link rel="stylesheet" href="styles.css?v=20261016h">
 </head>
 <body class="section-page">
   <div class="section-shell">
-    <main class="detail project-article" aria-labelledby="page-title">
-      <a class="back-link" href="td-securities.html">&larr; Back to Selected Projects</a>
-      <h1 id="page-title">Colline</h1>
+    <main class="section-content selected-projects project-detail" aria-labelledby="page-title">
+      <a class="back-link" href="td-securities.html">
+        &larr; Back to Selected Projects
+      </a>
+
+      <h1 class="selected-title" id="page-title">Colline</h1>
+
+      <div class="project-article">
       <p class="article-lede">A browser-driven reconciliation pipeline that brought a previously automated market-data workflow back after Internet Explorer was retired.</p>
       <p>The Colline process compares data in a target web portal with internal market-data records. When Internet Explorer was decommissioned in 2022, the legacy automation stopped working and the team had to return to manual extraction, reconciliation and correction. The task was a chance to replace the brittle browser dependency with a workflow that could run in current browsers.</p>
       <p>I built the pipeline with Selenium Basic and made it compatible with Google Chrome and Microsoft Edge. It starts by collecting the required Bloomberg and Refinitiv inputs, filling gaps in the source data, and scraping the target Colline records. The two datasets are then reconciled to identify exactly which entries need attention. Verified changes are sent back to the portal through browser automation, and a second download checks that the resulting records match the expected state.</p>
@@ -22,6 +27,7 @@
       <p>The closed-loop check matters because a successful browser action alone does not prove that the portal stored the intended value. By downloading the updated data and reconciling it again, the workflow confirms the result before the run is treated as complete.</p>
       <p>The pipeline saves about 60 minutes each month and became the team's first web-scraping workflow for a static site. It also gave later browser automation work a practical pattern for extraction, controlled updates and post-run validation.</p>
       <p class="article-tags">Selenium Basic · Chrome · Microsoft Edge · Bloomberg · Refinitiv · Data reconciliation</p>
+      </div>
     </main>
     <nav class="navigation" aria-label="Main navigation">
       <a class="nav-item" href="index.html">Home</a>
