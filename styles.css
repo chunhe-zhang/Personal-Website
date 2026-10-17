@@ -1275,7 +1275,7 @@ shell: same back-link, title and text column as td-securities.html.
 /*
 Top links on the Selected Projects / project / Other Projects pages
 ("Back to Work", "Back to Selected Projects", "Other Projects") all share ONE
-font size. 18px on desktop; up to 16px on phones (identical for all three) so "Back to Work" and
+font size. 18px on desktop, smaller (identical for all three) on phones so "Back to Work" and
 "Other Projects" never touch on narrow screens.
 */
 .selected-projects .back-link,
@@ -1286,12 +1286,20 @@ font size. 18px on desktop; up to 16px on phones (identical for all three) so "B
   line-height: 1.2;
 }
 
-/* Phones: one shared size, shrinking only as far as needed so the two links on
-   the Selected Projects page never collide (30 characters across the row). */
+/* Phones: one smaller shared size so both links on the Selected Projects page
+   sit comfortably on one row (30 characters across). */
 @media (max-width: 430px) {
   .selected-projects .back-link,
   .selected-projects .other-projects-link,
   .other-projects-page .back-link {
-    font-size: clamp(12px, calc((100vw - 100px) / 18), 16px);
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 340px) {
+  .selected-projects .back-link,
+  .selected-projects .other-projects-link,
+  .other-projects-page .back-link {
+    font-size: 13px;
   }
 }
