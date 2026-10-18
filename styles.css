@@ -552,6 +552,11 @@ Both 255 × 192.
   object-fit: contain;
 }
 
+/* Square project logos (e.g. Global X) */
+.company-logo.project-logo {
+  aspect-ratio: 1 / 1;
+}
+
 /* ================================
    PLACEHOLDER PAGES
 ================================ */
