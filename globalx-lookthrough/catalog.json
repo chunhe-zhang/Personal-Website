@@ -2620,74 +2620,170 @@
     {
       "region_code": "CA",
       "ticker": "AAPP",
-      "name": "Global X Apple (AAPL) Enhanced Yield ETF",
+      "name": "Global X Apple PowerStock ETF",
       "product_url": "https://www.globalx.ca/product/aapp",
       "region": "Canada",
-      "catalog_status": "ADF_raw_ingestion",
-      "holdings_status": "raw_html_only",
+      "catalog_status": "official_holdings_available",
+      "holdings_status": "exposure_available",
       "catalog_url": "https://www.globalx.ca/products",
       "catalog_as_of": "2026-10-18",
-      "product_url_status": "official_product_page"
+      "product_url_status": "official_product_page",
+      "exposure_as_of": "2026-10-14",
+      "coverage_status": "Exposure available · official snapshot",
+      "coverage_reason": "Global X’s official product page reports 133.54% of NAV exposure to APPLE INC as of 2026-10-14 (1.3354×). This verified snapshot is bundled with the website; Azure has not yet generated this row.",
+      "exposure_source_url": "https://www.globalx.ca/product/aapp",
+      "holdings": [
+        {
+          "ticker": "AAPL",
+          "name": "APPLE INC",
+          "exposure_pct": 133.54,
+          "paths": [
+            "AAPP",
+            "AAPL"
+          ],
+          "source": "Global X official top holdings"
+        }
+      ]
     },
     {
       "region_code": "CA",
       "ticker": "AMZP",
-      "name": "Global X Amazon (AMZN) Enhanced Yield ETF",
+      "name": "Global X Amazon PowerStock ETF",
       "product_url": "https://www.globalx.ca/product/amzp",
       "region": "Canada",
-      "catalog_status": "ADF_raw_ingestion",
-      "holdings_status": "raw_html_only",
+      "catalog_status": "official_holdings_available",
+      "holdings_status": "exposure_available",
       "catalog_url": "https://www.globalx.ca/products",
       "catalog_as_of": "2026-10-18",
-      "product_url_status": "official_product_page"
+      "product_url_status": "official_product_page",
+      "exposure_as_of": "2026-10-14",
+      "coverage_status": "Exposure available · official snapshot",
+      "coverage_reason": "Global X’s official product page reports 133.54% of NAV exposure to AMAZON.COM INC as of 2026-10-14 (1.3354×). This verified snapshot is bundled with the website; Azure has not yet generated this row.",
+      "exposure_source_url": "https://www.globalx.ca/product/amzp",
+      "holdings": [
+        {
+          "ticker": "AMZN",
+          "name": "AMAZON.COM INC",
+          "exposure_pct": 133.54,
+          "paths": [
+            "AMZP",
+            "AMZN"
+          ],
+          "source": "Global X official top holdings"
+        }
+      ]
     },
     {
       "region_code": "CA",
       "ticker": "GOOP",
-      "name": "Global X Alphabet (GOOG) Enhanced Yield ETF",
+      "name": "Global X Alphabet PowerStock ETF",
       "product_url": "https://www.globalx.ca/product/goop",
       "region": "Canada",
-      "catalog_status": "ADF_raw_ingestion",
-      "holdings_status": "raw_html_only",
+      "catalog_status": "official_holdings_available",
+      "holdings_status": "exposure_available",
       "catalog_url": "https://www.globalx.ca/products",
       "catalog_as_of": "2026-10-18",
-      "product_url_status": "official_product_page"
+      "product_url_status": "official_product_page",
+      "exposure_as_of": "2026-10-14",
+      "coverage_status": "Exposure available · official snapshot",
+      "coverage_reason": "Global X’s official product page reports 133.46% of NAV exposure to ALPHABET INC as of 2026-10-14 (1.3346×). This verified snapshot is bundled with the website; Azure has not yet generated this row.",
+      "exposure_source_url": "https://www.globalx.ca/product/goop",
+      "holdings": [
+        {
+          "ticker": "GOOGL",
+          "name": "ALPHABET INC",
+          "exposure_pct": 133.46,
+          "paths": [
+            "GOOP",
+            "GOOGL"
+          ],
+          "source": "Global X official top holdings"
+        }
+      ]
     },
     {
       "region_code": "CA",
       "ticker": "NVDP",
-      "name": "Global X NVIDIA (NVDA) Enhanced Yield ETF",
+      "name": "Global X NVIDIA PowerStock ETF",
       "product_url": "https://www.globalx.ca/product/nvdp",
       "region": "Canada",
-      "catalog_status": "ADF_raw_ingestion",
-      "holdings_status": "raw_html_only",
+      "catalog_status": "official_holdings_available",
+      "holdings_status": "exposure_available",
       "catalog_url": "https://www.globalx.ca/products",
       "catalog_as_of": "2026-10-18",
-      "product_url_status": "official_product_page"
+      "product_url_status": "official_product_page",
+      "exposure_as_of": "2026-10-14",
+      "coverage_status": "Exposure available · official snapshot",
+      "coverage_reason": "Global X’s official product page reports 133.20% of NAV exposure to NVIDIA CORP as of 2026-10-14 (1.3320×). This verified snapshot is bundled with the website; Azure has not yet generated this row.",
+      "exposure_source_url": "https://www.globalx.ca/product/nvdp",
+      "holdings": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "exposure_pct": 133.2,
+          "paths": [
+            "NVDP",
+            "NVDA"
+          ],
+          "source": "Global X official top holdings"
+        }
+      ]
     },
     {
       "region_code": "CA",
       "ticker": "SPCP",
-      "name": "Global X S&P 500 Enhanced Yield ETF",
+      "name": "Global X SpaceX PowerStock ETF",
       "product_url": "https://www.globalx.ca/product/spcp",
       "region": "Canada",
-      "catalog_status": "ADF_raw_ingestion",
-      "holdings_status": "raw_html_only",
+      "catalog_status": "official_holdings_available",
+      "holdings_status": "exposure_available",
       "catalog_url": "https://www.globalx.ca/products",
       "catalog_as_of": "2026-10-18",
-      "product_url_status": "official_product_page"
+      "product_url_status": "official_product_page",
+      "exposure_as_of": "2026-10-14",
+      "coverage_status": "Exposure available · official snapshot",
+      "coverage_reason": "Global X’s official product page reports 133.42% of NAV exposure to SPACE EXPLORATION TECHNOLOGIES CORP as of 2026-10-14 (1.3342×). This verified snapshot is bundled with the website; Azure has not yet generated this row.",
+      "exposure_source_url": "https://www.globalx.ca/product/spcp",
+      "holdings": [
+        {
+          "ticker": "SpaceX (private; no public ticker)",
+          "name": "SPACE EXPLORATION TECHNOLOGIES CORP",
+          "exposure_pct": 133.42,
+          "paths": [
+            "SPCP",
+            "SpaceX (private; no public ticker)"
+          ],
+          "source": "Global X official top holdings"
+        }
+      ]
     },
     {
       "region_code": "CA",
       "ticker": "TSLP",
-      "name": "Global X Tesla (TSLA) Enhanced Yield ETF",
+      "name": "Global X Tesla PowerStock ETF",
       "product_url": "https://www.globalx.ca/product/tslp",
       "region": "Canada",
-      "catalog_status": "ADF_raw_ingestion",
-      "holdings_status": "raw_html_only",
+      "catalog_status": "official_holdings_available",
+      "holdings_status": "exposure_available",
       "catalog_url": "https://www.globalx.ca/products",
       "catalog_as_of": "2026-10-18",
-      "product_url_status": "official_product_page"
+      "product_url_status": "official_product_page",
+      "exposure_as_of": "2026-10-14",
+      "coverage_status": "Exposure available · official snapshot",
+      "coverage_reason": "Global X’s official product page reports 133.26% of NAV exposure to TESLA INC as of 2026-10-14 (1.3326×). This verified snapshot is bundled with the website; Azure has not yet generated this row.",
+      "exposure_source_url": "https://www.globalx.ca/product/tslp",
+      "holdings": [
+        {
+          "ticker": "TSLA",
+          "name": "TESLA INC",
+          "exposure_pct": 133.26,
+          "paths": [
+            "TSLP",
+            "TSLA"
+          ],
+          "source": "Global X official top holdings"
+        }
+      ]
     }
   ]
 }
