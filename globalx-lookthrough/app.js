@@ -32,9 +32,10 @@ function populate(list){
  products=list||[];select.innerHTML="";
  const full=products.filter(p=>p.holdings_status==="exposure_available").length;
  const partial=products.filter(p=>Array.isArray(p.holdings)&&p.holdings.length&&p.holdings_status!=="exposure_available").length;
- const pending=products.length-full-partial;
+ const sourceOnly=products.filter(p=>!p.holdings?.length&&p.holdings_status==="top_holdings_captured").length;
+ const pending=products.length-full-partial-sourceOnly;
  const label=document.querySelector("#fund-label");if(label)label.textContent="SELECT A FUND · "+products.length+" PRODUCTS";
- const summary=document.querySelector("#coverage-summary");if(summary)summary.textContent=full+" full snapshots · "+partial+" partial single-stock datasets · "+pending+" pending";
+ const summary=document.querySelector("#coverage-summary");if(summary)summary.textContent=full+" full snapshots · "+partial+" partial single-stock datasets · "+sourceOnly+" partial source-only · "+pending+" pending";
  const groups=new Map();
  for(const p of products){const code=p.region_code||"CA";if(!groups.has(code)){const g=document.createElement("optgroup");g.label=p.region||REGION_NAMES[code]||code;groups.set(code,g);select.appendChild(g)}
   const o=document.createElement("option");o.value=code+"|"+p.ticker;o.textContent=p.ticker+" · "+p.name+availabilityLabel(p);groups.get(code).appendChild(o)}
@@ -69,7 +70,7 @@ async function load(){
 }
 async function init(){
  try{let list;if(API_BASE){const res=await fetch(API_BASE.replace(/\/$/,"")+"/catalog");if(res.ok)list=(await res.json()).products}
-  if(!list){const res=await fetch("catalog.json?v=recursive-public-exposure-20261018");if(!res.ok)throw new Error("Catalog could not load");list=(await res.json()).products}
+  if(!list){const res=await fetch("catalog.json?v=recursive-public-exposure-20261018b");if(!res.ok)throw new Error("Catalog could not load");list=(await res.json()).products}
   populate(list)
  }catch(e){document.querySelector("#status").textContent="Catalog error";message.className="message error";message.textContent=e.message}
 }
