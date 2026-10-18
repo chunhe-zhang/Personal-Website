@@ -8,7 +8,7 @@ const REGION_CHIP = { US: "US", CA: "CA", AU: "AU", BR: "BR", HK: "HK", CO: "CO"
 const REGION_ORDER = ["US", "CA", "AU", "BR", "HK", "CO"];
 
 // Paint colours used inside the SVG diagram (kept in sync with styles.css)
-const C = { flow1: "#2F5BFF", flow2: "#29C3C8", excess: "#F59E0B", ink: "#172033", slate: "#5B6477", hatch: "#9AA8C7", hatchPale: "#E9EEF8", gap: "#E3E8F1", gapBar: "#C5CEDF" };
+const C = { flow1: "#2F5BFF", flow2: "#29C3C8", excess: "#F59E0B", ink: "#172033", slate: "#5B6477", hatch: "#8FA0C6", hatchPale: "#F4F7FD", gap: "#C9D6E8", gapBar: "#9DAECB" };
 
 const $ = (s) => document.querySelector(s);
 const el = {
@@ -182,9 +182,9 @@ function buildFlow(fund, items, W, availH) {
   // Sizes and vertical stacking; shrink to fit when a height is given
   const nLeaf = leafList.length;
   const room = availH ? availH - PT - PB : 0;
-  const PITCH = room ? Math.max(18, Math.min(26, Math.floor(room / (nLeaf + 0.5)))) : 26;
+  const PITCH = room ? Math.max(18, Math.min(34, Math.floor(room / (nLeaf + 0.5)))) : 26;
   let Hn = Math.min(280, 90 + nLeaf * 16);
-  if (room) Hn = Math.max(70, Math.min(Hn, room - 8));
+  if (room) Hn = Math.max(70, Math.min(room - 8, 70 + nLeaf * 28));
   let scale = 1, H = 0, heights = [];
   const sumT = (a) => (a || []).reduce((s, e) => s + e.t, 0);
   for (let iter = 0; iter < 6; iter++) {
