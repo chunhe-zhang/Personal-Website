@@ -1,6 +1,5 @@
 // After Azure deployment set window.GLOBALX_API_BASE to the Function API base ending in /api.
 const API_BASE=window.GLOBALX_API_BASE||"";
-const DEMO={root_ticker:"AAPP",region:"CA",as_of:"2026-10-14",holdings:[{ticker:"AAPL",exposure_pct:133.54,multiple:1.3354}],paths:[{ticker:"AAPL",exposure_pct:133.54,path:["AAPP","AAPL"]}],unresolved:[]};
 const REGION_NAMES={US:"United States",AU:"Australia",BR:"Brazil",CO:"Colombia",HK:"Hong Kong",CA:"Canada"};
 const select=document.querySelector("#fund"),rows=document.querySelector("#rows"),message=document.querySelector("#message");
 let products=[];
@@ -27,9 +26,8 @@ async function load(){
  const sourceUrl=p.product_url||p.catalog_url;document.querySelector("#product-source").innerHTML=sourceUrl?'<a href="'+esc(sourceUrl)+'" target="_blank" rel="noopener">Open official source ↗</a>':'';
  try{
   if(API_BASE){const res=await fetch(API_BASE.replace(/\/$/,"")+"/lookthrough/"+encodeURIComponent(region)+"/"+encodeURIComponent(ticker));if(res.ok){render(await res.json(),p);return}}
-  if(region==="CA"&&ticker==="AAPP"){render(DEMO,p,true);return}
-  document.querySelector("#status").textContent=p.holdings_status==="raw_html_only"?"Raw only":"Catalog only";
-  message.className="message";message.textContent="This product is in the public catalog, but no normalized holdings snapshot is available in Azure yet. Public holdings coverage varies by region."
+  document.querySelector("#status").textContent=p.holdings_status==="raw_html_only"?"Raw only":"Exposure pending";
+  message.className="message";message.textContent="No verified, normalized public holdings snapshot is available for this product yet. Exposure is not estimated or filled with illustrative values."
  }catch(e){document.querySelector("#status").textContent="Unavailable";message.className="message error";message.textContent="Azure holdings API could not be reached; catalog details remain available."}
 }
 async function init(){
