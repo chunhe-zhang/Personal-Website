@@ -1,7 +1,104 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Explore Global X ETF product catalogs and underlying holdings exposure."><title>Global X | Exposure Map</title><link rel="stylesheet" href="styles.css"></head>
-<body><header class="topbar"><a class="brand" href="./">GX<span> / </span>LOOKTHROUGH</a><span class="live"><i></i> PUBLIC DATA EXPLORER</span></header><main>
-<section class="hero"><div class="eyebrow">FUND TRANSPARENCY · EXPOSURE ANALYSIS</div><h1>What do you<br><em>really own?</em></h1><p class="intro">Browse Global X products across regions and trace a fund through leverage and nested ETF layers to its underlying securities.</p><div class="selector"><label id="fund-label" for="fund">SELECT A FUND · LOADING CATALOG</label><select id="fund"><option>Loading public catalog…</option></select><div id="coverage-summary" class="footnote">Counting products with full, partial, and pending public data…</div></div><div id="product-source" class="source-link"></div></section>
-<section class="summary" aria-live="polite"><div><span class="label">SELECTED FUND</span><strong id="selected">—</strong></div><div><span class="label">REGION</span><strong id="region">—</strong></div><div><span class="label">CATALOG AS OF</span><strong id="asof">2026-10-18</strong></div><div><span class="label">HOLDINGS STATUS</span><strong id="status" class="status">Loading…</strong></div></section>
-<section class="content"><div class="section-heading"><div><span class="eyebrow">UNDERLYING EXPOSURE</span><h2>Where exposure lands</h2></div><span class="unit">Exposure as % of fund NAV</span></div><div id="message" class="message">Select a product to inspect available holdings.</div><div id="rows" class="rows"></div><div class="footnote">Dropdown labels show coverage before selection. Partial snapshots contain only holdings rows visible on the official public page and may omit most of a fund’s portfolio. Accessible Global X ETF layers are recursively multiplied into single-security exposures; layers without data and non-stock positions remain identified as unresolved. Reported leverage can produce weights above 100%.</div></section></main>
-<footer><span>GLOBAL X LOOKTHROUGH · EDUCATIONAL DATA PROJECT</span><a href="https://www.globalx.ca/" target="_blank" rel="noopener">Official Global X sources</a></footer><script src="app.js?v=recursive-public-exposure-20261018b"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Pick a Global X ETF and see which stocks it really holds, including exposure that passes through leverage and other ETFs.">
+  <meta name="theme-color" content="#FF5A00">
+  <title>Global X Look-through | What do you really own?</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23FF5A00'/%3E%3Cg fill='%23fff'%3E%3Cpolygon points='93,102 116,79 175,139 152,163'/%3E%3Cpolygon points='92,271 284,79 308,102 92,321'/%3E%3Cpolygon points='225,237 247,213 308,273 308,321'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=xray-20261018">
+</head>
+<body>
+  <!-- The X mark, defined once and reused in the hero -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="xmark" viewBox="90 76 220 246">
+      <polygon points="93,102 116,79 175,139 152,163"/>
+      <polygon points="92,271 284,79 308,102 92,321"/>
+      <polygon points="225,237 247,213 308,273 308,321"/>
+    </symbol>
+  </svg>
+
+  <a class="skip" href="#stage">Skip to results</a>
+
+  <header class="hero">
+    <div class="hero-x" aria-hidden="true">
+      <svg viewBox="0 0 220 246" focusable="false"><use href="#xmark" width="220" height="246"/></svg>
+    </div>
+
+    <nav class="bar" aria-label="Look-through">
+      <a class="brand" href="./">
+        <svg class="mark" viewBox="0 0 220 246" aria-hidden="true" focusable="false"><use href="#xmark" width="220" height="246"/></svg>
+        <span>Look-through</span>
+      </a>
+      <div class="bar-links">
+        <span id="catalog-asof" class="asof"></span>
+        <a href="../projects.html">Portfolio</a>
+      </div>
+    </nav>
+
+    <div class="hero-inner">
+      <h1>What do you<br>really own?</h1>
+      <p class="intro">Pick a Global X fund and follow its exposure through leverage and other ETFs to the individual holdings underneath.</p>
+
+      <div class="picker">
+        <label class="picker-label" for="fund-search">Find a fund</label>
+        <div class="combo">
+          <svg class="glass" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 15l5.5 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <input id="fund-search" type="text" role="combobox" aria-expanded="false" aria-controls="fund-list" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Loading funds…" disabled>
+          <ul id="fund-list" class="listbox" role="listbox" aria-label="Global X funds" hidden></ul>
+        </div>
+        <div id="combo-status" class="sr" aria-live="polite"></div>
+
+        <div id="region-chips" class="chips" role="group" aria-label="Filter by region"></div>
+        <label class="toggle"><input type="checkbox" id="only-data"><span>Only funds with holdings data</span></label>
+
+        <div id="coverage" class="coverage"></div>
+        <div id="quick" class="quick"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="fund-view">
+    <section id="stage" class="stage" aria-labelledby="fund-title">
+      <div class="fund-head">
+        <div>
+          <h2 id="fund-title" class="fund-ticker">&nbsp;</h2>
+          <p id="fund-name" class="fund-name" hidden></p>
+        </div>
+        <div class="fund-meta">
+          <span id="status-chip"></span>
+          <p id="fund-facts" class="facts"></p>
+          <span id="product-source"></span>
+        </div>
+      </div>
+
+      <p id="takeaway" class="takeaway" aria-live="polite"></p>
+      <div id="flow" class="flow"></div>
+      <ul id="flow-legend" class="legend"></ul>
+      <p id="message" class="message">Loading the public catalog…</p>
+      <noscript><p class="message error">This explorer needs JavaScript to load fund data.</p></noscript>
+    </section>
+
+    <section id="holdings" class="holdings" aria-labelledby="holdings-title" hidden>
+      <div class="sec-head">
+        <h2 id="holdings-title" class="sec-title">All positions</h2>
+        <p class="unit">Exposure as % of fund NAV <span id="row-count"></span></p>
+      </div>
+      <ol id="rows" class="rows"></ol>
+    </section>
+
+    <section class="notes" aria-labelledby="notes-title">
+      <h2 id="notes-title" class="notes-title">How to read this</h2>
+      <p>Partial snapshots only contain the holdings rows shown on the official public page, so they can leave out most of a fund’s portfolio. Where a Global X fund holds another Global X fund, the layers are multiplied through to single stocks. Layers without data, and positions that aren’t stocks, stay marked as untraced. Leverage can push exposure above 100% of NAV.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>An educational data project built on public Global X pages.</span>
+    <a href="https://www.globalx.ca/" target="_blank" rel="noopener noreferrer">Official Global X sources</a>
+  </footer>
+
+  <script src="app.js?v=xray-20261018"></script>
+</body>
+</html>
