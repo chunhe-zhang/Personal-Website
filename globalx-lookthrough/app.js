@@ -22,11 +22,12 @@ function explainReason(data,p){
  if(p?.holdings_status==="not_loaded")return "The official product page is mapped, but no successful holdings fetch or normalized snapshot has been recorded yet.";
  return "No verified public holdings snapshot is available. The source does not publish accessible holdings, or the fetch/parse step has not succeeded.";
 }
+function availabilityLabel(p){return Array.isArray(p.holdings)&&p.holdings.length?" · ✓ exposure":p.holdings_status==="top_holdings_captured"?" · partial":" · pending"}
 function populate(list){
  products=list||[];select.innerHTML="";
  const groups=new Map();
  for(const p of products){const code=p.region_code||"CA";if(!groups.has(code)){const g=document.createElement("optgroup");g.label=p.region||REGION_NAMES[code]||code;groups.set(code,g);select.appendChild(g)}
-  const o=document.createElement("option");o.value=code+"|"+p.ticker;o.textContent=p.ticker+" · "+p.name;groups.get(code).appendChild(o)}
+  const o=document.createElement("option");o.value=code+"|"+p.ticker;o.textContent=p.ticker+" · "+p.name+availabilityLabel(p);groups.get(code).appendChild(o)}
  const preferred=products.findIndex(p=>p.region_code==="CA"&&p.ticker==="AAPP");select.selectedIndex=Math.max(0,preferred);load()
 }
 function render(data,p){
@@ -36,7 +37,7 @@ function render(data,p){
  const list=data.holdings||[],max=Math.max(1,...list.map(x=>Math.abs(Number(x.exposure_pct)||0)));
  rows.innerHTML=list.map((h,i)=>'<article class="row"><span class="rank">'+String(i+1).padStart(2,"0")+'</span><div><div class="security">'+esc(h.ticker)+'</div><div class="path">LOOK-THROUGH · '+esc(p.ticker)+' → '+esc(h.ticker)+' · '+esc((h.paths||[]).join(" → ")||"direct")+'</div></div><div class="bar-wrap"><div class="bar" style="width:'+Math.min(100,Math.abs(h.exposure_pct)/max*100)+'%"></div></div><div class="value">'+Number(h.exposure_pct).toFixed(2)+'%</div></article>').join("");
  const unresolved=(data.unresolved||[]).map(x=>(x.ticker||"Unknown ETF")+": "+explainReason({reason:x.reason},p)).join(" ");
- if(list.length){message.className="message";message.textContent=unresolved?"Verified exposure is shown where available. Remaining exposure: "+unresolved:"Exposure is multiplied through the available holdings graph."}
+ if(list.length){message.className="message";const base=data.coverage_reason||"Exposure is multiplied through the available holdings graph.";message.textContent=unresolved?base+" Remaining exposure: "+unresolved:base}
  else{message.className="message";message.textContent=explainReason(data,p)}
 }
 async function load(){
@@ -48,12 +49,12 @@ async function load(){
    const res=await fetch(API_BASE.replace(/\/$/,"")+"/lookthrough/"+encodeURIComponent(region)+"/"+encodeURIComponent(ticker));
    const data=await res.json().catch(()=>({}));
    if(res.ok){render(data,p);return}
-   document.querySelector("#status").textContent=data.coverage_status||"Exposure pending";
-   message.className="message";message.textContent=explainReason(data,p);return
+   if(!p.holdings?.length){document.querySelector("#status").textContent=data.coverage_status||"Exposure pending";message.className="message";message.textContent=explainReason(data,p);return}
   }
+  if(Array.isArray(p.holdings)&&p.holdings.length){render({holdings:p.holdings,as_of:p.exposure_as_of,coverage_status:p.coverage_status,coverage_reason:p.coverage_reason},p);return}
   document.querySelector("#status").textContent=p.coverage_status|| (p.holdings_status==="raw_html_only"?"Raw only":"Exposure pending");
   message.className="message";message.textContent=explainReason(p,p)
- }catch(e){document.querySelector("#status").textContent="Unavailable";message.className="message error";message.textContent="Azure holdings API could not be reached. "+explainReason(p,p)}
+ }catch(e){if(Array.isArray(p.holdings)&&p.holdings.length){render({holdings:p.holdings,as_of:p.exposure_as_of,coverage_status:p.coverage_status,coverage_reason:p.coverage_reason},p);return}document.querySelector("#status").textContent="Unavailable";message.className="message error";message.textContent="Azure holdings API could not be reached. "+explainReason(p,p)}
 }
 async function init(){
  try{let list;if(API_BASE){const res=await fetch(API_BASE.replace(/\/$/,"")+"/catalog");if(res.ok)list=(await res.json()).products}
