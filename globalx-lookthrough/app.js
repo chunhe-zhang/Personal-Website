@@ -1,9 +1,27 @@
-// After Azure deployment set window.GLOBALX_API_BASE to the Function API base ending in /api.
+// Set window.GLOBALX_API_BASE after Azure Function deployment to enable live processed results.
 const API_BASE=window.GLOBALX_API_BASE||"";
 const REGION_NAMES={US:"United States",AU:"Australia",BR:"Brazil",CO:"Colombia",HK:"Hong Kong",CA:"Canada"};
 const select=document.querySelector("#fund"),rows=document.querySelector("#rows"),message=document.querySelector("#message");
 let products=[];
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function explainReason(data,p){
+ if(data?.coverage_reason||data?.reason)return data.coverage_reason||data.reason;
+ const code=data?.error||data?.coverage_status||"";
+ const known={
+  source_http_error:"The official product page returned an HTTP error, so no holdings were accepted.",
+  parser_no_holdings:"The public page was reachable, but no recognizable ticker-and-weight table or holdings CSV was found.",
+  public_source_unavailable:"The public holdings source could not be fetched or decoded.",
+  holdings_unavailable:"This product is in the catalog, but Azure has no normalized holdings snapshot for it yet.",
+  fund_holdings_unavailable:"A nested ETF was identified, but its own holdings snapshot is missing; look-through stops at that ETF.",
+  silver_snapshot_missing:"Raw source acquisition has not produced a normalized holdings snapshot for this fund.",
+  calculation_failed:"The source was acquired, but Azure could not finish the exposure calculation."
+ };
+ if(known[code])return known[code];
+ if(p?.holdings_status==="raw_html_only")return "Azure Data Factory saved this product page as raw HTML in bronze, but it has not yet been parsed into normalized holdings.";
+ if(p?.holdings_status==="top_holdings_captured")return "Only limited top-holdings metadata is recorded; a full normalized holdings snapshot is not available.";
+ if(p?.holdings_status==="not_loaded")return "The official product page is mapped, but no successful holdings fetch or normalized snapshot has been recorded yet.";
+ return "No verified public holdings snapshot is available. The source does not publish accessible holdings, or the fetch/parse step has not succeeded.";
+}
 function populate(list){
  products=list||[];select.innerHTML="";
  const groups=new Map();
@@ -11,24 +29,31 @@ function populate(list){
   const o=document.createElement("option");o.value=code+"|"+p.ticker;o.textContent=p.ticker+" · "+p.name;groups.get(code).appendChild(o)}
  const preferred=products.findIndex(p=>p.region_code==="CA"&&p.ticker==="AAPP");select.selectedIndex=Math.max(0,preferred);load()
 }
-function render(data,p,illustrative=false){
+function render(data,p){
  document.querySelector("#selected").textContent=p.ticker;document.querySelector("#region").textContent=p.region||REGION_NAMES[p.region_code]||p.region_code;
  document.querySelector("#asof").textContent=data.as_of||p.catalog_as_of||"—";
- document.querySelector("#status").textContent=illustrative?"Illustrative snapshot":data.unresolved?.length?data.unresolved.length+" unresolved":"Processed";
- const depth=Math.max(0,...(data.paths||[]).map(x=>x.path?.length||1))-1;
+ document.querySelector("#status").textContent=data.coverage_status|| (data.unresolved?.length?data.unresolved.length+" unresolved":"Processed");
  const list=data.holdings||[],max=Math.max(1,...list.map(x=>Math.abs(Number(x.exposure_pct)||0)));
- rows.innerHTML=list.map((h,i)=>'<article class="row"><span class="rank">'+String(i+1).padStart(2,"0")+'</span><div><div class="security">'+esc(h.ticker)+'</div><div class="path">LOOK-THROUGH · '+esc(p.ticker)+' → '+esc(h.ticker)+' · '+(depth||"direct")+'</div></div><div class="bar-wrap"><div class="bar" style="width:'+Math.min(100,Math.abs(h.exposure_pct)/max*100)+'%"></div></div><div class="value">'+Number(h.exposure_pct).toFixed(2)+'%</div></article>').join("");
- message.className="message";message.textContent=data.unresolved?.length?data.unresolved.length+" nested positions remain unresolved.":list.length?"Exposure is multiplied through the available holdings graph.":"No holdings have been processed for this product yet.";
+ rows.innerHTML=list.map((h,i)=>'<article class="row"><span class="rank">'+String(i+1).padStart(2,"0")+'</span><div><div class="security">'+esc(h.ticker)+'</div><div class="path">LOOK-THROUGH · '+esc(p.ticker)+' → '+esc(h.ticker)+' · '+esc((h.paths||[]).join(" → ")||"direct")+'</div></div><div class="bar-wrap"><div class="bar" style="width:'+Math.min(100,Math.abs(h.exposure_pct)/max*100)+'%"></div></div><div class="value">'+Number(h.exposure_pct).toFixed(2)+'%</div></article>').join("");
+ const unresolved=(data.unresolved||[]).map(x=>(x.ticker||"Unknown ETF")+": "+explainReason({reason:x.reason},p)).join(" ");
+ if(list.length){message.className="message";message.textContent=unresolved?"Verified exposure is shown where available. Remaining exposure: "+unresolved:"Exposure is multiplied through the available holdings graph."}
+ else{message.className="message";message.textContent=explainReason(data,p)}
 }
 async function load(){
  if(!products.length)return;const [region,ticker]=select.value.split("|"),p=products.find(x=>x.region_code===region&&x.ticker===ticker);if(!p)return;
- rows.innerHTML="";document.querySelector("#selected").textContent=ticker;document.querySelector("#region").textContent=p.region||REGION_NAMES[region];document.querySelector("#asof").textContent=p.catalog_as_of||"2026-10-18";document.querySelector("#status").textContent="Checking";
+ rows.innerHTML="";document.querySelector("#selected").textContent=ticker;document.querySelector("#region").textContent=p.region||REGION_NAMES[region];document.querySelector("#asof").textContent=p.as_of||p.catalog_as_of||"—";document.querySelector("#status").textContent="Checking";
  const sourceUrl=p.product_url||p.catalog_url;document.querySelector("#product-source").innerHTML=sourceUrl?'<a href="'+esc(sourceUrl)+'" target="_blank" rel="noopener">Open official source ↗</a>':'';
  try{
-  if(API_BASE){const res=await fetch(API_BASE.replace(/\/$/,"")+"/lookthrough/"+encodeURIComponent(region)+"/"+encodeURIComponent(ticker));if(res.ok){render(await res.json(),p);return}}
-  document.querySelector("#status").textContent=p.holdings_status==="raw_html_only"?"Raw only":"Exposure pending";
-  message.className="message";message.textContent="No verified, normalized public holdings snapshot is available for this product yet. Exposure is not estimated or filled with illustrative values."
- }catch(e){document.querySelector("#status").textContent="Unavailable";message.className="message error";message.textContent="Azure holdings API could not be reached; catalog details remain available."}
+  if(API_BASE){
+   const res=await fetch(API_BASE.replace(/\/$/,"")+"/lookthrough/"+encodeURIComponent(region)+"/"+encodeURIComponent(ticker));
+   const data=await res.json().catch(()=>({}));
+   if(res.ok){render(data,p);return}
+   document.querySelector("#status").textContent=data.coverage_status||"Exposure pending";
+   message.className="message";message.textContent=explainReason(data,p);return
+  }
+  document.querySelector("#status").textContent=p.coverage_status|| (p.holdings_status==="raw_html_only"?"Raw only":"Exposure pending");
+  message.className="message";message.textContent=explainReason(p,p)
+ }catch(e){document.querySelector("#status").textContent="Unavailable";message.className="message error";message.textContent="Azure holdings API could not be reached. "+explainReason(p,p)}
 }
 async function init(){
  try{let list;if(API_BASE){const res=await fetch(API_BASE.replace(/\/$/,"")+"/catalog");if(res.ok)list=(await res.json()).products}
