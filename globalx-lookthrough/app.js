@@ -58,7 +58,7 @@ async function load(){
 }
 async function init(){
  try{let list;if(API_BASE){const res=await fetch(API_BASE.replace(/\/$/,"")+"/catalog");if(res.ok)list=(await res.json()).products}
-  if(!list){const res=await fetch("catalog.json");if(!res.ok)throw new Error("Catalog could not load");list=(await res.json()).products}
+  if(!list){const res=await fetch("catalog.json?v=exposure-snapshots-20261018");if(!res.ok)throw new Error("Catalog could not load");list=(await res.json()).products}
   populate(list)
  }catch(e){document.querySelector("#status").textContent="Catalog error";message.className="message error";message.textContent=e.message}
 }
