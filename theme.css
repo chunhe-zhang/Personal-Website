@@ -299,3 +299,6 @@ body[data-theme] .navigation{
 }
 body[data-theme] .nav-item{flex:1 1 auto;width:auto;justify-content:center;text-align:center;
   font-size:1em;letter-spacing:clamp(.02em,.5vw,.12em);padding:1em .6em}
+/* pills closer to equal: short words start a little narrower, the rest of the bar is shared out evenly */
+body[data-theme] .nav-item{flex:1 1 6.4em;padding-inline:.3em}
+body[data-theme] .nav-item:nth-child(-n+2){flex-basis:5.6em}
