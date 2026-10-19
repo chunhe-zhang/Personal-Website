@@ -214,10 +214,22 @@ a{color:inherit}
 .source{margin-left:auto}
 .ext{display:inline-flex;align-items:center;gap:5px;color:var(--cobalt-deep);font-size:12.5px;font-weight:600;text-underline-offset:3px}
 .ext:hover{text-decoration-thickness:2px}
-.fund-sub{display:flex;flex-wrap:wrap;margin:6px 0 0;color:var(--slate);font-size:12.5px}
-.fund-name{color:var(--ink);font-weight:500}
-.fund-name:not([hidden]) + .facts{margin-left:10px;padding-left:10px;border-left:1px solid var(--stage-line)}
-.fund-profile{margin:8px 0 0;max-width:78ch;color:var(--slate);font-size:12.5px;line-height:1.5}
+.fund-name{margin:8px 0 0;font-size:14px;line-height:1.35;font-weight:600}
+.fund-about{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:6px 0 0}
+.fund-about[hidden]{display:none}
+.type-tag{
+  flex:none;
+  padding:1px 9px;
+  border:1px solid #D2C7FF;
+  border-radius:99px;
+  background:#EEE9FF;
+  color:#4A2DB5;
+  font-size:11.5px;
+  font-weight:700;
+}
+.fund-desc{font-size:12.5px;line-height:1.45;color:#38425C}
+.facts{margin:6px 0 0;color:var(--slate);font-size:12.5px}
+.fund-profile{margin:6px 0 0;max-width:78ch;color:var(--slate);font-size:12px;line-height:1.5}
 
 .takeaway{margin:10px 0 0;font-size:13.5px;line-height:1.5;font-weight:500}
 .takeaway:empty{display:none}

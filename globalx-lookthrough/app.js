@@ -2,6 +2,7 @@
 // Set window.GLOBALX_API_BASE after Azure Function deployment to enable live processed results.
 const API_BASE = window.GLOBALX_API_BASE || "";
 const CATALOG_URL = "catalog.json?v=recursive-public-exposure-20261018b";
+const INFO_URL = "funds-info.json?v=info2-20261018";
 
 const REGION_NAMES = { US: "United States", AU: "Australia", BR: "Brazil", CO: "Colombia", HK: "Hong Kong", CA: "Canada" };
 const REGION_CHIP = { US: "US", CA: "CA", AU: "AU", BR: "BR", HK: "HK", CO: "CO" };
@@ -16,10 +17,12 @@ const el = {
   cov: $("#coverage"), quick: $("#quick"), sr: $("#combo-status"), asof: $("#catalog-asof"),
   stage: $("#stage"), ticker: $("#fund-title"), name: $("#fund-name"), chip: $("#status-chip"),
   facts: $("#fund-facts"), source: $("#product-source"), take: $("#takeaway"), flow: $("#flow"),
+  ftype: $("#fund-type"), fdesc: $("#fund-desc"), fabout: $("#fund-about"),
   legend: $("#flow-legend"), message: $("#message"), rows: $("#rows"), count: $("#row-count"), about: $("#about-reason"), profile: $("#fund-profile")
 };
 
 let products = [];
+let FUND_INFO = {};   // optional: full names, ETF types and descriptions keyed by "REGION|TICKER"
 let current = null;   // { p, items }
 let token = 0;        // guards against late responses
 let lastW = 0, lastH = 0;
@@ -48,6 +51,23 @@ const reduceMotion = () => media("(prefers-reduced-motion: reduce)");
 // True when the page lays out as one screen (the diagram then fits the space it is given)
 const isFit = () => media("(min-width: 1100px) and (min-height: 600px)");
 
+const TYPE_BLURB = {
+  "Thematic equity": "Stocks tied to a long-term trend or technology, rather than a whole market.",
+  "Sector equity": "Stocks from one industry, such as semiconductors, miners or banks.",
+  "Country or regional equity": "Stocks from one country or region.",
+  "Broad market equity": "A wide basket of stocks that follows a major market index.",
+  "Covered call income": "Holds a stock portfolio and sells call options for extra income, which can limit gains in strong rallies.",
+  "Dividend income": "Stocks chosen for high dividend payments, aiming for regular income.",
+  "Factor or strategy equity": "Stocks picked by a rules-based strategy, such as quality, value or low volatility.",
+  "Bond": "Bonds that pay interest, such as treasuries, corporate or high-yield debt.",
+  "Preferred and income securities": "Preferred shares and similar securities that pay regular income.",
+  "Single-stock ETF": "Concentrated in one company’s stock instead of a diversified basket, so its result depends heavily on that one company.",
+  "Leveraged or inverse index": "Uses leverage or short positions to magnify or reverse the moves of an index.",
+  "Crypto and digital assets": "Exposure to bitcoin, ethereum or blockchain companies.",
+  "Mining and resources equity": "Shares of companies that mine or produce a resource, such as gold, copper or lithium. They tend to move more than the metal itself.",
+  "Commodity": "Exposure to physical commodities or commodity futures, such as gold, silver or oil.",
+  "Alternatives and multi-asset": "A mix of asset types or option strategies, aiming for income or smoother returns."
+};
 const KIND_LABEL = { full: "Verified snapshot", partial: "Partial snapshot", none: "No holdings yet", busy: "Checking" };
 const EXT_ICON = '<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function dot(kind) {
@@ -312,8 +332,12 @@ function takeaway(fund, items, f) {
 ------------------------------------------------------------------- */
 function paintHead(p, kind, data) {
   el.ticker.textContent = p.ticker;
-  const nm = p.name && p.name !== p.ticker ? p.name : "";
+  const info = FUND_INFO[keyOf(p)] || {};
+  const nm = info.n || (p.name && p.name !== p.ticker ? p.name : "");
   el.name.textContent = nm; el.name.hidden = !nm;
+  const type = info.t || "", desc = info.d || TYPE_BLURB[type] || "";
+  el.ftype.textContent = type; el.ftype.hidden = !type;
+  el.fdesc.textContent = desc; el.fabout.hidden = !type && !desc;
   const status = (data && data.coverage_status) || p.coverage_status || (p.holdings_status === "raw_html_only" ? "Raw only" : "");
   el.chip.innerHTML = `<span class="status chip-${kind}"${status ? ` title="${esc(status)}"` : ""}>${dot(kind === "busy" ? "none" : kind)}${KIND_LABEL[kind]}</span>`;
   const region = p.region || REGION_NAMES[p.region_code] || p.region_code;
@@ -439,7 +463,8 @@ function matches() {
   const list = products.filter((p) => (ui.region === "ALL" || p.region_code === ui.region) && (!ui.onlyData || hasData(p)));
   const scored = [];
   for (const p of list) {
-    const t = p.ticker.toLowerCase(), n = String(p.name || "").toLowerCase();
+    const inf = FUND_INFO[keyOf(p)] || {};
+    const t = p.ticker.toLowerCase(), n = (String(p.name || "") + " " + (inf.n || "") + " " + (inf.t || "")).toLowerCase();
     let s = 0;
     if (q) s = t === q ? 1 : t.startsWith(q) ? 2 : t.includes(q) ? 3 : n.includes(q) ? 4 : 0;
     if (q && !s) continue;
@@ -449,7 +474,7 @@ function matches() {
   return scored.map((x) => x.p);
 }
 function optHTML(p, n) {
-  const k = kindOf(p), nm = p.name && p.name !== p.ticker ? p.name : "";
+  const k = kindOf(p), full = (FUND_INFO[keyOf(p)] || {}).n || (p.name && p.name !== p.ticker ? p.name : ""), nm = full.replace(/^Global X\s+/, "");
   const cnt = hasData(p) ? p.holdings.length : 0;
   const cntText = cnt ? cnt + (cnt === 1 ? " holding" : " holdings") : "";
   return `<li class="opt" role="option" id="opt-${n}" data-n="${n}" aria-selected="false">` +
@@ -589,6 +614,7 @@ async function init() {
       if (!res.ok) throw new Error("Catalog could not load");
       const j = await res.json(); list = j.products; asOf = j.catalog_as_of;
     }
+    try { const ri = await fetch(INFO_URL); if (ri.ok) FUND_INFO = await ri.json(); } catch (e) { /* names and types are optional */ }
     populate(list, asOf || (list && list[0] && list[0].catalog_as_of));
   } catch (e) {
     el.chip.innerHTML = "";
