@@ -18,8 +18,9 @@
   --page-3:#FFE3CE;
 
   --side:#E9EDFF;
-  --side-line:#C5CFFF;
-  --side-hover:#F7F8FF;
+  --side-mint:#DDF4E8;
+  --side-line:#BCDCD3;
+  --side-hover:#F3FCF8;
 
   --stage:#E3F1FF;
   --stage-line:#B8D8F4;
@@ -89,7 +90,7 @@ a{color:inherit}
 .asof{display:none;font-weight:500;color:rgba(255,255,255,.88)}
 
 .side,.stage,.holdings{border-radius:8px;border:1px solid transparent}
-.side{background:var(--side);border-color:var(--side-line)}
+.side{background:linear-gradient(172deg,var(--side) 0%,#E3F4F2 45%,var(--side-mint) 100%);border-color:var(--side-line)}
 .stage{background:var(--stage);border-color:var(--stage-line)}
 .holdings{background:var(--hold);border-color:var(--hold-line)}
 
@@ -109,7 +110,7 @@ a{color:inherit}
   font:500 14px var(--text);
 }
 .combo input::placeholder{color:#667085}
-.combo input:hover{border-color:#9FB0FF}
+.combo input:hover{border-color:#86CDB0}
 .combo input:focus{outline:none;border-color:var(--cobalt);box-shadow:0 0 0 3px rgba(47,91,255,.2)}
 .combo input:disabled{cursor:progress}
 .glass{position:absolute;left:13px;top:12px;color:var(--cobalt-deep);pointer-events:none}
@@ -140,16 +141,16 @@ a{color:inherit}
   flex-direction:column;
   align-items:flex-start;
   padding:5px 9px;
-  border:1px solid var(--side-line);
+  border:1px solid #9FD8BC;
   border-radius:6px;
-  background:#fff;
+  background:#D3F2E2;
   text-align:left;
   line-height:1.25;
   cursor:pointer;
 }
 .qbtn b{font-size:12.5px;font-weight:700}
 .qbtn span{font-size:11px;font-weight:500;color:var(--slate)}
-.qbtn:hover{border-color:var(--cobalt);background:#EEF2FF}
+.qbtn:hover{border-color:var(--cobalt);background:#fff}
 
 .listbox{
   flex:1 1 auto;
@@ -171,7 +172,7 @@ a{color:inherit}
   cursor:pointer;
 }
 .opt:hover{background:var(--side-hover)}
-.opt[aria-selected="true"]{background:#D6DEFF}
+.opt[aria-selected="true"]{background:#C9EEDA}
 .opt.is-current{background:#fff;box-shadow:inset 3px 0 0 var(--cobalt)}
 .opt-tk{font-weight:700;font-size:13px}
 .opt-nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--slate);font-size:12px}
@@ -186,7 +187,7 @@ a{color:inherit}
 .covbar i{display:block;min-width:3px;border-radius:2px}
 .c-full{background:var(--cobalt)}
 .c-part{background:#8FA7FF}
-.c-none{background:#C5CFFF}
+.c-none{background:#B5D7CC}
 .covlegend{display:flex;flex-wrap:wrap;gap:2px 12px;margin:7px 0 0;padding:0;list-style:none;font-size:11.5px;color:var(--slate)}
 .covlegend li{display:inline-flex;align-items:center;gap:5px}
 
