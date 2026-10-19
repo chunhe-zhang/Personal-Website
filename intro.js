@@ -10,7 +10,7 @@
   const cards = [...document.querySelectorAll(".card")];
   const N = cards.length;
   const railBtns = [...document.querySelectorAll("#rail button")];
-  const spacer = $("#spacer"), flash = $("#flash");
+  const spacer = $("#spacer"), flash = $("#flash"), heroSub = $("#hero-sub"), cue = $("#cue");
   const root = document.documentElement;
   const NAMES = ["home", "work", "projects", "articles", "contact"];
   const ACC = ["#55ff00", "#22d3ee", "#ff7a1a", "#b36bff", "#ff4fa3"];
@@ -21,9 +21,10 @@
   const smooth = (t) => t * t * (3 - 2 * t);
 
   let W = 0, H = 0, DPR = 1, step = 600;
-  let target = 0, cur = 0, prev = 0;
+  let cur = 0, prev = 0;
   let mx = -9999, my = -9999, mxn = 0, myn = 0, mxs = 0, mys = 0;
-  let lastScroll = 0, snapped = true, touching = false;
+  let idx = 0, anim = null, lockUntil = 0, lastWheel = 0, lastAbs = 0, touchY = null;
+  let letterPath = null, letterW = 8;
   let leaving = null;
   let startTime = performance.now();
   let accent = [85, 255, 0];
@@ -47,15 +48,18 @@
     const c = off.getContext("2d");
     c.strokeStyle = "#fff"; c.lineWidth = sw; c.lineJoin = "miter"; c.miterLimit = 1.4; c.lineCap = "butt";
     const t = sw / 2, zx = ox + lw + gap;
-    c.beginPath(); c.moveTo(ox + lw, oy + t); c.lineTo(ox + t, oy + t); c.lineTo(ox + t, oy + lh - t); c.lineTo(ox + lw, oy + lh - t); c.stroke();
-    c.beginPath(); c.moveTo(zx, oy + t); c.lineTo(zx + lw, oy + t); c.lineTo(zx, oy + lh - t); c.lineTo(zx + lw, oy + lh - t); c.stroke();
+    const path = new Path2D();
+    path.moveTo(ox + lw, oy + t); path.lineTo(ox + t, oy + t); path.lineTo(ox + t, oy + lh - t); path.lineTo(ox + lw, oy + lh - t);
+    path.moveTo(zx, oy + t); path.lineTo(zx + lw, oy + t); path.lineTo(zx, oy + lh - t); path.lineTo(zx + lw, oy + lh - t);
+    c.stroke(path);
+    letterPath = path; letterW = sw;
     const data = c.getImageData(0, 0, off.width, off.height).data;
     const raw = [];
-    const stride = W < 700 ? 2 : 3;
+    const stride = 2;
     for (let y = 0; y < off.height; y += stride)
       for (let x = 0; x < off.width; x += stride)
         if (data[(y * off.width + x) * 4 + 3] > 128) raw.push([x, y]);
-    const want = W < 700 ? 2400 : 3200;
+    const want = W < 700 ? 3600 : 6500;
     for (let i = raw.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [raw[i], raw[j]] = [raw[j], raw[i]]; }
     raw.length = Math.min(raw.length, want);
     GROUPS.forEach((g) => (g.list = []));
@@ -68,7 +72,7 @@
         x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r, vx: 0, vy: 0,
         sx: W / 2 + Math.cos(sa) * sr, sy: H / 2 + Math.sin(sa) * sr,
         delay: Math.random() * 700 + (hx / W) * 700,
-        ph: Math.random() * 6.28, sz: 1.3 + Math.random() * 1.7,
+        ph: Math.random() * 6.28, sz: 1.8 + Math.random() * 1.5,
       };
       GROUPS[gi].list.push(p);
       return p;
@@ -90,61 +94,78 @@
     W = innerWidth; H = innerHeight;
     cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    step = 0.85 * H;
-    spacer.style.height = N * step + H + "px";
+    spacer.style.display = "none";
     buildPoints();
     if (!stars.length) buildStars();
-    target = clamp(scrollY / step, 0, N + 0);
   }
 
-  /* ---------- text scramble on titles ---------- */
-  const GLYPH = "!<>-_/[]{}=+*^?#01";
-  const scrambling = new WeakMap();
-  function scramble(el) {
+  /* ---------- typewriter titles ---------- */
+  const typing = new WeakMap();
+  function typeIn(el) {
     const text = el.dataset.text;
-    const t0 = performance.now(), dur = 520;
-    const id = (scrambling.get(el) || 0) + 1; scrambling.set(el, id);
+    const id = (typing.get(el) || 0) + 1; typing.set(el, id);
+    let k = 0;
     const tick = () => {
-      if (scrambling.get(el) !== id) return;
-      const p = clamp((performance.now() - t0) / dur);
-      let out = "";
-      for (let i = 0; i < text.length; i++)
-        out += p >= (i + 1) / (text.length + 1) ? text[i] : GLYPH[(Math.random() * GLYPH.length) | 0];
-      el.textContent = out;
-      if (p < 1) requestAnimationFrame(tick); else el.textContent = text;
+      if (typing.get(el) !== id) return;
+      if (k >= text.length) { el.textContent = text; return; }
+      k++;
+      el.innerHTML = `<span class="t">${text.slice(0, k)}</span><span class="r">${text.slice(k)}</span>`;
+      setTimeout(tick, 70);
     };
-    tick();
+    el.innerHTML = `<span class="t"></span><span class="r">${text}</span>`;
+    setTimeout(tick, 120);
   }
-  cards.forEach((c) => {
-    const title = c.querySelector(".title");
-    c.querySelector("a").addEventListener("pointerenter", () => scramble(title));
-  });
 
-  /* ---------- navigation ---------- */
-  const goTo = (t) => scrollTo({ top: clamp(t, 0, N) * step, behavior: "smooth" });
+  /* ---------- navigation: one gesture = one section ---------- */
+  const ease = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+  function goTo(t) {
+    t = clamp(Math.round(t), 0, N);
+    const now = performance.now();
+    if (t === idx && !anim) return;
+    idx = t;
+    const dur = Math.max(700, Math.min(1300, 600 + Math.abs(t - cur) * 260));
+    anim = { from: cur, to: t, t0: now, dur };
+    lockUntil = now + dur;
+  }
+  const go = (d) => goTo(idx + d);
   railBtns.forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.t)));
   cards.forEach((c, i) => {
     c.querySelector("a").addEventListener("click", (e) => {
       if (e.button || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
       e.preventDefault();
       if (leaving) return;
-      if (Math.abs(i + 1 - cur) > 0.45) { goTo(i + 1); return; }
+      if (idx !== i + 1 || anim) { goTo(i + 1); return; }
       leaving = { i, t0: performance.now(), href: c.querySelector("a").href };
       root.style.setProperty("--flash", ACC[i]);
     });
-    c.querySelector("a").addEventListener("focus", () => { if (Math.abs(i + 1 - cur) > 0.45) goTo(i + 1); });
+    c.querySelector("a").addEventListener("focus", () => { if (idx !== i + 1) goTo(i + 1); });
   });
   addEventListener("keydown", (e) => {
     if (leaving || e.altKey || e.ctrlKey || e.metaKey) return;
-    const here = Math.round(target);
-    if (e.key === "ArrowDown" || e.key === "PageDown" || (e.key === " " && !e.shiftKey)) { e.preventDefault(); goTo(here + 1); }
-    else if (e.key === "ArrowUp" || e.key === "PageUp" || (e.key === " " && e.shiftKey)) { e.preventDefault(); goTo(here - 1); }
+    if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === "PageDown" || (e.key === " " && !e.shiftKey)) { e.preventDefault(); go(1); }
+    else if (e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "PageUp" || (e.key === " " && e.shiftKey)) { e.preventDefault(); go(-1); }
     else if (e.key === "Home") { e.preventDefault(); goTo(0); }
     else if (e.key === "End") { e.preventDefault(); goTo(N); }
   });
-  addEventListener("scroll", () => { lastScroll = performance.now(); snapped = false; target = clamp(scrollY / step, 0, N); }, { passive: true });
-  addEventListener("touchstart", () => (touching = true), { passive: true });
-  addEventListener("touchend", () => { touching = false; lastScroll = performance.now(); }, { passive: true });
+  addEventListener("wheel", (e) => {
+    e.preventDefault();
+    if (leaving) return;
+    const now = performance.now();
+    const dy = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    const a = Math.abs(dy);
+    // a new gesture = a pause since the last event, or a clearly stronger push (ignores trackpad inertia)
+    const fresh = now - lastWheel > 110 || a > lastAbs * 1.8 + 6;
+    lastWheel = now; lastAbs = a;
+    if (now < lockUntil || !fresh || a < 4) return;
+    go(dy > 0 ? 1 : -1);
+  }, { passive: false });
+  addEventListener("touchstart", (e) => { touchY = e.touches[0].clientY; }, { passive: true });
+  addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+  addEventListener("touchend", (e) => {
+    if (touchY == null || leaving) return;
+    const dy = touchY - e.changedTouches[0].clientY; touchY = null;
+    if (Math.abs(dy) > 38 && performance.now() >= lockUntil - 250) go(dy > 0 ? 1 : -1);
+  }, { passive: true });
   addEventListener("pointermove", (e) => { mx = e.clientX; my = e.clientY; mxn = (mx / W - 0.5) * 2; myn = (my / H - 0.5) * 2; }, { passive: true });
   addEventListener("pointerleave", () => { mx = my = -9999; });
   addEventListener("resize", resize);
@@ -156,18 +177,14 @@
     const f = Math.min((now - last) / 16.667, 3); last = now;
     const time = now - startTime;
 
-    // smooth scroll value
+    // eased glide between sections
     prev = cur;
-    cur += (target - cur) * Math.min(1, 0.11 * f);
-    if (Math.abs(target - cur) < 0.0004) cur = target;
-    const speed = Math.abs(cur - prev) / f;
-
-    // snap to the nearest section once scrolling stops
-    if (!snapped && !touching && !leaving && now - lastScroll > 170) {
-      snapped = true;
-      const near = Math.round(target);
-      if (Math.abs(target - near) > 0.012) goTo(near);
+    if (anim) {
+      const p = clamp((now - anim.t0) / anim.dur);
+      cur = anim.from + (anim.to - anim.from) * ease(p);
+      if (p >= 1) { cur = anim.to; anim = null; }
     }
+    const speed = Math.abs(cur - prev) / f;
 
     // leaving transition progress
     let lp = 0;
@@ -222,6 +239,14 @@
     const s = smooth(clamp(cur / 0.85));
     const heroA = 1 - s;
     if (heroA > 0.01) {
+      const formed = clamp((time - 2000) / 1000);
+      if (formed > 0 && letterPath) {
+        ctx.globalAlpha = heroA * formed * 0.3;
+        ctx.strokeStyle = "#3fd400"; ctx.lineWidth = letterW; ctx.lineJoin = "miter"; ctx.miterLimit = 1.4; ctx.lineCap = "butt";
+        ctx.shadowColor = "#55ff00"; ctx.shadowBlur = 16;
+        ctx.stroke(letterPath);
+        ctx.shadowBlur = 0;
+      }
       const R = Math.min(130, W * 0.2), R2 = R * R;
       const damp = Math.pow(0.84, f);
       for (const g of GROUPS) {
@@ -247,9 +272,9 @@
 
     // hero captions
     const ho = clamp(1 - cur * 2.4);
-    root.style.setProperty("--hero-o", ho.toFixed(3));
-    root.style.setProperty("--cue-o", ho.toFixed(3));
-    if (!document.body.classList.contains("is-ready") && time > 1700) document.body.classList.add("is-ready");
+    const ready = clamp((time - 1500) / 900);
+    heroSub.style.opacity = (ho * ready).toFixed(3);
+    cue.style.opacity = (ho * clamp((time - 2200) / 900)).toFixed(3);
 
     // ---- cards ----
     let newFront = -1;
@@ -287,7 +312,7 @@
     }
     if (newFront !== frontIdx) {
       frontIdx = newFront;
-      if (newFront >= 0 && time > 300) scramble(cards[newFront].querySelector(".title"));
+      if (newFront >= 0 && time > 300) typeIn(cards[newFront].querySelector(".title"));
     }
 
     // rail
@@ -302,10 +327,10 @@
   }
 
   /* ---------- go ---------- */
+  document.documentElement.classList.add("paged");
   resize();
   const hash = location.hash.slice(1).toLowerCase();
   const hi = NAMES.indexOf(hash);
-  if (hi >= 0) { scrollTo(0, (hi + 1) * step); target = cur = prev = hi + 1; startTime -= 3000; }
-  else { target = cur = prev = clamp(scrollY / step, 0, N); }
+  if (hi >= 0) { idx = hi + 1; cur = prev = idx; startTime -= 3000; }
   requestAnimationFrame((t) => { last = t; frame(t); });
 })();
