@@ -217,6 +217,7 @@ a{color:inherit}
 .fund-sub{display:flex;flex-wrap:wrap;margin:6px 0 0;color:var(--slate);font-size:12.5px}
 .fund-name{color:var(--ink);font-weight:500}
 .fund-name:not([hidden]) + .facts{margin-left:10px;padding-left:10px;border-left:1px solid var(--stage-line)}
+.fund-profile{margin:8px 0 0;max-width:78ch;color:var(--slate);font-size:12.5px;line-height:1.5}
 
 .takeaway{margin:10px 0 0;font-size:13.5px;line-height:1.5;font-weight:500}
 .takeaway:empty{display:none}
