@@ -280,7 +280,7 @@ body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:va
 .launch-veil{
   position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;
   background:radial-gradient(circle at var(--x,50%) var(--y,50%),color-mix(in srgb,var(--a) 75%,#fff) 0%,color-mix(in srgb,var(--a) 45%,transparent) 38%,transparent 72%);
-  animation:th-veil .7s cubic-bezier(.3,.6,.3,1) forwards;
+  animation:th-veil 1.15s cubic-bezier(.3,.6,.3,1) forwards;
 }
-@keyframes th-veil{0%{opacity:0;transform:scale(.5)}40%{opacity:.95}100%{opacity:0;transform:scale(1.7)}}
-.is-launching{transform:scale(1.03)!important;border-color:var(--a)!important;box-shadow:0 0 60px -4px var(--a)!important;transition:transform .3s cubic-bezier(.3,.6,.3,1),box-shadow .3s!important}
+@keyframes th-veil{0%{opacity:0;transform:scale(.4)}45%{opacity:.95}75%{opacity:.8}100%{opacity:0;transform:scale(1.9)}}
+.is-launching{transform:scale(1.03)!important;border-color:var(--a)!important;box-shadow:0 0 60px -4px var(--a)!important;transition:transform .45s cubic-bezier(.3,.6,.3,1),box-shadow .45s!important}
