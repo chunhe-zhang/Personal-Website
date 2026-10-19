@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&display=swap");
 /* Shared look for every inner page: same glowing, glassy style as the front page.
    Loaded after styles.css, so it only restyles; page structure is untouched. */
 
@@ -186,7 +187,7 @@ body[data-theme] .navigation{
   box-shadow:0 22px 60px -18px var(--a),0 0 0 1px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
   padding:7px;gap:4px;
 }
-body[data-theme] .nav-item{border-radius:99px;font-size:17px;font-weight:700;letter-spacing:.16em;padding:14px 6px;color:color-mix(in srgb,#fff 78%,var(--a));transition:color .25s,background .25s,box-shadow .25s,text-shadow .25s}
+body[data-theme] .nav-item{border-radius:99px;font-family:"Sora","Avenir Next","Segoe UI",system-ui,sans-serif;font-size:15.5px;font-weight:600;letter-spacing:.14em;padding:15px 6px;color:color-mix(in srgb,#fff 78%,var(--a));transition:color .25s,background .25s,box-shadow .25s,text-shadow .25s}
 body[data-theme] a.nav-item:hover{color:#fff;background:color-mix(in srgb,var(--a) 16%,transparent);text-shadow:0 0 14px var(--a)}
 body[data-theme] .nav-item.active,
 body[data-theme] a.nav-item.active:hover{background:linear-gradient(120deg,var(--c),var(--a) 55%,var(--b));color:#050805;text-shadow:none;
@@ -215,7 +216,7 @@ body[data-theme] .bio{color:#e6f5e1;letter-spacing:.08em}
   body[data-theme] .selected-projects .project-entry strong{font-size:21px}
   body[data-theme] .contact-item{grid-template-columns:1fr;gap:6px;padding:12px 16px 12px 20px}
   body[data-theme] .contact-link{font-size:14px}
-  body[data-theme] .nav-item{font-size:clamp(10px,2.9vw,15px);letter-spacing:.06em;padding:12px 2px}
+  body[data-theme] .nav-item{font-size:clamp(9px,2.7vw,14px);letter-spacing:.05em;padding:12px 2px}
   body[data-theme] .contact-item{padding:14px 16px}
   body[data-theme] .card-body h2{font-size:16px;letter-spacing:.03em}
   body[data-theme] .card-summary{font-size:12.5px;line-height:1.5}
