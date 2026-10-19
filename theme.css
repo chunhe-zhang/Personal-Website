@@ -236,24 +236,24 @@ body[data-theme] .flowchart-figure figcaption{color:var(--muted)}
 
 /* ---------- one entrance motion everywhere: rise + de-blur (same as the cards on the front page) ---------- */
 @keyframes th-in{from{opacity:0;transform:translate3d(0,28px,0) scale(.96);filter:blur(12px)}}
-body[data-theme]::before{animation:th-fade 1.4s ease backwards,th-drift 26s ease-in-out infinite alternate}
+body[data-theme]::before{animation:th-fade 1s ease backwards,th-drift 26s ease-in-out infinite alternate}
 @keyframes th-fade{from{opacity:0}}
-body[data-theme] h1{animation:th-in .85s cubic-bezier(.2,.7,.2,1) backwards}
-body[data-theme] .back-link,body[data-theme] .other-projects-link{animation:th-in .8s cubic-bezier(.2,.7,.2,1) .1s backwards}
+body[data-theme] h1{animation:th-in .6s cubic-bezier(.2,.7,.2,1) backwards}
+body[data-theme] .back-link,body[data-theme] .other-projects-link{animation:th-in .55s cubic-bezier(.2,.7,.2,1) .05s backwards}
 body[data-theme] .company-card,body[data-theme] .project-card,body[data-theme] .project-entry,
 body[data-theme] .project-summary-card,body[data-theme] .contact-item,body[data-theme] .flowchart-figure,
 body[data-theme] .page-empty-state,body[data-theme] .portrait,body[data-theme] .cover .bio,
 body[data-theme] .project-article > *:not(h1),body[data-theme] .other-projects-intro{
-  animation:th-in .85s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--d,2) * 1ms);
+  animation:th-in .6s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--d,2) * 1ms);
 }
-body[data-theme] .cover h1{animation-delay:.12s}
-body[data-theme] *:nth-child(1){--d:150}body[data-theme] *:nth-child(2){--d:235}body[data-theme] *:nth-child(3){--d:320}
-body[data-theme] *:nth-child(4){--d:405}body[data-theme] *:nth-child(5){--d:490}body[data-theme] *:nth-child(6){--d:575}
-body[data-theme] *:nth-child(7){--d:660}body[data-theme] *:nth-child(8){--d:745}body[data-theme] *:nth-child(n+9){--d:830}
-body[data-theme] .cover .portrait{--d:0}body[data-theme] .cover .bio{--d:260}
+body[data-theme] .cover h1{animation-delay:.08s}
+body[data-theme] *:nth-child(1){--d:90}body[data-theme] *:nth-child(2){--d:150}body[data-theme] *:nth-child(3){--d:210}
+body[data-theme] *:nth-child(4){--d:270}body[data-theme] *:nth-child(5){--d:330}body[data-theme] *:nth-child(6){--d:390}
+body[data-theme] *:nth-child(7){--d:450}body[data-theme] *:nth-child(8){--d:510}body[data-theme] *:nth-child(n+9){--d:570}
+body[data-theme] .cover .portrait{--d:0}body[data-theme] .cover .bio{--d:170}
 
 /* ---------- leaving a page: the same motion in reverse; the nav and Front button stay put ---------- */
-body[data-theme] .section-content,body[data-theme] .cover > :not(.navigation):not(.corner){transition:opacity .3s ease-in,filter .3s ease-in,transform .3s ease-in}
+body[data-theme] .section-content,body[data-theme] .cover > :not(.navigation):not(.corner){transition:opacity .22s ease-in,filter .22s ease-in,transform .22s ease-in}
 html.is-leaving body[data-theme] .section-content,
 html.is-leaving body[data-theme] .cover > :not(.navigation):not(.corner){opacity:0;filter:blur(10px);transform:translate3d(0,-14px,0) scale(.985)}
 
@@ -271,3 +271,12 @@ body[data-theme] .card-role,body[data-theme] .project-summary-card .project-summ
 body[data-theme] .bio{color:var(--text)}
 body[data-theme] .nav-item{color:color-mix(in srgb,#fff 80%,var(--a))}
 body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:var(--c)}
+
+/* ---------- opening a link in a new tab: a soft colour bloom from the click point, then the tab opens ---------- */
+.launch-veil{
+  position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at var(--x,50%) var(--y,50%),color-mix(in srgb,var(--a) 75%,#fff) 0%,color-mix(in srgb,var(--a) 45%,transparent) 38%,transparent 72%);
+  animation:th-veil .7s cubic-bezier(.3,.6,.3,1) forwards;
+}
+@keyframes th-veil{0%{opacity:0;transform:scale(.5)}40%{opacity:.95}100%{opacity:0;transform:scale(1.7)}}
+.is-launching{transform:scale(1.03)!important;border-color:var(--a)!important;box-shadow:0 0 60px -4px var(--a)!important;transition:transform .3s cubic-bezier(.3,.6,.3,1),box-shadow .3s!important}

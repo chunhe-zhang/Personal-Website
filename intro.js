@@ -41,7 +41,7 @@
     if (t === idx && !anim) return;
     const now = performance.now();
     idx = t;
-    const dur = Math.max(750, Math.min(1300, 650 + Math.abs(t - cur) * 260));
+    const dur = Math.max(600, Math.min(1050, 500 + Math.abs(t - cur) * 200));
     anim = { from: cur, to: t, t0: now, dur };
     lockUntil = now + dur;
   }
@@ -99,7 +99,7 @@
     }
     let lp = 0;
     if (leaving) {
-      lp = clamp((now - leaving.t0) / 780);
+      lp = clamp((now - leaving.t0) / 620);
       if (lp >= 1) { const href = leaving.href; leaving = null; location.href = href; return; }
     }
     mxs += (mxn - mxs) * 0.06 * f; mys += (myn - mys) * 0.06 * f;

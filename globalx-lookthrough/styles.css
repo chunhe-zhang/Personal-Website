@@ -364,3 +364,14 @@ a{color:inherit}
   .sweep,.late{animation:none}
   .rb,.lbl,.row{transition:none}
 }
+
+/* Arrival from the portfolio: an orange bloom that melts away while the page rises in. */
+@keyframes gx-bloom{0%{opacity:.95;transform:scale(1)}100%{opacity:0;transform:scale(1.7)}}
+@keyframes gx-rise{from{opacity:0;transform:translate3d(0,24px,0) scale(.985);filter:blur(10px)}}
+html::after{
+  content:"";position:fixed;inset:0;z-index:200;pointer-events:none;
+  background:radial-gradient(circle at 50% 45%,#ff9a4d 0%,rgba(255,90,0,.55) 38%,transparent 72%);
+  animation:gx-bloom .75s cubic-bezier(.3,.6,.3,1) forwards;
+}
+.app{animation:gx-rise .6s cubic-bezier(.2,.7,.2,1) .08s backwards}
+@media (prefers-reduced-motion:reduce){html::after{display:none}.app{animation:none}}
