@@ -13,7 +13,7 @@
   const spacer = $("#spacer"), flash = $("#flash"), heroSub = $("#hero-sub"), cue = $("#cue");
   const root = document.documentElement;
   const NAMES = ["home", "work", "projects", "articles", "contact"];
-  const ACC = ["#55ff00", "#22d3ee", "#ff7a1a", "#b36bff", "#ff4fa3"];
+  const ACC = ["#22d3ee", "#55ff00", "#ff7a1a", "#b36bff", "#ff4fa3"];
   const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
   const ACC_RGB = ACC.map(hex);
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -197,7 +197,7 @@
 
     // accent colour follows the section in view
     const ai = clamp(Math.round(cur) - 1, 0, N - 1);
-    const tgt = cur < 0.5 ? ACC_RGB[0] : ACC_RGB[ai];
+    const tgt = cur < 0.5 ? hex("#55ff00") : ACC_RGB[ai];
     for (let k = 0; k < 3; k++) accent[k] += (tgt[k] - accent[k]) * 0.08 * f;
 
     // ---- background ----
@@ -320,7 +320,7 @@
     // rail
     const ri = Math.round(clamp(cur, 0, N));
     railBtns.forEach((b, k) => b.classList.toggle("on", k === ri));
-    root.style.setProperty("--rail", ri === 0 ? ACC[0] : ACC[ri - 1]);
+    root.style.setProperty("--rail", ri === 0 ? "#55ff00" : ACC[ri - 1]);
 
     // flash overlay while leaving
     flash.style.opacity = leaving ? clamp((lp - 0.45) / 0.55).toFixed(3) : "0";
