@@ -289,12 +289,13 @@ body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:va
 @keyframes th-veil{0%{opacity:0;transform:scale(.4)}45%{opacity:.95}75%{opacity:.8}100%{opacity:0;transform:scale(1.9)}}
 .is-launching{transform:scale(1.03)!important;border-color:var(--a)!important;box-shadow:0 0 60px -4px var(--a)!important;transition:transform .45s cubic-bezier(.3,.6,.3,1),box-shadow .45s!important}
 
-/* nav: five equal-width pills; the bar scales as one unit with its font size, same recipe at every screen size */
+/* nav: a balance of equal and word-length widths. Each pill starts at its word's width and shares the rest of the bar equally,
+   so short words get a little less room, long ones a little more, and the bar scales as one unit at every screen size */
 body[data-theme] .navigation{
   font-size:clamp(8.8px,2.55vw,15.5px);
-  grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-flow:row;
+  display:flex;
   width:min(calc(100% - clamp(12px,5vw,48px)),40em);max-width:none;
   margin-inline:auto;gap:.12em;padding:.4em;
 }
-body[data-theme] .nav-item{width:100%;justify-content:center;text-align:center;
-  font-size:1em;letter-spacing:clamp(.02em,.5vw,.12em);padding:1em 0}
+body[data-theme] .nav-item{flex:1 1 auto;width:auto;justify-content:center;text-align:center;
+  font-size:1em;letter-spacing:clamp(.02em,.5vw,.12em);padding:1em .6em}
