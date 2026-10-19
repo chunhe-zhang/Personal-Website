@@ -132,8 +132,7 @@ body.intro::after{inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(0,0
 .rail button{all:unset;cursor:pointer;display:flex;align-items:center;padding:4px 0;
   font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
 .rail button::after{content:"";width:9px;height:9px;border-radius:50%;border:1px solid var(--dim);transition:all .3s ease}
-.rail button span{position:absolute;right:24px;top:50%;margin-top:-6px;opacity:0;transform:translateX(8px);transition:all .3s ease;pointer-events:none;white-space:nowrap}
-.rail button:hover span,.rail button:focus-visible span,.rail button.on span{opacity:1;transform:none}
+.rail button span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .rail button.on{color:var(--ink)}
 .rail button.on::after{background:var(--rail,var(--green));border-color:var(--rail,var(--green));box-shadow:0 0 12px var(--rail,var(--green));transform:scale(1.25)}
 .rail button:focus-visible::after{outline:2px solid #fff;outline-offset:3px}
