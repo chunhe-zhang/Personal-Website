@@ -177,16 +177,20 @@ body[data-theme] .coming-soon-text{color:var(--a);letter-spacing:.2em;text-trans
 
 /* ---------- bottom navigation: floating pill ---------- */
 body[data-theme] .navigation{
-  border:1px solid rgba(255,255,255,.14);border-radius:99px;
-  background:rgba(8,12,8,.72);
-  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
-  box-shadow:0 18px 50px -20px var(--a);
-  padding:6px;gap:4px;
+  border:1px solid color-mix(in srgb,var(--a) 38%,rgba(255,255,255,.12));border-radius:99px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,0) 55%),
+    radial-gradient(120% 220% at 50% 130%,color-mix(in srgb,var(--a) 34%,transparent),transparent 62%),
+    rgba(8,10,12,.74);
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4);
+  box-shadow:0 22px 60px -18px var(--a),0 0 0 1px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.22);
+  padding:7px;gap:4px;
 }
-body[data-theme] .nav-item{border-radius:99px;font-size:15px;letter-spacing:.12em;padding:12px 4px;color:#c4d4c0}
-body[data-theme] a.nav-item:hover{color:#fff;background:rgba(255,255,255,.08)}
+body[data-theme] .nav-item{border-radius:99px;font-size:17px;font-weight:700;letter-spacing:.16em;padding:14px 6px;color:color-mix(in srgb,#fff 78%,var(--a));transition:color .25s,background .25s,box-shadow .25s,text-shadow .25s}
+body[data-theme] a.nav-item:hover{color:#fff;background:color-mix(in srgb,var(--a) 16%,transparent);text-shadow:0 0 14px var(--a)}
 body[data-theme] .nav-item.active,
-body[data-theme] a.nav-item.active:hover{background:var(--a);color:#000;box-shadow:0 0 22px -4px var(--a)}
+body[data-theme] a.nav-item.active:hover{background:linear-gradient(120deg,var(--c),var(--a) 55%,var(--b));color:#050805;text-shadow:none;
+  box-shadow:0 0 28px -3px var(--a),inset 0 1px 0 rgba(255,255,255,.55)}
 body[data-theme] a.nav-item:focus-visible{outline:2px solid var(--a);outline-offset:3px}
 
 /* ---------- Front shortcut picks up the page colour ---------- */
@@ -211,7 +215,7 @@ body[data-theme] .bio{color:#e6f5e1;letter-spacing:.08em}
   body[data-theme] .selected-projects .project-entry strong{font-size:21px}
   body[data-theme] .contact-item{grid-template-columns:1fr;gap:6px;padding:12px 16px 12px 20px}
   body[data-theme] .contact-link{font-size:14px}
-  body[data-theme] .nav-item{font-size:clamp(9px,2.6vw,14px);letter-spacing:.06em}
+  body[data-theme] .nav-item{font-size:clamp(10px,2.9vw,15px);letter-spacing:.06em;padding:12px 2px}
   body[data-theme] .contact-item{padding:14px 16px}
   body[data-theme] .card-body h2{font-size:16px;letter-spacing:.03em}
   body[data-theme] .card-summary{font-size:12.5px;line-height:1.5}
@@ -273,7 +277,6 @@ body[data-theme] .project-summary-card .project-summary-impact,body[data-theme] 
 body[data-theme] .card-role{font-size:15px}
 body[data-theme] .project-summary-card .project-summary-impact{font-size:14.5px;line-height:1.55}
 body[data-theme] .bio{color:var(--text)}
-body[data-theme] .nav-item{color:color-mix(in srgb,#fff 80%,var(--a))}
 body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:var(--c)}
 
 /* ---------- opening a link in a new tab: a soft colour bloom from the click point, then the tab opens ---------- */
