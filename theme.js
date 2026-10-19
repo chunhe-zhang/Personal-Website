@@ -1,19 +1,16 @@
-/* Types each page title in over a fixed 320 ms, like the front page cards. */
+/* Page-to-page motion: fade the page out the same way it fades in, then follow the link. */
 (() => {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const h = document.querySelector("body[data-theme] h1");
-  if (!h) return;
-  const text = h.textContent.trim();
-  if (!text) return;
-  h.setAttribute("aria-label", text);
-  const D = 320, t0 = performance.now() + 60;
-  const set = (k) => { h.innerHTML = `<span class="t" aria-hidden="true"></span>`; h.firstChild.textContent = text.slice(0, k); const r = document.createElement("span"); r.className = "r"; r.setAttribute("aria-hidden", "true"); r.textContent = text.slice(k); h.appendChild(r); };
-  set(0);
-  const tick = () => {
-    const p = Math.min(1, Math.max(0, (performance.now() - t0) / D));
-    if (p >= 1) { h.textContent = text; h.removeAttribute("aria-label"); return; }
-    set(Math.ceil(text.length * p));
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
+  document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest && e.target.closest("a[href]");
+    if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
+    let u; try { u = new URL(a.href, location.href); } catch (_) { return; }
+    if (u.origin !== location.origin || u.pathname === location.pathname) return;
+    if (!/(\.html|\/)$/.test(u.pathname)) return;
+    e.preventDefault();
+    document.documentElement.classList.add("is-leaving");
+    setTimeout(() => { location.href = a.href; }, 300);
+  });
+  addEventListener("pageshow", (e) => { if (e.persisted) document.documentElement.classList.remove("is-leaving"); });
 })();

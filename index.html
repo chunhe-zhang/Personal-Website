@@ -7,10 +7,9 @@
   <meta name="theme-color" content="#000000">
   <title>Chunhe Zhang</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Cpath d='M30 20H14v24h16M34 20h16L34 44h16' fill='none' stroke='%2355ff00' stroke-width='5'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="intro.css?v=4">
+  <link rel="stylesheet" href="intro.css?v=5">
 </head>
 <body class="intro">
-  <canvas id="fx" aria-hidden="true"></canvas>
   <div class="vignette" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
 
@@ -18,13 +17,27 @@
     <span class="hud-meta">Toronto &middot; TD Securities &middot; Easy Group</span>
   </header>
 
-  <section class="hero" id="hero">
-    <h1 class="sr">Chunhe Zhang</h1>
-    <p class="hero-sub" id="hero-sub">Chunhe Zhang</p>
-    <div class="cue" id="cue" aria-hidden="true"><span>Scroll</span><i></i><i></i></div>
-  </section>
-
   <nav class="stage" id="stage" aria-label="Site sections">
+    <div class="hero" id="hero">
+      <h1 class="sr">Chunhe Zhang</h1>
+      <svg class="neon" viewBox="0 0 400 220" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="ng" gradientUnits="userSpaceOnUse" x1="49" y1="28" x2="351" y2="192">
+            <stop offset="0" stop-color="#22d3ee"/><stop offset=".28" stop-color="#55ff00"/>
+            <stop offset=".52" stop-color="#ffd23d"/><stop offset=".76" stop-color="#ff4fa3"/><stop offset="1" stop-color="#b36bff"/>
+            <animateTransform attributeName="gradientTransform" type="rotate" from="0 200 110" to="360 200 110" dur="10s" repeatCount="indefinite"/>
+          </linearGradient>
+          <filter id="ngb" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
+        </defs>
+        <g fill="none" stroke-miterlimit="1.4">
+          <path class="g" d="M180 42H63V178H180M220 42H351L220 178H351" stroke="url(#ng)" stroke-width="36" filter="url(#ngb)" opacity=".85"/>
+          <path d="M180 42H63V178H180M220 42H351L220 178H351" stroke="url(#ng)" stroke-width="28"/>
+          <path d="M180 36H63V178H180M220 36H351L220 178H351" stroke="#fff" stroke-width="3" opacity=".5" transform="translate(0,-2)"/>
+        </g>
+      </svg>
+      <p class="hero-sub" id="hero-sub">Chunhe Zhang</p>
+    </div>
+    <div class="cue" id="cue" aria-hidden="true"><span>Scroll</span><i></i><i></i></div>
     <ol class="deck" id="deck">
       <li class="card" style="--a:#22d3ee;--b:#3b6bff;--c:#7af0ff">
         <a href="home.html">
@@ -93,6 +106,6 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </noscript>
-  <script src="intro.js?v=6"></script>
+  <script src="intro.js?v=8"></script>
 </body>
 </html>

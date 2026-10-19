@@ -1,5 +1,6 @@
 /* Animated front page. Same black + neon-green identity as the rest of the site. */
 :root{
+  --a:#22d3ee;--b:#ff4fa3;--c:#55ff00;
   --bg:#000;
   --green:#55ff00;
   --ink:#f4fff0;
@@ -15,7 +16,6 @@ body.intro{
 }
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-#fx{position:fixed;inset:0;width:100%;height:100%;display:block}
 .vignette{position:fixed;inset:0;pointer-events:none;
   background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(0,0,0,.72) 100%)}
 .grain{position:fixed;inset:-50%;pointer-events:none;opacity:.07;mix-blend-mode:screen;
@@ -27,21 +27,46 @@ body.intro{
 
 html.paged,html.paged body{height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none}
 
+@property --a{syntax:"<color>";inherits:true;initial-value:#22d3ee}
+@property --b{syntax:"<color>";inherits:true;initial-value:#ff4fa3}
+@property --c{syntax:"<color>";inherits:true;initial-value:#55ff00}
+html{transition:--a .9s ease,--b .9s ease,--c .9s ease}
+body.intro::before,body.intro::after{content:"";position:fixed;z-index:0;pointer-events:none}
+body.intro::before{
+  inset:-25%;
+  background:
+    radial-gradient(44% 46% at 16% 16%,var(--a),transparent 72%),
+    radial-gradient(40% 44% at 88% 36%,var(--b),transparent 72%),
+    radial-gradient(36% 40% at 46% 104%,var(--c),transparent 72%);
+  opacity:.8;filter:blur(36px);animation:th-drift 26s ease-in-out infinite alternate;
+}
+body.intro::after{inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(0,0,0,.05),rgba(0,0,0,.62))}
+@keyframes th-drift{to{transform:translate3d(4%,-3%,0) scale(1.12) rotate(4deg)}}
+@keyframes th-in{from{opacity:0;transform:translate3d(0,28px,0) scale(.96);filter:blur(12px)}}
+.vignette{z-index:1}.grain{z-index:1}
+
 /* ---------- HUD ---------- */
 .hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:16px;
   padding:20px 24px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;pointer-events:none;z-index:5;color:var(--dim)}
 .hud-meta{margin-left:auto}
 
-/* ---------- Hero ---------- */
-.hero{position:fixed;inset:0;pointer-events:none;z-index:2}
-.hero-sub{position:absolute;left:0;right:0;bottom:19vh;margin:0;text-align:center;
-  font-size:clamp(18px,2.6vw,30px);font-weight:700;letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;color:var(--green);
-  text-shadow:0 0 18px rgba(85,255,0,.55);
-  opacity:0}
-.cue{position:absolute;left:50%;bottom:4.5vh;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;
-  font-size:clamp(14px,1.7vw,18px);font-weight:700;letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;color:#d9ffd0;opacity:0}
-.cue i{width:16px;height:16px;border-right:3px solid var(--green);border-bottom:3px solid var(--green);transform:rotate(45deg);margin-top:2px;
-  filter:drop-shadow(0 0 6px rgba(85,255,0,.7));animation:cue 1.6s ease-in-out infinite}
+/* ---------- Hero (first "card" of the tunnel) ---------- */
+.hero{position:absolute;left:50%;top:50%;width:min(92vw,980px);margin:0;transform:translate3d(-50%,-50%,0);
+  display:flex;flex-direction:column;align-items:center;gap:0;will-change:transform,opacity,filter;pointer-events:none}
+.neon{width:min(66vw,720px);height:auto;overflow:visible;
+  animation:th-in .95s cubic-bezier(.2,.7,.2,1) .1s backwards,floaty 7s ease-in-out 1.2s infinite alternate}
+@keyframes floaty{to{transform:translateY(-8px)}}
+.hero-sub{margin:clamp(14px,3vh,34px) 0 0;text-align:center;
+  font-size:clamp(20px,3vw,34px);font-weight:700;letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;
+  background:linear-gradient(95deg,#fff 0%,var(--c) 30%,var(--a) 65%,var(--b) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 18px color-mix(in srgb,var(--a) 55%,transparent));
+  animation:th-in .9s cubic-bezier(.2,.7,.2,1) .3s backwards}
+.cue{position:fixed;left:50%;bottom:4.5vh;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-size:clamp(14px,1.7vw,18px);font-weight:700;letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;color:#e4fff0;z-index:4;
+  animation:th-in .9s cubic-bezier(.2,.7,.2,1) .6s backwards}
+.cue i{width:16px;height:16px;border-right:3px solid var(--c);border-bottom:3px solid var(--c);transform:rotate(45deg);margin-top:2px;
+  filter:drop-shadow(0 0 6px var(--c));animation:cue 1.6s ease-in-out infinite}
 .cue i:nth-of-type(2){animation-delay:.2s;margin-top:-10px;opacity:.55}
 @keyframes cue{0%{transform:translateY(-6px) rotate(45deg);opacity:0}50%{opacity:1}100%{transform:translateY(8px) rotate(45deg);opacity:0}}
 
@@ -85,9 +110,6 @@ html.paged,html.paged body{height:100%;overflow:hidden;overscroll-behavior:none;
   background:radial-gradient(420px circle at calc(50% + var(--mx)*50%) calc(50% + var(--my)*50%),rgba(255,255,255,.14),transparent 60%);
   mix-blend-mode:overlay;
 }
-.title .t{border-right:.035em solid var(--a);margin-right:-.035em;animation:caret .7s steps(1) infinite}
-.title .r{visibility:hidden}
-@keyframes caret{50%{border-right-color:transparent}}
 .title{
   position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
   text-align:center;font-weight:700;text-transform:uppercase;
@@ -138,8 +160,8 @@ html.paged,html.paged body{height:100%;overflow:hidden;overscroll-behavior:none;
 /* ---------- Reduced motion: plain stacked list ---------- */
 @media (prefers-reduced-motion:reduce){
   .grain,.cue i,.bg i{animation:none}
-  .hero,.hud,.rail,.flash{display:none}
-  #fx,.vignette,.grain{display:none}
+  .hero,.hud,.rail,.flash,.cue{display:none}
+  .vignette,.grain{display:none}
   .stage{position:static;perspective:none;overflow:visible;padding:80px 20px 40px}
   .deck{position:static;display:grid;gap:22px;justify-items:center}
   .card{position:relative;left:auto;top:auto;visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important;pointer-events:auto!important}
