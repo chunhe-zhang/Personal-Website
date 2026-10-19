@@ -291,6 +291,10 @@ body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:va
 
 /* nav pills size to their word, with the same side padding on each, so spacing looks even */
 @media (min-width:701px){
-  body[data-theme] .navigation{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:auto;width:fit-content;max-width:calc(100% - 48px);justify-content:center;gap:6px}
+  body[data-theme] .navigation{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:auto;width:fit-content;max-width:calc(100% - 48px);margin-inline:auto;justify-content:center;gap:6px}
   body[data-theme] .nav-item{width:auto;padding:15px 26px}
+}
+@media (max-width:700px){
+  body[data-theme] .navigation{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:auto;width:fit-content;max-width:calc(100% - 20px);margin-inline:auto;justify-content:center;gap:2px;padding:5px}
+  body[data-theme] .nav-item{width:auto;padding:12px clamp(6px,2.2vw,12px);font-size:clamp(9px,2.8vw,13px);letter-spacing:.04em}
 }
