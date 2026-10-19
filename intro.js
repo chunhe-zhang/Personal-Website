@@ -64,14 +64,14 @@
     raw.length = Math.min(raw.length, want);
     GROUPS.forEach((g) => (g.list = []));
     pts = raw.map(([hx, hy]) => {
-      const a = Math.random() * Math.PI * 2, r = Math.max(W, H) * (0.6 + Math.random() * 0.9);
+      const a = Math.random() * Math.PI * 2, r = Math.max(W, H) * (0.25 + Math.random() * 0.5);
       const sa = Math.random() * Math.PI * 2, sr = Math.max(W, H) * (0.5 + Math.random() * 0.8);
       const gi = Math.random() < 0.72 ? 0 : Math.random() < 0.55 ? 1 : Math.random() < 0.5 ? 2 : 3;
       const p = {
         hx, hy,
         x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r, vx: 0, vy: 0,
         sx: W / 2 + Math.cos(sa) * sr, sy: H / 2 + Math.sin(sa) * sr,
-        delay: Math.random() * 300 + (hx / W) * 300,
+        delay: Math.random() * 120 + (hx / W) * 120,
         ph: Math.random() * 6.28, sz: 1.8 + Math.random() * 1.5,
       };
       GROUPS[gi].list.push(p);
@@ -241,7 +241,7 @@
     const s = smooth(clamp(cur / 0.85));
     const heroA = 1 - s;
     if (heroA > 0.01) {
-      const formed = clamp((time - 900) / 600);
+      const formed = clamp((time - 350) / 350);
       if (formed > 0 && letterPath) {
         ctx.globalAlpha = heroA * formed * 0.3;
         ctx.strokeStyle = "#3fd400"; ctx.lineWidth = letterW; ctx.lineJoin = "miter"; ctx.miterLimit = 1.4; ctx.lineCap = "butt";
@@ -250,7 +250,7 @@
         ctx.shadowBlur = 0;
       }
       const R = Math.min(130, W * 0.2), R2 = R * R;
-      const damp = Math.pow(0.84, f);
+      const damp = Math.pow(0.8, f);
       for (const g of GROUPS) {
         ctx.fillStyle = g.color;
         ctx.globalAlpha = heroA * 0.95;
@@ -258,7 +258,7 @@
           const live = time > p.delay;
           const tx = lerp(p.hx, p.sx, s), ty = lerp(p.hy, p.sy, s);
           if (live) {
-            const k = 0.095 + s * 0.03;
+            const k = 0.16 + s * 0.03;
             p.vx += (tx - p.x) * k * f; p.vy += (ty - p.y) * k * f;
             const dx = p.x - mx, dy = p.y - my, d2 = dx * dx + dy * dy;
             if (d2 < R2 && d2 > 1) { const d = Math.sqrt(d2), fo = (1 - d / R) * 5.5 * f; p.vx += (dx / d) * fo; p.vy += (dy / d) * fo; }
@@ -274,9 +274,9 @@
 
     // hero captions
     const ho = clamp(1 - cur * 2.4);
-    const ready = clamp((time - 800) / 600);
+    const ready = clamp((time - 400) / 400);
     heroSub.style.opacity = (ho * ready).toFixed(3);
-    cue.style.opacity = (ho * clamp((time - 1200) / 600)).toFixed(3);
+    cue.style.opacity = (ho * clamp((time - 600) / 400)).toFixed(3);
 
     // ---- cards ----
     let newFront = -1;
