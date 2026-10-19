@@ -71,7 +71,7 @@
         hx, hy,
         x: W / 2 + Math.cos(a) * r, y: H / 2 + Math.sin(a) * r, vx: 0, vy: 0,
         sx: W / 2 + Math.cos(sa) * sr, sy: H / 2 + Math.sin(sa) * sr,
-        delay: Math.random() * 700 + (hx / W) * 700,
+        delay: Math.random() * 300 + (hx / W) * 300,
         ph: Math.random() * 6.28, sz: 1.8 + Math.random() * 1.5,
       };
       GROUPS[gi].list.push(p);
@@ -101,19 +101,21 @@
 
   /* ---------- typewriter titles ---------- */
   const typing = new WeakMap();
+  const TYPE_MS = 320; // same total time for every title, however long
   function typeIn(el) {
     const text = el.dataset.text;
     const id = (typing.get(el) || 0) + 1; typing.set(el, id);
-    let k = 0;
+    const t0 = performance.now() + 40;
+    el.innerHTML = `<span class="t"></span><span class="r">${text}</span>`;
     const tick = () => {
       if (typing.get(el) !== id) return;
-      if (k >= text.length) { el.textContent = text; return; }
-      k++;
+      const p = clamp((performance.now() - t0) / TYPE_MS);
+      const k = Math.ceil(text.length * p);
+      if (p >= 1) { el.textContent = text; return; }
       el.innerHTML = `<span class="t">${text.slice(0, k)}</span><span class="r">${text.slice(k)}</span>`;
-      setTimeout(tick, 70);
+      requestAnimationFrame(tick);
     };
-    el.innerHTML = `<span class="t"></span><span class="r">${text}</span>`;
-    setTimeout(tick, 120);
+    requestAnimationFrame(tick);
   }
 
   /* ---------- navigation: one gesture = one section ---------- */
@@ -239,7 +241,7 @@
     const s = smooth(clamp(cur / 0.85));
     const heroA = 1 - s;
     if (heroA > 0.01) {
-      const formed = clamp((time - 2000) / 1000);
+      const formed = clamp((time - 900) / 600);
       if (formed > 0 && letterPath) {
         ctx.globalAlpha = heroA * formed * 0.3;
         ctx.strokeStyle = "#3fd400"; ctx.lineWidth = letterW; ctx.lineJoin = "miter"; ctx.miterLimit = 1.4; ctx.lineCap = "butt";
@@ -256,7 +258,7 @@
           const live = time > p.delay;
           const tx = lerp(p.hx, p.sx, s), ty = lerp(p.hy, p.sy, s);
           if (live) {
-            const k = 0.055 + s * 0.03;
+            const k = 0.095 + s * 0.03;
             p.vx += (tx - p.x) * k * f; p.vy += (ty - p.y) * k * f;
             const dx = p.x - mx, dy = p.y - my, d2 = dx * dx + dy * dy;
             if (d2 < R2 && d2 > 1) { const d = Math.sqrt(d2), fo = (1 - d / R) * 5.5 * f; p.vx += (dx / d) * fo; p.vy += (dy / d) * fo; }
@@ -272,9 +274,9 @@
 
     // hero captions
     const ho = clamp(1 - cur * 2.4);
-    const ready = clamp((time - 1500) / 900);
+    const ready = clamp((time - 800) / 600);
     heroSub.style.opacity = (ho * ready).toFixed(3);
-    cue.style.opacity = (ho * clamp((time - 2200) / 900)).toFixed(3);
+    cue.style.opacity = (ho * clamp((time - 1200) / 600)).toFixed(3);
 
     // ---- cards ----
     let newFront = -1;
