@@ -16,7 +16,7 @@ const el = {
   cov: $("#coverage"), quick: $("#quick"), sr: $("#combo-status"), asof: $("#catalog-asof"),
   stage: $("#stage"), ticker: $("#fund-title"), name: $("#fund-name"), chip: $("#status-chip"),
   facts: $("#fund-facts"), source: $("#product-source"), take: $("#takeaway"), flow: $("#flow"),
-  legend: $("#flow-legend"), message: $("#message"), rows: $("#rows"), count: $("#row-count"), about: $("#about-reason")
+  legend: $("#flow-legend"), message: $("#message"), rows: $("#rows"), count: $("#row-count"), about: $("#about-reason"), profile: $("#fund-profile")
 };
 
 let products = [];
@@ -318,7 +318,12 @@ function paintHead(p, kind, data) {
   el.chip.innerHTML = `<span class="status chip-${kind}"${status ? ` title="${esc(status)}"` : ""}>${dot(kind === "busy" ? "none" : kind)}${KIND_LABEL[kind]}</span>`;
   const region = p.region || REGION_NAMES[p.region_code] || p.region_code;
   const asOf = (data && data.as_of) || p.exposure_as_of || p.catalog_as_of;
-  el.facts.textContent = region + (asOf && kind !== "busy" && kind !== "none" ? ", holdings as of " + fmtDate(asOf) : "");
+  const facts = [region, p.trading_currency ? "Trading currency: " + p.trading_currency : "", p.hedge_target_currency ? "Hedged to " + p.hedge_target_currency : "", p.official_category ? "Category: " + p.official_category : "", asOf && kind !== "busy" && kind !== "none" ? "Holdings as of " + fmtDate(asOf) : ""].filter(Boolean);
+  el.facts.textContent = facts.join(" · ");
+  if (el.profile) {
+    const profile = ["Asset type: " + (p.asset_class || "Unclassified"), "Structure: " + (p.structure_label || "Not classified")].join(" · ");
+    el.profile.textContent = profile + ". " + (p.instrument_description || "Composition details are not available.");
+  }
   const url = p.product_url || p.catalog_url;
   el.source.innerHTML = url ? `<a class="ext" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Official fund page ${EXT_ICON}</a>` : "";
 }
