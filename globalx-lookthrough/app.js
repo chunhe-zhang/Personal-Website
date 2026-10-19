@@ -1,8 +1,8 @@
 "use strict";
 // Set window.GLOBALX_API_BASE after Azure Function deployment to enable live processed results.
 const API_BASE = window.GLOBALX_API_BASE || "";
-const CATALOG_URL = "catalog.json?v=canada-179-20261018";
-const INFO_URL = "funds-info.json?v=canada-179-20261018";
+const CATALOG_URL = "catalog.json?v=canada-179-20261018-r2";
+const INFO_URL = "funds-info.json?v=canada-179-20261018-r2";
 
 const REGION_NAMES = { US: "United States", AU: "Australia", BR: "Brazil", CO: "Colombia", HK: "Hong Kong", CA: "Canada" };
 const REGION_CHIP = { US: "US", CA: "CA", AU: "AU", BR: "BR", HK: "HK", CO: "CO" };
