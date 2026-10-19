@@ -1,0 +1,144 @@
+/* Animated front page. Same black + neon-green identity as the rest of the site. */
+:root{
+  --bg:#000;
+  --green:#55ff00;
+  --ink:#f4fff0;
+  --dim:#8a9a86;
+  --mono:"Courier New",Courier,ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{background:#000}
+body.intro{
+  margin:0;min-height:100svh;background:#000;color:var(--ink);
+  font-family:var(--mono);
+  overflow-x:hidden;
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;display:block}
+.vignette{position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,transparent 45%,rgba(0,0,0,.72) 100%)}
+.grain{position:fixed;inset:-50%;pointer-events:none;opacity:.07;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 1s steps(6) infinite}
+@keyframes grain{
+  0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}
+  60%{transform:translate(-5%,-2%)}80%{transform:translate(4%,4%)}100%{transform:translate(0,0)}}
+
+/* ---------- HUD ---------- */
+.hud{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:16px;
+  padding:20px 24px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;pointer-events:none;z-index:5;color:var(--dim)}
+.hud-name{color:var(--ink)}
+
+/* ---------- Hero ---------- */
+.hero{position:fixed;inset:0;pointer-events:none;z-index:2}
+.hero-sub{position:absolute;left:0;right:0;bottom:22vh;margin:0;text-align:center;
+  font-size:clamp(11px,1.4vw,14px);letter-spacing:.5em;text-transform:uppercase;color:var(--green);
+  opacity:0;transition:opacity 1.2s ease .2s}
+.is-ready .hero-sub{opacity:var(--hero-o,1)}
+.cue{position:absolute;left:50%;bottom:6vh;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--dim);opacity:0;transition:opacity 1s ease 1.2s}
+.is-ready .cue{opacity:var(--cue-o,1)}
+.cue i{width:1px;height:44px;background:linear-gradient(var(--green),transparent);transform-origin:top;animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* ---------- 3D deck ---------- */
+.stage{position:fixed;inset:0;z-index:3;perspective:1100px;perspective-origin:50% 46%;overflow:hidden;pointer-events:none}
+.deck{list-style:none;margin:0;padding:0;position:absolute;inset:0;transform-style:preserve-3d}
+.card{
+  position:absolute;left:50%;top:50%;
+  width:min(84vw,900px);height:min(54svh,470px);
+  margin:0;will-change:transform,opacity,filter;
+  visibility:hidden;opacity:0;
+  --mx:0;--my:0;
+}
+.card a{
+  position:relative;display:block;width:100%;height:100%;
+  color:var(--ink);text-decoration:none;overflow:hidden;
+  border-radius:26px;
+  border:1px solid color-mix(in srgb,var(--a) 55%,transparent);
+  background:#050806;
+  box-shadow:0 0 0 1px rgba(255,255,255,.04) inset,0 30px 90px -20px color-mix(in srgb,var(--a) 45%,transparent);
+  isolation:isolate;
+  cursor:pointer;
+  outline:none;
+}
+.card a:focus-visible{border-color:#fff;box-shadow:0 0 0 3px var(--a)}
+/* Blurry, slowly drifting colour field behind the title */
+.bg{position:absolute;inset:-12%;z-index:-1;filter:blur(38px) saturate(1.25);transform:translate3d(calc(var(--mx)*-18px),calc(var(--my)*-14px),0)}
+.bg i{position:absolute;border-radius:50%;opacity:.85;mix-blend-mode:screen}
+.bg i:nth-child(1){width:62%;height:78%;left:-6%;top:6%;background:radial-gradient(closest-side,var(--a),transparent);animation:drift1 14s ease-in-out infinite alternate}
+.bg i:nth-child(2){width:56%;height:70%;right:-4%;top:-10%;background:radial-gradient(closest-side,var(--b),transparent);animation:drift2 17s ease-in-out infinite alternate}
+.bg i:nth-child(3){width:44%;height:58%;left:30%;bottom:-18%;background:radial-gradient(closest-side,var(--c),transparent);animation:drift3 12s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(22%,-12%) scale(1.18)}}
+@keyframes drift2{to{transform:translate(-26%,16%) scale(.86)}}
+@keyframes drift3{to{transform:translate(-18%,-22%) scale(1.25)}}
+.card a::before{ /* dark veil keeps the title readable on bright blobs */
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.5));
+}
+.card a::after{ /* glass sheen following the pointer */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(420px circle at calc(50% + var(--mx)*50%) calc(50% + var(--my)*50%),rgba(255,255,255,.14),transparent 60%);
+  mix-blend-mode:overlay;
+}
+.tick{position:absolute;left:50%;top:calc(50% - clamp(48px,8.4vw,98px));width:2px;height:clamp(12px,1.7vw,18px);
+  background:var(--ink);transform:translateX(-50%);opacity:.9}
+.tick::before{content:"";position:absolute;left:-6px;top:0;width:14px;height:2px;background:var(--ink)}
+.title{
+  position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+  text-align:center;font-weight:700;text-transform:uppercase;
+  font-size:clamp(34px,9.4vw,124px);line-height:1;letter-spacing:.06em;white-space:nowrap;
+  color:#fff;text-shadow:0 0 26px color-mix(in srgb,var(--a) 70%,transparent);
+  padding-left:.06em; /* optically re-centre after letter-spacing */
+}
+.num,.sub,.go{position:absolute;font-size:11px;letter-spacing:.24em;text-transform:uppercase}
+.num{left:26px;top:22px;color:var(--ink);opacity:.8}
+.sub{left:0;right:0;bottom:24px;text-align:center;color:var(--ink);opacity:.82}
+.go{right:26px;top:22px;color:var(--a);transition:transform .3s ease,letter-spacing .3s ease}
+.card a:hover .go,.card a:focus-visible .go{transform:translateX(6px);letter-spacing:.32em}
+.card.is-front{pointer-events:auto}
+.stage .card{pointer-events:none}
+.stage .card.is-front{pointer-events:auto}
+
+/* ---------- Rail ---------- */
+.rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:6;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+.rail li{position:relative}
+.rail button{all:unset;cursor:pointer;display:flex;align-items:center;padding:4px 0;
+  font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+.rail button::after{content:"";width:9px;height:9px;border-radius:50%;border:1px solid var(--dim);transition:all .3s ease}
+.rail button span{position:absolute;right:24px;top:50%;margin-top:-6px;opacity:0;transform:translateX(8px);transition:all .3s ease;pointer-events:none;white-space:nowrap}
+.rail button:hover span,.rail button:focus-visible span,.rail button.on span{opacity:1;transform:none}
+.rail button.on{color:var(--ink)}
+.rail button.on::after{background:var(--rail,var(--green));border-color:var(--rail,var(--green));box-shadow:0 0 12px var(--rail,var(--green));transform:scale(1.25)}
+.rail button:focus-visible::after{outline:2px solid #fff;outline-offset:3px}
+
+/* ---------- Transition flash & scroll spacer ---------- */
+.flash{position:fixed;inset:0;z-index:20;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 50%,#fff,var(--flash,#55ff00) 55%,#000)}
+.spacer{height:100svh;pointer-events:none}
+
+.plain{position:relative;z-index:30;list-style:none;margin:0;padding:90px 24px;display:grid;gap:14px;font-size:18px}
+.plain a{color:var(--green)}
+
+/* ---------- Small screens ---------- */
+@media (max-width:700px){
+  .hud{padding:14px 16px;flex-direction:column;gap:6px}
+  .hud-meta{display:none}
+  .card{width:88vw;height:46svh}
+  .card a{border-radius:20px}
+  .rail{right:10px;gap:12px}
+  .rail button span{display:none}
+  .num{left:18px;top:16px}.go{right:18px;top:16px}
+  .sub{bottom:18px}
+}
+
+/* ---------- Reduced motion: plain stacked list ---------- */
+@media (prefers-reduced-motion:reduce){
+  .grain,.cue i,.bg i{animation:none}
+  .hero,.hud,.rail,.flash{display:none}
+  #fx,.vignette,.grain{display:none}
+  .stage{position:static;perspective:none;overflow:visible;padding:80px 20px 40px}
+  .deck{position:static;display:grid;gap:22px;justify-items:center}
+  .card{position:relative;left:auto;top:auto;visibility:visible!important;opacity:1!important;transform:none!important;filter:none!important;pointer-events:auto!important}
+  .spacer{display:none}
+}
