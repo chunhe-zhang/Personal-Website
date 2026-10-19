@@ -7,6 +7,7 @@ body[data-theme]{
   --border:color-mix(in srgb,var(--a) 28%,#1a1a1a);
   --text:color-mix(in srgb,#fff 84%,var(--a));   /* body copy: near-white with a hint of the page colour */
   --muted:color-mix(in srgb,#fff 60%,var(--a));  /* secondary text */
+  --soft:color-mix(in srgb,var(--a) 68%,#dfe8e0);  /* small accent text: the page colour, calmer saturation */
   position:relative;
   font-family:"Courier New",Courier,ui-monospace,monospace;
   background:#000;
@@ -225,8 +226,8 @@ body[data-theme] .bio{color:#e6f5e1;letter-spacing:.08em}
 /* ---------- home: the two employers, in their own colours ---------- */
 body[data-theme] .bio{font-size:clamp(22px,3.2svh,32px);line-height:1.5;letter-spacing:.1em}
 body[data-theme] .bio-td,body[data-theme] .bio-easy{font-weight:700}
-body[data-theme] .bio-td{background:linear-gradient(90deg,#9bff7a,#35c24a);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-body[data-theme] .bio-easy{background:linear-gradient(90deg,#ffd23d,#ff8a1a);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+body[data-theme] .bio-td{background:linear-gradient(90deg,#b9f6ff,#4fc3ff);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+body[data-theme] .bio-easy{background:linear-gradient(90deg,#9fb8ff,#5b7bff);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
 /* ---------- flowcharts: the diagrams are dark-on-transparent, so give them a light panel ---------- */
 body[data-theme] .flowchart-figure{padding:14px}
@@ -266,8 +267,11 @@ body[data-theme] .project-article p,
 body[data-theme] .detail-intro,body[data-theme] .detail-list{color:var(--text)}
 body[data-theme] .project-article strong,body[data-theme] .detail-list strong{color:#fff}
 body[data-theme] .project-article .article-lede{color:#fff;text-shadow:0 0 24px color-mix(in srgb,var(--a) 35%,transparent)}
-body[data-theme] .article-tags{color:var(--c)}
-body[data-theme] .card-role,body[data-theme] .project-summary-card .project-summary-impact{color:var(--c)}
+body[data-theme] .project-article p.article-tags,body[data-theme] .article-tags{color:var(--soft);font-size:15.5px!important;line-height:1.6}
+body[data-theme] .card-role,body[data-theme] .detail-role,
+body[data-theme] .project-summary-card .project-summary-impact,body[data-theme] .project-card-impact{color:var(--soft)}
+body[data-theme] .card-role{font-size:15px}
+body[data-theme] .project-summary-card .project-summary-impact{font-size:14.5px;line-height:1.55}
 body[data-theme] .bio{color:var(--text)}
 body[data-theme] .nav-item{color:color-mix(in srgb,#fff 80%,var(--a))}
 body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:var(--c)}
