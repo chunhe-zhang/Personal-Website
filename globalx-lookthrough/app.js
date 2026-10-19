@@ -445,9 +445,11 @@ function matches() {
 }
 function optHTML(p, n) {
   const k = kindOf(p), nm = p.name && p.name !== p.ticker ? p.name : "";
+  const cnt = hasData(p) ? p.holdings.length : 0;
+  const cntText = cnt ? cnt + (cnt === 1 ? " holding" : " holdings") : "";
   return `<li class="opt" role="option" id="opt-${n}" data-n="${n}" aria-selected="false">` +
     `<span class="opt-tk">${esc(p.ticker)}</span><span class="opt-nm">${esc(nm)}</span>` +
-    `<span class="opt-meta"><span class="opt-rg">${esc(p.region_code)}</span><span class="opt-st" title="${esc(KIND_LABEL[k])}">${dot(k)}<span class="sr">${esc(KIND_LABEL[k])}</span></span></span></li>`;
+    `<span class="opt-meta">${cntText ? `<span class="opt-n">${cntText}</span>` : ""}<span class="opt-rg">${esc(p.region_code)}</span><span class="opt-st" title="${esc(KIND_LABEL[k])}">${dot(k)}<span class="sr">${esc(KIND_LABEL[k])}</span></span></span></li>`;
 }
 function markCurrent(scroll) {
   let at = null;
