@@ -5,7 +5,8 @@ body[data-theme]{
   --a:#55ff00; --b:#00b3a4; --c:#c7ff3d;
   --heading:var(--a); --active:var(--a);
   --border:color-mix(in srgb,var(--a) 28%,#1a1a1a);
-  --text:#d3e3cf;
+  --text:color-mix(in srgb,#fff 84%,var(--a));   /* body copy: near-white with a hint of the page colour */
+  --muted:color-mix(in srgb,#fff 60%,var(--a));  /* secondary text */
   position:relative;
   font-family:"Courier New",Courier,ui-monospace,monospace;
   background:#000;
@@ -229,8 +230,9 @@ body[data-theme] .bio-easy{background:linear-gradient(90deg,#ffd23d,#ff8a1a);-we
 
 /* ---------- flowcharts: the diagrams are dark-on-transparent, so give them a light panel ---------- */
 body[data-theme] .flowchart-figure{padding:14px}
-body[data-theme] .flowchart-figure img{background:#f4f7fb;border-radius:14px;padding:18px}
-body[data-theme] .flowchart-figure figcaption{color:#b7c9b3}
+/* transparent diagram: flip black-on-clear to light-on-dark, keeping the hues, so no white block */
+body[data-theme] .flowchart-figure img{background:transparent;border-radius:0;padding:0;filter:invert(1) hue-rotate(180deg) saturate(1.25) brightness(1.05)}
+body[data-theme] .flowchart-figure figcaption{color:var(--muted)}
 
 /* ---------- one entrance motion everywhere: rise + de-blur (same as the cards on the front page) ---------- */
 @keyframes th-in{from{opacity:0;transform:translate3d(0,28px,0) scale(.96);filter:blur(12px)}}
@@ -254,3 +256,18 @@ body[data-theme] .cover .portrait{--d:0}body[data-theme] .cover .bio{--d:260}
 body[data-theme] .section-content,body[data-theme] .cover > :not(.navigation):not(.corner){transition:opacity .3s ease-in,filter .3s ease-in,transform .3s ease-in}
 html.is-leaving body[data-theme] .section-content,
 html.is-leaving body[data-theme] .cover > :not(.navigation):not(.corner){opacity:0;filter:blur(10px);transform:translate3d(0,-14px,0) scale(.985)}
+
+/* ---------- text colour: no flat greys ---------- */
+body[data-theme]{color:var(--text)}
+body[data-theme] .card-summary,
+body[data-theme] .project-summary-card p,
+body[data-theme] .selected-projects .project-entry,
+body[data-theme] .project-article p,
+body[data-theme] .detail-intro,body[data-theme] .detail-list{color:var(--text)}
+body[data-theme] .project-article strong,body[data-theme] .detail-list strong{color:#fff}
+body[data-theme] .project-article .article-lede{color:#fff;text-shadow:0 0 24px color-mix(in srgb,var(--a) 35%,transparent)}
+body[data-theme] .article-tags{color:var(--c)}
+body[data-theme] .card-role,body[data-theme] .project-summary-card .project-summary-impact{color:var(--c)}
+body[data-theme] .bio{color:var(--text)}
+body[data-theme] .nav-item{color:color-mix(in srgb,#fff 80%,var(--a))}
+body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:var(--c)}

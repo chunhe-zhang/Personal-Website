@@ -4,7 +4,7 @@
   --bg:#000;
   --green:#55ff00;
   --ink:#f4fff0;
-  --dim:#8a9a86;
+  --dim:color-mix(in srgb,#fff 62%,var(--a));
   --mono:"Courier New",Courier,ui-monospace,monospace;
 }
 *{box-sizing:border-box}
