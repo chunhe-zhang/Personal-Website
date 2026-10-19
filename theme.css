@@ -1,0 +1,150 @@
+/* Shared look for every inner page: same glowing, glassy style as the front page.
+   Loaded after styles.css, so it only restyles; page structure is untouched. */
+
+body[data-theme]{
+  --a:#55ff00; --b:#00b3a4; --c:#c7ff3d;
+  --heading:var(--a); --active:var(--a);
+  --border:color-mix(in srgb,var(--a) 28%,#1a1a1a);
+  --text:#d3e3cf;
+  position:relative;
+  font-family:"Courier New",Courier,ui-monospace,monospace;
+  background:#000;
+}
+body[data-theme="work"]    {--a:#22d3ee;--b:#3b6bff;--c:#7af0ff}
+body[data-theme="projects"]{--a:#ff7a1a;--b:#ff3d6e;--c:#ffd23d}
+body[data-theme="articles"]{--a:#b36bff;--b:#5a4bff;--c:#ff7bd5}
+body[data-theme="contact"] {--a:#ff4fa3;--b:#ff9a3d;--c:#b36bff}
+
+/* soft drifting colour field behind everything */
+body[data-theme]::before,body[data-theme]::after{content:"";position:fixed;z-index:-1;pointer-events:none}
+body[data-theme]::before{
+  inset:-25%;
+  background:
+    radial-gradient(38% 42% at 18% 18%,var(--a),transparent 70%),
+    radial-gradient(34% 38% at 86% 38%,var(--b),transparent 70%),
+    radial-gradient(30% 34% at 46% 104%,var(--c),transparent 70%);
+  opacity:.42;filter:blur(30px);
+  animation:th-drift 26s ease-in-out infinite alternate;
+}
+body[data-theme]::after{inset:0;background:radial-gradient(ellipse at 50% 38%,rgba(0,0,0,.30),rgba(0,0,0,.86))}
+@keyframes th-drift{to{transform:translate3d(4%,-3%,0) scale(1.12) rotate(4deg)}}
+
+/* ---------- titles ---------- */
+body[data-theme] h1,
+body[data-theme] .section-page-title,
+body[data-theme] .selected-title,
+body[data-theme] .contact-content h1{
+  font-family:inherit;color:#fff;font-weight:700;text-transform:uppercase;
+  letter-spacing:.06em;
+  text-shadow:0 0 30px color-mix(in srgb,var(--a) 75%,transparent);
+}
+body[data-theme] .cover h1{text-transform:none;letter-spacing:.04em}
+body[data-theme] h1 .t{border-right:.05em solid var(--a);animation:th-caret .7s steps(1) infinite}
+body[data-theme] h1 .r{visibility:hidden}
+@keyframes th-caret{50%{border-right-color:transparent}}
+body[data-theme] .section-page-title,
+body[data-theme] .selected-projects .selected-title,
+body[data-theme] .other-projects-page .selected-title,
+body[data-theme] .selected-title{color:#fff}
+body[data-theme] h2,
+body[data-theme] .project-card-title,
+body[data-theme] .project-summary-card h2{font-family:inherit}
+
+/* ---------- glass surfaces ---------- */
+body[data-theme] .company-card,
+body[data-theme] .project-card,
+body[data-theme] .project-summary-card,
+body[data-theme] .flowchart-figure,
+body[data-theme] .contact-item,
+body[data-theme] .cover{
+  background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.025));
+  border:1px solid color-mix(in srgb,var(--a) 48%,transparent);
+  border-radius:20px;
+  box-shadow:0 26px 70px -34px var(--a),inset 0 0 0 1px rgba(255,255,255,.04);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  transition:border-color .25s,box-shadow .25s,transform .25s,background .25s;
+}
+body[data-theme] .company-card:hover,
+body[data-theme] .company-card:focus-within,
+body[data-theme] .project-card:hover,
+body[data-theme] .project-card:focus-visible,
+body[data-theme] .project-summary-card:hover,
+body[data-theme] .contact-item:hover,
+body[data-theme] .contact-item:focus-within{
+  border-color:var(--a);
+  box-shadow:0 30px 80px -26px var(--a),inset 0 0 0 1px rgba(255,255,255,.07);
+  transform:translateY(-2px);
+}
+body[data-theme] .company-card .company-logo{border-radius:14px}
+body[data-theme] .card-body h2{color:#fff;letter-spacing:.05em;font-size:22px}
+body[data-theme] .card-role,
+body[data-theme] .detail-role,
+body[data-theme] .project-summary-card .project-summary-impact,
+body[data-theme] .project-card-impact,
+body[data-theme] .article-tags{color:var(--a)}
+body[data-theme] .card-summary{color:#cfe0cb;font-size:15px;line-height:1.55}
+body[data-theme] .project-summary-card p{color:#cfe0cb}
+
+/* ---------- buttons & links ---------- */
+body[data-theme] .view-detail{
+  border:1px solid var(--a);color:var(--a);border-radius:99px;
+  padding:8px 16px;letter-spacing:.1em;
+  transition:background .2s,color .2s,box-shadow .2s;
+}
+body[data-theme] .view-detail:hover,
+body[data-theme] .view-detail:focus-visible{background:var(--a);color:#000;box-shadow:0 0 22px -2px var(--a)}
+body[data-theme] .back-link,
+body[data-theme] .selected-projects .back-link,
+body[data-theme] .other-projects-page .back-link,
+body[data-theme] .selected-projects .other-projects-link{color:var(--a)}
+body[data-theme] .selected-projects .project-entry strong{color:var(--a)}
+body[data-theme] .selected-projects .project-entry{color:#cfe0cb}
+body[data-theme] .selected-projects .project-entry:hover,
+body[data-theme] .selected-projects .project-entry:hover strong{color:#fff}
+body[data-theme] .contact-item a{color:var(--a)}
+body[data-theme] .contact-item a:hover{color:#fff}
+body[data-theme] .contact-label{color:#fff;letter-spacing:.08em}
+
+/* ---------- contact: still rows, now glass rows ---------- */
+body[data-theme] .contact-list{border-top:0;gap:12px}
+body[data-theme] .contact-item{padding:18px 24px;border-bottom-width:1px}
+
+/* ---------- empty state ---------- */
+body[data-theme] .page-empty-state{border-top:0;text-align:center}
+body[data-theme] .page-empty-state p,
+body[data-theme] .coming-soon-text{color:var(--a);letter-spacing:.2em;text-transform:uppercase}
+
+/* ---------- bottom navigation: floating pill ---------- */
+body[data-theme] .navigation{
+  border:1px solid rgba(255,255,255,.14);border-radius:99px;
+  background:rgba(8,12,8,.72);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  box-shadow:0 18px 50px -20px var(--a);
+  padding:6px;gap:4px;
+}
+body[data-theme] .nav-item{border-radius:99px;font-size:15px;letter-spacing:.12em;padding:12px 4px;color:#c4d4c0}
+body[data-theme] a.nav-item:hover{color:#fff;background:rgba(255,255,255,.08)}
+body[data-theme] .nav-item.active,
+body[data-theme] a.nav-item.active:hover{background:var(--a);color:#000;box-shadow:0 0 22px -4px var(--a)}
+body[data-theme] a.nav-item:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+
+/* ---------- Front shortcut picks up the page colour ---------- */
+body[data-theme] .front-link{border-color:var(--a);color:var(--a)}
+body[data-theme] .front-link::before,body[data-theme] .front-link::after{border-color:var(--a)}
+body[data-theme] .front-link:hover,body[data-theme] .front-link:focus-visible{background:var(--a);color:#000;box-shadow:0 0 24px 2px var(--a)}
+
+/* ---------- home cover ---------- */
+body[data-theme] .cover{border-radius:28px}
+body[data-theme] .corner{display:none}
+body[data-theme] .portrait{border-radius:20px;box-shadow:0 0 60px -12px var(--a);outline:1px solid color-mix(in srgb,var(--a) 60%,transparent)}
+body[data-theme] .bio{color:#e6f5e1;letter-spacing:.08em}
+
+@media (max-width:700px){
+  body[data-theme] .nav-item{font-size:clamp(9px,2.6vw,14px);letter-spacing:.06em}
+  body[data-theme] .contact-item{padding:14px 16px}
+  body[data-theme] .card-body h2{font-size:16px;letter-spacing:.03em}
+  body[data-theme] .card-summary{font-size:12.5px;line-height:1.5}
+  body[data-theme] .view-detail{padding:6px 12px;font-size:11px}
+  body[data-theme] .company-card,body[data-theme] .project-card{border-radius:16px}
+}
+@media (prefers-reduced-motion:reduce){body[data-theme]::before{animation:none}body[data-theme] h1 .t{animation:none}}
