@@ -289,12 +289,12 @@ body[data-theme] .page-empty-state p,body[data-theme] .coming-soon-text{color:va
 @keyframes th-veil{0%{opacity:0;transform:scale(.4)}45%{opacity:.95}75%{opacity:.8}100%{opacity:0;transform:scale(1.9)}}
 .is-launching{transform:scale(1.03)!important;border-color:var(--a)!important;box-shadow:0 0 60px -4px var(--a)!important;transition:transform .45s cubic-bezier(.3,.6,.3,1),box-shadow .45s!important}
 
-/* nav pills size to their word, with the same side padding on each, so spacing looks even */
-@media (min-width:701px){
-  body[data-theme] .navigation{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:auto;width:fit-content;max-width:calc(100% - 48px);margin-inline:auto;justify-content:center;gap:6px}
-  body[data-theme] .nav-item{width:auto;padding:15px 26px}
+/* nav: five equal-width pills; the bar scales as one unit with its font size, same recipe at every screen size */
+body[data-theme] .navigation{
+  font-size:clamp(8.8px,2.55vw,15.5px);
+  grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-flow:row;
+  width:min(calc(100% - clamp(12px,5vw,48px)),40em);max-width:none;
+  margin-inline:auto;gap:.12em;padding:.4em;
 }
-@media (max-width:700px){
-  body[data-theme] .navigation{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:auto;width:fit-content;max-width:calc(100% - 20px);margin-inline:auto;justify-content:center;gap:2px;padding:5px}
-  body[data-theme] .nav-item{width:auto;padding:12px clamp(6px,2.2vw,12px);font-size:clamp(9px,2.8vw,13px);letter-spacing:.04em}
-}
+body[data-theme] .nav-item{width:100%;justify-content:center;text-align:center;
+  font-size:1em;letter-spacing:clamp(.02em,.5vw,.12em);padding:1em 0}
