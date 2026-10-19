@@ -1,8 +1,8 @@
 "use strict";
 // Set window.GLOBALX_API_BASE after Azure Function deployment to enable live processed results.
 const API_BASE = window.GLOBALX_API_BASE || "";
-const CATALOG_URL = "catalog.json?v=recursive-public-exposure-20261018b";
-const INFO_URL = "funds-info.json?v=info2-20261018";
+const CATALOG_URL = "catalog.json?v=canada-179-20261018";
+const INFO_URL = "funds-info.json?v=canada-179-20261018";
 
 const REGION_NAMES = { US: "United States", AU: "Australia", BR: "Brazil", CO: "Colombia", HK: "Hong Kong", CA: "Canada" };
 const REGION_CHIP = { US: "US", CA: "CA", AU: "AU", BR: "BR", HK: "HK", CO: "CO" };
@@ -119,7 +119,8 @@ function toItems(data, p) {
     const label = /[A-Za-z0-9]/.test(raw) ? raw : name || raw || "Unknown";
     const path = parsePath(h, fund);
     path[path.length - 1] = label;
-    return { kind, ticker: label, name: label === name ? "" : name, pct: num(h.exposure_pct), path };
+    const assetType = h.asset_type || (/fixed income|bond/i.test(p.asset_class || "") ? "bond" : /preferred/i.test(p.asset_class || "") ? "preferred" : /commodity futures|derivatives/i.test(p.asset_class || "") ? "derivative" : "security");
+    return { kind, ticker: label, name: name || (label.length > 18 ? label : ""), pct: num(h.exposure_pct), path, assetType, reason: h.reason || "", contributions: h.contributions || [] };
   };
   const held = (data.holdings || []).map(mk("stock")).sort((a, b) => b.pct - a.pct);
   const open = (data.unresolved || p.unresolved || []).map(mk("unresolved")).sort((a, b) => b.pct - a.pct);
@@ -133,7 +134,7 @@ function toItems(data, p) {
    availH (optional) is the height the diagram must fit inside
 ------------------------------------------------------------------- */
 function buildFlow(fund, items, W, availH) {
-  const live = items.filter((x) => x.pct > 0);
+  const live = items.flatMap(x => x.contributions && x.contributions.length ? x.contributions.map(c => ({ ...x, pct: num(c.exposure_pct), path: c.path })) : [x]).filter((x) => x.pct > 0);
   const total = live.reduce((s, x) => s + x.pct, 0);
   const base = Math.max(100, total);
   const NODE = 11, GAP = 3, PT = 32, PB = 8, MAXL = 12;
@@ -143,7 +144,7 @@ function buildFlow(fund, items, W, availH) {
   const byTicker = new Map();
   for (const x of live.filter((x) => x.kind === "stock")) {
     const g = byTicker.get(x.ticker) || { id: x.ticker, label: x.ticker, name: x.name, v: 0, items: [] };
-    g.v += x.pct; g.items.push(x.i); byTicker.set(x.ticker, g);
+    g.v += x.pct; if (!g.items.includes(x.i)) g.items.push(x.i); byTicker.set(x.ticker, g);
   }
   let stockLeaves = [...byTicker.values()].sort((a, b) => b.v - a.v);
   if (stockLeaves.length > MAXL) {
@@ -304,26 +305,23 @@ function buildFlow(fund, items, W, availH) {
 function legendHTML(f) {
   const li = [`<li><i class="sw sw-flow"></i>Ribbon width is share of fund NAV</li>`];
   if (f.leveraged) li.push(`<li><i class="sw sw-lev"></i>Exposure above 100% of NAV (leverage)</li>`);
-  if (f.hasOpen) li.push(`<li><i class="sw sw-hatch"></i>Stops at a position we couldn’t trace to a single stock</li>`);
+  if (f.hasOpen) li.push(`<li><i class="sw sw-hatch"></i>ETF layer with no captured child snapshot</li>`);
   if (f.hasGap) li.push(`<li><i class="sw sw-gap"></i>Not in the public snapshot</li>`);
   return li.join("");
 }
 
 function listJoin(a) { return a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]; }
 function takeaway(fund, items, f) {
-  const stocks = items.filter((x) => x.kind === "stock" && x.pct > 0), open = items.filter((x) => x.kind === "unresolved" && x.pct > 0);
-  const top = stocks[0], out = [];
-  if (top) {
-    out.push(stocks.length === 1
-      ? `${fund} puts ${pct(top.pct)} of its NAV into ${top.name || top.ticker}.`
-      : `${fund}’s public snapshot lists ${stocks.length} holdings. The largest is ${top.ticker} at ${pct(top.pct)} of NAV.`);
-  } else if (open.length) {
-    out.push(`We couldn’t trace ${fund}’s positions down to single stocks.`);
-  }
-  if (f.leveraged) out.push("That adds up to more than 100% because the fund uses leverage.");
-  else if (f.hasGap) out.push(`Public data covers ${pct(f.total)} of NAV; the rest isn’t published.`);
-  if (f.mids.length) out.push(`Some of it passes through ${listJoin(f.mids)}, ${f.mids.length > 1 ? "other Global X funds" : "another Global X fund"}.`);
-  if (top && open.length) out.push(`${open.length === 1 ? "One position isn’t" : open.length + " positions aren’t"} traced to a single stock.`);
+  const known = items.filter(x => x.kind !== "unresolved"), open = items.filter(x => x.kind === "unresolved");
+  const top = [...items].filter(x => x.pct > 0).sort((a,b) => b.pct-a.pct)[0], out = [];
+  out.push(fund + " has " + known.length + " captured security positions after available look-through.");
+  if (top) out.push("The largest displayed " + (top.kind === "unresolved" ? "unresolved ETF" : "position") + " is " + top.ticker + " at " + pct(top.pct) + " of NAV.");
+  if (f.hasGap) out.push("Displayed positions cover " + pct(f.total) + " of NAV; remaining positions are outside this captured snapshot.");
+  if (f.leveraged) out.push("Reported positive weights exceed 100%; borrowing or derivatives may affect NAV weights.");
+  if (f.mids.length) out.push("Available layers: " + listJoin(f.mids) + ".");
+  if (open.length) out.push(open.length + " ETF layer(s) have no captured child holdings.");
+  if (items.some(x => x.pct < 0)) out.push("Negative positions remain in the list; the flow shows positive weights.");
+  if (current && current.p.mixed_source_dates) out.push("Source dates differ across layers; see About this data.");
   return out.join(" ");
 }
 
@@ -335,7 +333,7 @@ function paintHead(p, kind, data) {
   const info = FUND_INFO[keyOf(p)] || {};
   const nm = info.n || (p.name && p.name !== p.ticker ? p.name : "");
   el.name.textContent = nm; el.name.hidden = !nm;
-  const type = info.t || "", desc = info.d || TYPE_BLURB[type] || "";
+  const type = info.t || p.asset_class || "", desc = info.d || p.instrument_description || TYPE_BLURB[type] || "";
   el.ftype.textContent = type; el.ftype.hidden = !type;
   el.fdesc.textContent = desc; el.fabout.hidden = !type && !desc;
   const status = (data && data.coverage_status) || p.coverage_status || (p.holdings_status === "raw_html_only" ? "Raw only" : "");
@@ -357,10 +355,10 @@ function rowsHTML(items) {
   return items.map((h) => {
     const open = h.kind === "unresolved";
     return `<li class="row${open ? " is-open" : ""}" data-i="${h.i}">` +
-      `<span class="r-tk"><span class="r-rank">${open ? "–" : h.i + 1}</span>${esc(h.ticker)}</span>` +
+      `<span class="r-tk" title="${esc(h.name || h.ticker)}"><span class="r-rank">${open ? "–" : h.i + 1}</span>${esc(h.ticker)}</span>` +
       `<span class="r-val">${pct(h.pct)}</span>` +
       `<span class="r-sub">${h.name ? `<span class="r-nm">${esc(h.name)}</span>` : ""}<span class="r-pth">${esc(h.path.join(" → "))}</span></span>` +
-      (open ? '<span class="r-tag">Not traced to a single stock</span>' : "") +
+      ('<span class="r-tag" title="' + esc(h.reason) + '">' + esc(open ? "Unresolved ETF layer" : ({equity:"Company equity",bond:"Bond / debt",cash:"Cash / deposit",preferred:"Preferred security",derivative:"Derivative / contract",fund:"Fund",security:"Reported security"}[h.assetType] || h.assetType)) + '</span>') +
       `<div class="meter" aria-hidden="true"><i style="width:${Math.min(100, (Math.abs(h.pct) / max) * 100)}%"></i></div></li>`;
   }).join("");
 }
@@ -407,7 +405,7 @@ function render(res, p) {
   el.count.textContent = nStocks + (nStocks === 1 ? " holding" : " holdings") + (nOpen ? ", " + nOpen + " untraced" : "");
   const open = items.filter((x) => x.kind === "unresolved");
   const base = data.coverage_reason || "Exposure is multiplied through the available holdings graph.";
-  el.about.textContent = open.length ? base + " Positions we couldn’t trace to a single stock: " + open.map((x) => x.ticker).join(", ") + "." : base;
+  el.about.textContent = open.length ? base + " ETF layers without captured child holdings: " + open.map((x) => x.ticker).join(", ") + "." : base;
   drawFlow(true);
 }
 

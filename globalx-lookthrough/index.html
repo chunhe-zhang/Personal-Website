@@ -84,7 +84,7 @@
       <details class="about">
         <summary>About this data</summary>
         <p id="about-reason" class="about-reason"></p>
-        <p>Partial snapshots only contain the holdings rows shown on the official public page, so they can leave out most of a fund’s portfolio. Where a Global X fund holds another Global X fund, the layers are multiplied through to single stocks. Layers without data, and positions that aren’t stocks, stay marked as untraced. Leverage can push exposure above 100% of NAV.</p>
+        <p>Partial snapshots only contain the holdings rows shown on the official public page, so they can leave out most of a fund’s portfolio. Available ETF layers are multiplied through without rescaling partial tables. Bonds, preferred shares, deposits and derivatives retain their asset type. Only ETF layers with missing child snapshots stay marked as untraced. Leverage can push exposure above 100% of NAV.</p>
       </details>
     </section>
 
@@ -94,6 +94,6 @@
     </footer>
   </div>
 
-  <script src="app.js?v=info2-20261018"></script>
+  <script src="app.js?v=canada-179-20261018"></script>
 </body>
 </html>
