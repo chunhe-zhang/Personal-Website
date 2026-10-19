@@ -85,9 +85,6 @@ html.paged,html.paged body{height:100%;overflow:hidden;overscroll-behavior:none;
   background:radial-gradient(420px circle at calc(50% + var(--mx)*50%) calc(50% + var(--my)*50%),rgba(255,255,255,.14),transparent 60%);
   mix-blend-mode:overlay;
 }
-.tick{position:absolute;left:50%;top:calc(50% - clamp(48px,8.4vw,98px));width:2px;height:clamp(12px,1.7vw,18px);
-  background:var(--ink);transform:translateX(-50%);opacity:.9}
-.tick::before{content:"";position:absolute;left:-6px;top:0;width:14px;height:2px;background:var(--ink)}
 .title .t{border-right:.035em solid var(--a);margin-right:-.035em;animation:caret .7s steps(1) infinite}
 .title .r{visibility:hidden}
 @keyframes caret{50%{border-right-color:transparent}}
