@@ -64,7 +64,7 @@
   function showToast(i) {
     const s = stages[i];
     const title = s.querySelector("h2").textContent.replace(/_$/, "");
-    const label = s.classList.contains("stage-next") ? "Next stage" : `Stage ${String(i + 1).padStart(2, "0")} unlocked`;
+    const label = s.classList.contains("stage-next") ? "Next stage" : `Stage ${nodes[i].textContent} unlocked`;
     toast.style.setProperty("--t", getComputedStyle(s).getPropertyValue("--s").trim());
     toast.innerHTML = "";
     const ico = document.createElement("span"); ico.className = "ico"; ico.textContent = s.classList.contains("stage-next") ? "?" : "★";
@@ -108,7 +108,7 @@
       const col = getComputedStyle(stages[cur]).getPropertyValue("--s").trim();
       const hud = stages[cur].classList.contains("stage-next") ? "#b36bff" : col;
       root.style.setProperty("--hud", hud);
-      hudN.textContent = String(Math.min(cur + 1, 6)).padStart(2, "0");
+      hudN.textContent = nodes[cur].textContent;
       hudYears.textContent = stages[cur].dataset.years;
       lastCur = cur;
     }
