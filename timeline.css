@@ -177,27 +177,9 @@
 
 /* ---------- small screens: path runs down the left ---------- */
 @media (max-width:700px){
-  .tl-hud{gap:10px;padding:9px 14px;font-size:11px;letter-spacing:.14em;width:calc(100% - 66px);margin-right:0}
-  .stage-years{font-size:22px;white-space:nowrap}
+  .tl-hud{gap:10px;padding:9px 14px;font-size:11px;letter-spacing:.14em;width:calc(100% - 66px);margin-right:0;justify-content:space-between}
   .tl-hud-bar{display:none}
-  .tl-hud{justify-content:space-between}
-  .stage-head{gap:10px}
-  .stage,.stage:nth-child(even){--x:26px;min-height:0;padding-bottom:34px}
-  .stage{--ny:calc(50% - 17px)}
   .stage-node{width:46px;height:46px;margin:-23px 0 0 -23px;font-size:14px}
-  .stage-card,.stage:nth-child(even) .stage-card{width:auto;margin:0 0 0 64px;padding:18px 18px}
-  .stage .stage-card{display:block;min-height:0;padding:18px 16px 18px 18px}
-  .stage .stage-logo{position:absolute;top:14px;right:14px;width:40px;height:40px}
-  .stage .stage-logo::before{inset:-14px}
-  .stage .stage-logo.mono{font-size:26px}
-  .stage .stage-years,.stage .stage-card h2{padding-right:44px}
-  .stage .stage-card h2{font-size:17px;margin:8px 0 4px}
-  .stage .stage-sub{font-size:13.5px}
-  .stage-logo{width:54px;height:54px}
-  .stage-logo::before{inset:-16px}
-  .stage-logo.mono{font-size:30px}
-  .stage-years{font-size:20px}
-  .stage-logo.mono{font-size:11px}
   .tl-toast{top:auto;bottom:118px;max-width:calc(100% - 32px);white-space:normal}
 }
 
@@ -206,4 +188,35 @@
   .stage .stage-card{opacity:1!important;filter:none!important;translate:none!important}
   .tl-avatar,.tl-toast{display:none}
   .stage.cur .stage-node,.blink,.tl-avatar i::after{animation:none}
+}
+
+/* ================= square cards (v3) =================
+   Cards sit either side of a gently weaving centre line, stacked so each one
+   overlaps the previous on the other side. Type and logo scale with the card
+   itself (container query units), so every card keeps the same proportions. */
+.stage{--x:calc(50% - 16px);--ny:50%;min-height:0;padding:0}
+.stage:nth-child(even){--x:calc(50% + 16px)}
+.stage + .stage{margin-top:-96px}
+.stage .stage-card,.stage:nth-child(even) .stage-card{
+  container-type:inline-size;display:flex;flex-direction:column;align-items:flex-start;gap:0;
+  width:clamp(240px,38%,350px);min-height:0;padding:clamp(20px,7cqi,28px);
+  margin:0 0 0 calc(50% + 48px)}
+.stage:nth-child(even) .stage-card{margin:0 0 0 calc(50% - 48px - clamp(240px,38%,350px))}
+.stage .stage-logo{order:-1;position:relative;top:auto;right:auto;width:30cqi;height:30cqi;margin:0 0 7cqi}
+.stage .stage-logo img[src*="td-securities"]{width:100%}
+.stage .stage-logo::before{inset:-34%}
+.stage .stage-logo.mono{font-size:17cqi;justify-content:start}
+.stage .stage-years{font-size:12.5cqi;padding:0;white-space:nowrap}
+.stage .stage-card h2{font-size:7.2cqi;margin:3.5cqi 0 1.6cqi;padding:0}
+.stage .stage-sub{font-size:4.6cqi}
+.stage-next .stage-card{min-height:0}
+
+@media (max-width:700px){
+  .stage,.stage:nth-child(even){--x:26px}
+  .stage + .stage{margin-top:28px}
+  .stage .stage-card,.stage:nth-child(even) .stage-card{width:auto;margin:0 0 0 64px}
+  .stage .stage-logo{width:24cqi;height:24cqi;margin-bottom:5cqi}
+  .stage .stage-years{font-size:11cqi}
+  .stage .stage-card h2{font-size:7.4cqi}
+  .stage .stage-sub{font-size:5cqi}
 }
