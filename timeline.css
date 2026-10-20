@@ -112,6 +112,14 @@
 .stage-logo img{width:100%;height:100%;object-fit:contain;display:block;
   filter:drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 6px 18px color-mix(in srgb,var(--s) 55%,transparent))}
 .stage-logo img[src*="td-securities"]{border-radius:16px;height:auto;aspect-ratio:255/192}
+.stage-logo .logo-ink{display:block;width:100%;height:100%;
+  -webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat;
+  background:linear-gradient(135deg,#ffc24a 0%,#ff7a1a 30%,#ff4fa3 62%,#b36bff 100%) 0 0/200% 200%;
+  filter:drop-shadow(0 6px 18px color-mix(in srgb,var(--s) 60%,transparent));
+  animation:logo-flow 8s ease-in-out infinite alternate}
+.logo-easy{--logo:url("assets/logos/easy-group-mask.png")}
+@keyframes logo-flow{to{background-position:100% 100%}}
+@media (prefers-reduced-motion:reduce){.stage-logo .logo-ink{animation:none}}
 .stage-logo.mono{font-size:46px;font-weight:700;color:#fff;text-shadow:0 0 18px rgba(255,255,255,.7)}
 .stage.on .stage-logo{animation:tl-pop .6s cubic-bezier(.2,.7,.2,1.4) backwards .1s}
 .stage-card:hover .stage-logo{transform:rotate(-5deg) scale(1.07)}
