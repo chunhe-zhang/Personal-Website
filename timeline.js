@@ -86,7 +86,7 @@
     L = Math.min(total, Math.max(0, L));
     [glow, line].forEach((p) => { p.style.strokeDashoffset = String(total - L); });
     const p = line.getPointAtLength(L);
-    if (avatar) avatar.style.transform = `translate(${p.x}px, ${p.y}px)`;
+    avatar.style.transform = `translate(${p.x}px, ${p.y}px)`;
 
     let cur = 0;
     stages.forEach((s, i) => {
