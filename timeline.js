@@ -1,5 +1,5 @@
 /* Timeline stage map: the path draws as you scroll, the player marker follows it,
-   and each stage unlocks (with a small burst + toast) when the player reaches it. */
+   and each stage unlocks (with a small burst) when the player reaches it. */
 (() => {
   "use strict";
   const wrap = document.getElementById("tl-wrap");
@@ -14,12 +14,11 @@
   const hudN = document.getElementById("hud-n");
   const hudBar = document.getElementById("hud-bar");
   const hudYears = document.getElementById("hud-years");
-  const toast = document.getElementById("tl-toast");
   const root = document.documentElement;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const FOCUS = 0.62; // the "player" sits at 62% of the viewport height
 
-  let total = 0, samples = [], stageLen = [], ready = false, raf = 0, toastTimer = 0, lastCur = -1;
+  let total = 0, samples = [], stageLen = [], ready = false, raf = 0, lastCur = -1;
   const seen = new Set();
 
   stages.forEach((s) => { const b = document.createElement("span"); b.className = "burst"; b.setAttribute("aria-hidden", "true"); s.appendChild(b); });
@@ -61,22 +60,6 @@
     return total;
   }
 
-  function showToast(i) {
-    const s = stages[i];
-    const title = s.querySelector("h2").textContent.replace(/_$/, "");
-    const label = s.classList.contains("stage-next") ? "Next stage" : `Stage ${nodes[i].textContent} unlocked`;
-    toast.style.setProperty("--t", getComputedStyle(s).getPropertyValue("--s").trim());
-    toast.innerHTML = "";
-    const ico = document.createElement("span"); ico.className = "ico"; ico.textContent = s.classList.contains("stage-next") ? "?" : "★";
-    const txt = document.createElement("span");
-    const b = document.createElement("b"); b.textContent = label;
-    txt.append(b, document.createTextNode(`${title} · ${s.dataset.years}`));
-    toast.append(ico, txt);
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
-  }
-
   function update() {
     raf = 0;
     if (!total) return;
@@ -96,7 +79,6 @@
         s.classList.add("on");
         if (ready && !reduce) {
           s.classList.remove("just"); void s.offsetWidth; s.classList.add("just");
-          if (!seen.has(i)) showToast(i);
         }
         seen.add(i);
       } else if (!on && s.classList.contains("on")) {
