@@ -207,3 +207,14 @@
   .tl-avatar,.tl-toast{display:none}
   .stage.cur .stage-node,.blink,.tl-avatar i::after{animation:none}
 }
+
+/* gentle alternation: cards stay near the centre and shift a little left / right;
+   each node sits just outside its card, so the path weaves softly between them */
+@media (min-width:701px){
+  .tl{--w:min(50%,430px);--shift:44px}
+  .stage{--x:calc(50% - var(--w) / 2 - var(--shift) - 34px)}
+  .stage:nth-child(even){--x:calc(50% + var(--w) / 2 + var(--shift) + 34px)}
+  .stage .stage-card,.stage:nth-child(even) .stage-card{width:var(--w);margin-right:0;
+    margin-left:calc(50% - var(--w) / 2 - var(--shift))}
+  .stage:nth-child(even) .stage-card{margin-left:calc(50% - var(--w) / 2 + var(--shift))}
+}
