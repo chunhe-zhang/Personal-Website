@@ -75,7 +75,7 @@
 .stage:nth-child(even) .stage-card{margin-left:auto;margin-right:calc(100% - var(--x) + 56px)}
 .stage-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
   background:radial-gradient(260px circle at var(--px,50%) var(--py,0%),color-mix(in srgb,var(--s) 22%,transparent),transparent 70%)}
-.stage:not(.on) .stage-card{opacity:.22;filter:blur(5px) grayscale(1);translate:0 22px}
+.stage:not(.on) .stage-card{opacity:.6;filter:blur(7px) saturate(.35) brightness(.8);translate:0 18px;box-shadow:none}
 
 .stage-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px;
   font-size:11.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--s)}
@@ -102,22 +102,19 @@
 .blink{animation:tl-blink 1s steps(1) infinite;margin-left:.1em}
 @keyframes tl-blink{50%{opacity:0}}
 
-/* simple card: logo + years / name / role */
-.stage-card{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:20px}
+/* card: years / name / role on the left, the logo sits in the card's own light on the right */
+.stage-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px}
 .stage-text{min-width:0}
-.stage-card .stage-logo{width:78px;height:78px;border-radius:18px;padding:7px}
-.stage-card .stage-logo.mono{font-size:28px;padding:0}
-
-/* logo tile beside the years */
-.stage-head{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.stage-logo{flex:none;display:grid;place-items:center;width:68px;height:52px;border-radius:12px;overflow:hidden;
-  background:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.25),0 10px 24px -10px var(--s);
+.stage-logo{position:relative;flex:none;display:grid;place-items:center;width:92px;height:92px;
   transition:transform .4s cubic-bezier(.2,.7,.2,1)}
-.stage-logo img{width:100%;height:100%;object-fit:contain;display:block}
-.stage-logo.mono{background:linear-gradient(150deg,color-mix(in srgb,var(--s) 85%,#fff),color-mix(in srgb,var(--s) 55%,#000));
-  color:#05060a;font-size:13px;font-weight:700;letter-spacing:.06em;text-align:center;line-height:1.1;padding:4px}
+.stage-logo::before{content:"";position:absolute;inset:-28px;border-radius:50%;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--s) 38%,transparent),color-mix(in srgb,var(--s) 10%,transparent) 60%,transparent)}
+.stage-logo img{width:100%;height:100%;object-fit:contain;display:block;
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.35)) drop-shadow(0 6px 18px color-mix(in srgb,var(--s) 55%,transparent))}
+.stage-logo img[src*="td-securities"]{border-radius:16px;height:auto;aspect-ratio:255/192}
+.stage-logo.mono{font-size:46px;font-weight:700;color:#fff;text-shadow:0 0 18px rgba(255,255,255,.7)}
 .stage.on .stage-logo{animation:tl-pop .6s cubic-bezier(.2,.7,.2,1.4) backwards .1s}
-.stage-card:hover .stage-logo{transform:rotate(-4deg) scale(1.06)}
+.stage-card:hover .stage-logo{transform:rotate(-5deg) scale(1.07)}
 @keyframes tl-pop{from{transform:scale(.4) rotate(-12deg);opacity:0}}
 
 /* clickable logo → photo gallery (only when the stage has photos) */
@@ -179,13 +176,11 @@
   .stage-node{width:46px;height:46px;margin:-23px 0 0 -23px;font-size:14px;top:40px}
   .stage .burst{top:40px}
   .stage-card,.stage:nth-child(even) .stage-card{width:auto;margin:0 0 0 64px;padding:18px 18px}
-  .stage-card{grid-template-columns:auto 1fr;gap:6px 14px}
-  .stage-text{display:contents}
-  .stage-card .stage-logo{width:48px;height:48px;border-radius:12px;padding:4px}
-  .stage-card .stage-years{grid-column:2}
-  .stage-card h2,.stage-card .stage-sub{grid-column:1 / -1}
-  .stage-card h2{margin-top:8px}
-  .stage-card .stage-logo.mono{font-size:20px}
+  .stage-card{gap:12px}
+  .stage-logo{width:54px;height:54px}
+  .stage-logo::before{inset:-16px}
+  .stage-logo.mono{font-size:30px}
+  .stage-years{font-size:20px}
   .stage-logo.mono{font-size:11px}
   .tl-toast{top:auto;bottom:118px;max-width:calc(100% - 32px);white-space:normal}
 }
