@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Timeline — Chunhe Zhang, Data Engineer · Toronto.">
+  <title>Timeline | Chunhe Zhang</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css?v=20261016k">
+  <link rel="stylesheet" href="front.css?v=2">
+  <link rel="stylesheet" href="theme.css?v=20">
+  <link rel="stylesheet" href="timeline.css?v=1">
+  <script src="theme.js?v=5" defer></script>
+  <script src="timeline.js?v=1" defer></script>
+</head>
+<body class="section-page" data-theme="violet">
+  <div class="section-shell">
+    <main class="section-content unified-section-content timeline-page" aria-labelledby="page-title">
+      <h1 class="section-page-title" id="page-title">Timeline</h1>
+
+      <div class="tl-hud" aria-hidden="true">
+        <span class="tl-hud-stage">Stage <b id="hud-n">01</b><i>/</i>06</span>
+        <span class="tl-hud-bar"><i id="hud-bar"></i></span>
+        <span class="tl-hud-years" id="hud-years">2010 – 2013</span>
+      </div>
+
+      <div class="tl-wrap" id="tl-wrap">
+        <svg class="tl-svg" id="tl-svg" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="tl-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1000">
+              <stop offset="0" stop-color="#22d3ee"/>
+              <stop offset=".2" stop-color="#55ff00"/>
+              <stop offset=".4" stop-color="#ffd23d"/>
+              <stop offset=".6" stop-color="#ff7a1a"/>
+              <stop offset=".8" stop-color="#b36bff"/>
+              <stop offset="1" stop-color="#ff4fa3"/>
+            </linearGradient>
+            <filter id="tl-blur" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="7"/></filter>
+          </defs>
+          <path class="tl-track" id="tl-track"/>
+          <path class="tl-glow" id="tl-glow" stroke="url(#tl-grad)" filter="url(#tl-blur)"/>
+          <path class="tl-line" id="tl-line" stroke="url(#tl-grad)"/>
+        </svg>
+        <div class="tl-avatar" id="tl-avatar" aria-hidden="true"><i></i></div>
+
+        <ol class="tl" id="tl">
+          <li class="stage" style="--s:#22d3ee" data-years="2010 – 2013">
+            <button class="stage-node" type="button" aria-label="Go to stage 1: Dalian No. 24 High School">01</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Stage 01</span><span class="chip">School</span></p>
+              <div class="stage-head"><p class="stage-years">2010 – 2013</p><span class="stage-logo mono" aria-hidden="true">D24</span></div>
+              <h2>Dalian No. 24 High School</h2>
+              <p class="stage-sub">Dalian, China</p>
+            </article>
+          </li>
+          <li class="stage" style="--s:#55ff00" data-years="2013 – 2014">
+            <button class="stage-node" type="button" aria-label="Go to stage 2: Hong Kong Baptist University">02</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Stage 02</span><span class="chip">University</span></p>
+              <div class="stage-head"><p class="stage-years">2013 – 2014</p><span class="stage-logo mono" aria-hidden="true">HKBU</span></div>
+              <h2>Hong Kong Baptist University</h2>
+              <p class="stage-sub">Hong Kong</p>
+            </article>
+          </li>
+          <li class="stage" style="--s:#ffd23d" data-years="2014 – 2018">
+            <button class="stage-node" type="button" aria-label="Go to stage 3: University of Toronto, B.Sc.">03</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Stage 03</span><span class="chip">University</span></p>
+              <div class="stage-head"><p class="stage-years">2014 – 2018</p><span class="stage-logo mono" aria-hidden="true">U of T</span></div>
+              <h2>University of Toronto</h2>
+              <p class="stage-sub">B.Sc. · Mathematics &amp; Physics</p>
+            </article>
+          </li>
+          <li class="stage" style="--s:#ff7a1a" data-years="2019 – 2020">
+            <button class="stage-node" type="button" aria-label="Go to stage 4: University of Toronto, Master's">04</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Stage 04</span><span class="chip">Graduate</span></p>
+              <div class="stage-head"><p class="stage-years">2019 – 2020</p><span class="stage-logo mono" aria-hidden="true">U of T</span></div>
+              <h2>University of Toronto</h2>
+              <p class="stage-sub">Master's · Statistics</p>
+            </article>
+          </li>
+          <li class="stage" style="--s:#b36bff" data-years="2020 – 2022">
+            <button class="stage-node" type="button" aria-label="Go to stage 5: Easy Group">05</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Stage 05</span><span class="chip">Work</span></p>
+              <div class="stage-head"><p class="stage-years">2020 – 2022</p><span class="stage-logo"><img src="assets/logos/easy-group.png" alt="Easy Group logo" width="255" height="192" loading="lazy"></span></div>
+              <h2>Easy Group</h2>
+              <p class="stage-sub">Data Engineer</p>
+              <a class="stage-link" href="easy-education.html">View detail <span aria-hidden="true">→</span></a>
+            </article>
+          </li>
+          <li class="stage" style="--s:#ff4fa3" data-years="2022 – 2026">
+            <button class="stage-node" type="button" aria-label="Go to stage 6: TD Securities">06</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Stage 06</span><span class="chip">Work</span></p>
+              <div class="stage-head"><p class="stage-years">2022 – 2026</p><span class="stage-logo"><img src="assets/logos/td-securities.png" alt="TD Securities logo" width="255" height="192" loading="lazy"></span></div>
+              <h2>TD Securities</h2>
+              <p class="stage-sub">Analyst III (Data Engineer)</p>
+              <a class="stage-link" href="td-securities.html">View detail <span aria-hidden="true">→</span></a>
+            </article>
+          </li>
+          <li class="stage stage-next" style="--s:#ffffff" data-years="2026 – ?">
+            <button class="stage-node" type="button" aria-label="Go to the next stage">?</button>
+            <article class="stage-card">
+              <p class="stage-meta"><span>Next stage</span></p>
+              <p class="stage-years">2026 – ?</p>
+              <h2>Loading<span class="blink" aria-hidden="true">_</span></h2>
+            </article>
+          </li>
+        </ol>
+      </div>
+    </main>
+    <nav class="navigation" aria-label="Main navigation">
+      <a class="nav-item" href="home.html">Home</a>
+      <a class="nav-item" href="work.html">Work</a>
+      <a class="nav-item" href="projects.html">Projects</a>
+      <a class="nav-item active" href="timeline.html" aria-current="page">Timeline</a>
+      <a class="nav-item" href="contact.html?v=20261016b">Contact</a>
+    </nav>
+  </div>
+  <div class="tl-toast" id="tl-toast" role="status" aria-live="polite"></div>
+  <a class="front-link" href="index.html#timeline" aria-label="Back to front page" title="Front page"><svg viewBox="0 0 40 28" aria-hidden="true" focusable="false"><path d="M17 5H5v18h12M23 5h12L23 23h12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="miter"/></svg><span>Front</span></a>
+</body>
+</html>

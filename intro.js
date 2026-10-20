@@ -10,7 +10,7 @@
   const railBtns = [...document.querySelectorAll("#rail button")];
   const hero = $("#hero"), flash = $("#flash"), spacer = $("#spacer");
   const root = document.documentElement;
-  const NAMES = ["home", "work", "projects", "articles", "contact"];
+  const NAMES = ["home", "work", "projects", "timeline", "contact"];
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const ease = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
 
@@ -150,7 +150,8 @@
     requestAnimationFrame(frame);
   }
 
-  const hi = NAMES.indexOf(location.hash.slice(1).toLowerCase());
+  const hash = location.hash.slice(1).toLowerCase();
+  const hi = NAMES.indexOf(hash === "articles" ? "timeline" : hash); // old #articles links still land on Timeline
   if (hi >= 0) { idx = hi + 1; cur = idx; }
   requestAnimationFrame((t) => { last = t; frame(t); });
 })();
